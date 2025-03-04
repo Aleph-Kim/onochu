@@ -7,3 +7,9 @@ services:
       - "8080:80"
     volumes:
       - .:/var/www/html
+    networks:
+      - mysql_net
+
+networks:
+  mysql_net:
+    external: true
