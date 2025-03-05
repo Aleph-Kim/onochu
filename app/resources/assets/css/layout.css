@@ -1,0 +1,136 @@
+:root {
+    --main-color: #554DB4;
+}
+
+@font-face {
+    font-family: 'pretendard';
+    src: url('../fonts/PretendardVariable.ttf') format('truetype');
+}
+
+body {
+    font-family: 'pretendard';
+}
+
+/* 헤더 영역 시작 */
+.header {
+    width: 100%;
+    background-color: #ffffff;
+    border-bottom: 1px solid #eee;
+    position: sticky;
+    top: 0;
+    z-index: 999;
+}
+
+.header_inner {
+    margin: 0 auto;
+    padding: 0 200px;
+    display: flex;
+    align-items: center;
+    justify-content: space-evenly;
+    height: 70px;
+}
+
+/* 로고 */
+.logo {
+    display: flex;
+    align-items: center;
+    color: var(--main-color);
+    font-size: 1.8em;
+    font-weight: 700;
+}
+
+.logo img {
+    height: 40px;
+    margin-right: 10px;
+}
+
+/* 검색 영역 */
+.search {
+    position: relative;
+    width: 300px;
+    margin: 0 auto;
+}
+
+.search input[type="text"] {
+    width: 100%;
+    padding: 10px 40px 10px 10px;
+    box-sizing: border-box;
+    border: 1px solid #ccc;
+    border-radius: 4px;
+    font-size: 14px;
+}
+
+/* 검색 버튼 */
+.btn-search {
+    width: 20px;
+    position: absolute;
+    right: 10px;
+    top: 50%;
+    transform: translateY(-50%);
+    cursor: pointer;
+    display: flex;
+    align-items: center;
+}
+
+.btn-search img {
+    width: 100%;
+}
+
+/* 유저 메뉴 */
+.user-menu {
+    margin-left: 30px;
+}
+
+.btn-login {
+    padding: 6px 12px;
+    color: #333;
+    cursor: pointer;
+    transition: color 0.1s;
+}
+
+.btn-login:hover {
+    color: #a0a0a0;
+}
+
+/* 반응형 스타일 */
+@media screen and (max-width: 1024px) {
+    .header_inner {
+        padding: 0 50px;
+    }
+}
+
+@media screen and (max-width: 768px) {
+    .header_inner {
+        padding: 0 10px;
+        justify-content: space-between;
+    }
+
+    .search {
+        display: none;
+    }
+}
+
+/* 헤더 영역 끝 */
+
+/* 메인 영역 시작 */
+main {
+    width: 90%;
+    max-width: 1200px;
+    margin: 0 auto;
+    padding: 15px;
+}
+
+@media (max-width: 768px) {
+    main {
+        width: 100%;
+        padding: 0 10px;
+    }
+}
+
+@media (max-width: 480px) {
+    main {
+        padding: 0 5px;
+    }
+}
+
+/* 메인 영역 끝 */
