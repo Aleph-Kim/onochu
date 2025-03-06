@@ -21,6 +21,12 @@ main {
     transition: transform 0.3s;
 }
 
+@media (max-width: 480px) {
+    .music-slider .is-selected .music-card-wrap {
+        transform: scale(1.1);
+    }
+}
+
 .music-card-wrap {
     padding: 15px;
 }
