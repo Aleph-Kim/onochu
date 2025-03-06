@@ -19,5 +19,5 @@ if (file_exists($viewFile)) {
     require $viewFile;
 } else {
     http_response_code(404);
-    echo "404 Not Found";
+    require $_SERVER['ERROR_PATH'] . "404.php";
 }

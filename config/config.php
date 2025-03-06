@@ -13,3 +13,6 @@ $_SERVER['CSS_PATH'] = "/app/resources/assets/css/";
 
 // image 경로
 $_SERVER['IMAGE_PATH'] = "/app/resources/assets/image/";
+
+// 에러페이지 뷰 경로
+$_SERVER['ERROR_PATH'] = $_SERVER['VIEW_PATH'] . "error/";
