@@ -24,19 +24,19 @@ class SearchController extends Controller
 
         // 빈 검색어 처리
         if (empty($keyword)) {
-            return "검색어 없음";
+            ErrorHandler::handleError(500);
         }
 
         // JSON 데이터 가져오기
         $jsonData = $this->fetchFloSongData($keyword);
         if ($jsonData === false) {
-            return "에러 발생";
+            ErrorHandler::handleError(500);
         }
 
         // JSON 데이터 디코딩
         $data = json_decode($jsonData, true);
         if ($data === null) {
-            return "에러 발생";
+            ErrorHandler::handleError(500);
         }
 
         // 노래 정보 추출

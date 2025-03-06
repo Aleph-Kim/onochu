@@ -1,4 +1,8 @@
 <?
+
+// core 경로
+$_SERVER['CORE_PATH'] = $_SERVER['DOCUMENT_ROOT'] . "/core/";
+
 // 뷰 경로
 $_SERVER['VIEW_PATH'] = $_SERVER['DOCUMENT_ROOT'] . "/app/resources/views/";
 
