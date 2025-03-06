@@ -34,12 +34,12 @@
                 Onochu
             </a>
             <!-- 검색 -->
-            <div class="search">
-                <input type="text" placeholder="검색어를 입력하세요" />
+            <form class="search" action="/search">
+                <input type="text" name="q" placeholder="검색어를 입력하세요" value="<?= $_GET['q'] ?>" />
                 <button class="btn-search">
                     <img src="<?= $_SERVER['IMAGE_PATH'] . 'icon/magnifier.svg' ?>">
                 </button>
-            </div>
+            </form>
             <!-- 유저 메뉴 -->
             <div class="user-menu">
                 <button type="button" class="btn-login">로그인</button>
