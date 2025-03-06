@@ -31,7 +31,7 @@ body {
 }
 
 /* 로고 */
-.logo {
+#logo {
     display: flex;
     align-items: center;
     color: var(--main-color);
@@ -39,19 +39,40 @@ body {
     font-weight: 700;
 }
 
-.logo img {
+#logo img {
     height: 40px;
     margin-right: 10px;
 }
 
+#searchFormWrap {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
+#searchFormHideBtn {
+    display: none;
+    width: 30px;
+    height: 30px;
+    margin-right: 10px;
+}
+
 /* 검색 영역 */
-.search {
+#searchForm {
     position: relative;
     width: 300px;
     margin: 0 auto;
 }
 
-.search input[type="text"] {
+@media screen and (max-width: 768px) {
+    #searchForm {
+        width: 80%;
+        margin: 0;
+    }
+
+}
+
+#searchForm input[type="text"] {
     width: 100%;
     padding: 10px 40px 10px 10px;
     box-sizing: border-box;
@@ -62,9 +83,10 @@ body {
 
 /* 검색 버튼 */
 .btn-search {
-    width: 20px;
+    width: 38px;
+    padding: 7px;
     position: absolute;
-    right: 10px;
+    right: 0;
     top: 50%;
     transform: translateY(-50%);
     cursor: pointer;
@@ -72,13 +94,26 @@ body {
     align-items: center;
 }
 
-.btn-search img {
-    width: 100%;
+#searchFormHideBtn svg,
+.btn-search svg,
+.mobile-btn-search svg {
+    fill: #afafaf;
+}
+
+#rightBtnBox {
+    display: flex;
+    align-items: center;
 }
 
 /* 유저 메뉴 */
 .user-menu {
     margin-left: 30px;
+}
+
+@media screen and (max-width: 768px) {
+    .user-menu {
+        margin-left: 0;
+    }
 }
 
 .btn-login {
@@ -105,8 +140,13 @@ body {
         justify-content: space-between;
     }
 
-    .search {
+    #searchForm {
         display: none;
+    }
+
+    .mobile-btn-search {
+        height: 34px;
+        width: 34px;
     }
 }
 
