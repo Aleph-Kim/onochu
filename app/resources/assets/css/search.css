@@ -1,5 +1,5 @@
 .search-text-box {
-    font-size: 1.5em;
+    font-size: 1.5rem;
     padding: 20px;
 }
 
@@ -24,10 +24,17 @@
 }
 
 .song-box .album-img {
+    width: 70px;
     margin-right: 10px;
 }
 
+.song-box .album-img img {
+    height: 100%;
+    border-radius: 3px;
+}
+
 .song-box .song-info {
+    max-width: 75%;
     padding: 10px;
     display: flex;
     flex-direction: column;
@@ -36,6 +43,28 @@
 
 .song-box .song-name {
     color: var(--main-color);
+    overflow: hidden;
+    text-overflow: ellipsis;
+    white-space: nowrap;
+}
+
+.song-box .song-etc {
+    overflow: hidden;
+    text-overflow: ellipsis;
+    white-space: nowrap;
+}
+
+@media (max-width: 480px) {
+    .song-wrap {
+        margin: 0 20px;
+    }
+    .song-box .album-img {
+        margin: 0;
+    }
+
+    .song-box .song-etc {
+        font-size: 14px;
+    }
 }
 
 .not-found {
@@ -50,11 +79,11 @@
     height: 96px;
 }
 
-.not-found .not-found-text{
+.not-found .not-found-text {
     margin: 30px 0;
     font-size: 1.3em;
 }
 
-.not-found .another-text{
+.not-found .another-text {
     font-size: 1em;
 }

@@ -19,7 +19,7 @@ $songs = $controller->index();
                     </span>
                     <div class="song-info">
                         <div class="song-name"><?= $song['song']['name'] ?></div>
-                        <div>
+                        <div class="song-etc">
                             <span class="artist-name"><?= $song['artist']['name'] ?></span>
                             <span> • </span>
                             <span class="album-name"><?= $song['album']['title'] ?></span>
