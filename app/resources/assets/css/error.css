@@ -18,6 +18,20 @@ h1 {
     margin: 20px 15px;
 }
 
+@media (max-width: 480px) {
+    h1 {
+        font-size: 2em;
+    }
+    
+    .zoom-area {
+        font-size: 1em;
+    }
+    
+    .error-container {
+        font-size: 5.3em;
+    }
+}
+
 .error-container>span {
     display: inline-block;
     line-height: 0.7;
