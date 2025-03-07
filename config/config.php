@@ -3,6 +3,12 @@
 // core 경로
 $_SERVER['CORE_PATH'] = $_SERVER['DOCUMENT_ROOT'] . "/core/";
 
+// config 경로
+$_SERVER['CONFIG_PATH'] = $_SERVER['DOCUMENT_ROOT'] . "/config/";
+
+// env 파일 경로
+$_SERVER['ENV_PATH'] = $_SERVER['DOCUMENT_ROOT'] . "/.env";
+
 // 뷰 경로
 $_SERVER['VIEW_PATH'] = $_SERVER['DOCUMENT_ROOT'] . "/app/resources/views/";
 

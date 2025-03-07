@@ -3,6 +3,7 @@ require_once '../vendor/autoload.php';
 
 require_once '../config/config.php';
 
+require_once $_SERVER['CONFIG_PATH'] . "loadEnv.php";
 require_once $_SERVER['CORE_PATH'] . "ErrorHandler.php";
 require_once $_SERVER['CORE_PATH'] . 'Controller.php';
 require_once $_SERVER['CORE_PATH'] . 'Model.php';

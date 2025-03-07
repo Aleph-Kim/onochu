@@ -1,10 +1,10 @@
 <?
 
-$dbHost = "172.17.0.1"; // 호스트 주소
-$dbName = "test_db"; // 데이타 베이스(DataBase) 이름
-$dbUser = "root"; // DB 아이디
-$dbPass = "mysql_dev"; // DB 패스워드
-$dbChar = "utf8"; // 문자 인코딩
+$dbHost = getenv("DB_HOST"); // 호스트 주소
+$dbName = getenv("DB_NAME"); // 데이타 베이스(DataBase) 이름
+$dbUser = getenv("DB_USER"); // DB 아이디
+$dbPass = getenv("DB_PASS"); // DB 패스워드
+$dbChar = getenv("DB_CHAR"); // 문자 인코딩
 
 class Model
 {
