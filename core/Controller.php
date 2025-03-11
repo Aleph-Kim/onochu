@@ -1,5 +1,7 @@
 <?
 
+namespace core;
+
 class Controller
 {
     protected function model($model)

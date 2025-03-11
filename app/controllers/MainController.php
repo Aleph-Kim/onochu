@@ -1,4 +1,7 @@
 <?
+
+use core\Controller;
+
 class MainController extends Controller
 {
     public function index()

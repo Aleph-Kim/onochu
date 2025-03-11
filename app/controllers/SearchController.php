@@ -1,5 +1,7 @@
 <?
 
+use core\Controller;
+
 /**
  * SearchController 클래스
  *

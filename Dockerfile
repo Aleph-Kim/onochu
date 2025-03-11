@@ -13,8 +13,17 @@ COPY apache.conf /etc/apache2/conf-available/custom.conf
 # 커스텀 Apache 설정 활성화
 RUN a2enconf custom
 
+# Composer 설치에 필요한 패키지 설치 (curl, unzip, git)
+RUN apt-get update && apt-get install -y \
+    curl \
+    unzip \
+    git
+
+# Composer 설치
+RUN curl -sS https://getcomposer.org/installer | php -- --install-dir=/usr/local/bin --filename=composer
+
 # 애플리케이션 파일 복사
 COPY . /var/www/html/
 
-# Apache 서비스 시작
-CMD ["apache2-foreground"]
+# composer 라이브러리 설치 && Apache 서비스 시작
+CMD bash -c "composer install --no-interaction --prefer-dist && apache2-foreground"
