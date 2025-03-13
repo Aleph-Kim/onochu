@@ -9,7 +9,6 @@ $song = $controller->index();
 
 <div class="song-container">
     <div class="artist-info">
-        <img src="<?= $song['artist']['img_url'] ?>">
         <span><?= $song['artist']['name'] ?></span>
     </div>
     <div class="song-img">

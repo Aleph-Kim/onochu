@@ -1,32 +1,34 @@
 <?
 
 use core\Controller;
+use Helpers\FloApi;
 
 class RecommendsController extends Controller
 {
+
+    // FloApi 객체 프로퍼티
+    protected $flo_api;
+
+    // 컨트롤러 클래스가 호출될 때
+    public function __construct()
+    {
+        // FloApi 객체를 인스턴스화하여 할당
+        $this->flo_api = new FloApi();
+    }
+
     public function index()
     {
-        return [
-            'song' =>
-            [
-                'id' => 30707952,
-                'name' => 'Touch Your Body',
-                'play_time' => '03:01',
-                'genre' => '알앤비'
-            ],
-            'artist' =>
-            [
-                'id' => 20021322,
-                'name' => '에스디 (As D)',
-                'img_url' => 'https://cdn.music-flo.com/image/v2/artist/207/955/02/04/402955207_5f8d2511_s.jpg',
-            ],
-            'album' =>
-            [
-                'id' => 20106584,
-                'title' => 'Touch Your Body',
-                'img_url' => 'https://cdn.music-flo.com/image/album/115/322/02/04/402322115_5c9cea70.jpg',
-                'release_date' => '2025.03.13',
-            ]
-        ];
+        // XSS 방지 처리
+        $_GET['id'] = htmlspecialchars($_GET['id']);
+
+        // 검색어
+        $song_id = $_GET['id'];
+
+        // 빈 검색어 처리
+        if (empty($song_id)) {
+            ErrorHandler::handleError(400);
+        }
+
+        return $this->flo_api->getSongByFloId($song_id);
     }
 }

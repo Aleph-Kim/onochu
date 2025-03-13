@@ -8,8 +8,24 @@ class ErrorHandler
      */
     public static function handleError($code)
     {
-        http_response_code($code);
-        require $_SERVER['ERROR_PATH'] . $code . '.php';
+        switch ($code) {
+            case 400:
+                self::msgBack("잘못된 요청입니다.");
+                break;
+            default:
+                http_response_code($code);
+                require $_SERVER['ERROR_PATH'] . $code . '.php';
+        }
         exit;
+    }
+
+    /**
+     * 에러 메시지를 출력한 후 뒤로가기
+     */
+    private function msgBack($msg)
+    {
+        $code = "<script>window.history.go(-1);alert('{$msg}');</script>";
+
+        echo $code;
     }
 }
