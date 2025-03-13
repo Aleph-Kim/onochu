@@ -1,0 +1,99 @@
+.song-container {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    margin-top: 40px;
+}
+
+.artist-info {
+    display: flex;
+    align-items: center;
+    margin-bottom: 20px;
+    font-size: 0.9em;
+}
+
+.artist-info img {
+    width: 25px;
+    height: 25px;
+    border-radius: 5px;
+    margin-right: 5px;
+}
+
+.song-img img {
+    width: 250px;
+    height: 250px;
+    border-radius: 10px;
+    object-fit: cover;
+}
+
+.song-info h2 {
+    margin: 20px 0;
+    font-size: 1.5em;
+    font-weight: bold;
+}
+
+.song-info p {
+    font-size: 0.9em;
+    color: #b5b5b5;
+}
+
+.recommends-rating {
+    direction: rtl;
+    font-size: 45px;
+    text-align: center;
+    display: inline-block;
+    margin: 20px 0;
+}
+
+.recommends-rating input {
+    display: none;
+}
+
+.recommends-rating label {
+    color: #afafaf;
+    cursor: pointer;
+    transition: color 0.2s;
+}
+
+.recommends-rating label:hover,
+.recommends-rating label:hover~label,
+.recommends-rating input:checked~label {
+    color: var(--main-color);
+}
+
+.buttons {
+    width: 90%;
+    max-width: 500px;
+    margin: 20px;
+    text-align: end;
+}
+
+.btn {
+    display: inline-block;
+    padding: 10px 20px;
+    border-radius: 4px;
+    cursor: pointer;
+    transition: 0.2s;
+}
+
+.btn-submit {
+    color: #fff;
+    background-color: var(--main-color);
+}
+
+.btn-submit:active,
+.btn-submit:hover {
+    background-color: var(--term-color);
+    ;
+}
+
+.btn-cancel {
+    color: #fff;
+    background-color: #afafaf;
+}
+
+.btn-cancel:active,
+.btn-cancel:hover {
+    background-color: #8b8b8b;
+    ;
+}

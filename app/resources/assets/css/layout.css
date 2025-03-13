@@ -1,5 +1,6 @@
 :root {
     --main-color: #554DB4;
+    --term-color: #716cab;
 }
 
 @font-face {
@@ -9,6 +10,27 @@
 
 body {
     font-family: 'pretendard';
+}
+
+textarea {
+    width: 90%;
+    max-width: 500px;
+    height: 150px;
+    padding: 10px;
+    border: 1px solid #afafaf;
+    border-radius: 5px;
+    font-size: 16px;
+    resize: none;
+    transition: border-color 0.2s ease-in-out;
+}
+
+textarea::placeholder {
+    color: #afafaf;
+}
+
+textarea:focus {
+    outline: none;
+    border-color: var(--term-color);
 }
 
 /* 헤더 영역 시작 */
