@@ -1,6 +1,6 @@
 <?
 
-use core\Controller;
+use Core\Controller;
 
 class HomeController extends Controller
 {

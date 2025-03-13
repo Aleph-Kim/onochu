@@ -1,6 +1,5 @@
 <?
-
-namespace core;
+namespace Core;
 
 class Controller
 {
