@@ -174,3 +174,11 @@ main {
 }
 
 /* 메인 영역 끝 */
+
+.between-bar {
+    display: inline-block;
+    width: 1px;
+    height: 10px;
+    margin: 0 4px;
+    background-color: #aeaeae;
+}

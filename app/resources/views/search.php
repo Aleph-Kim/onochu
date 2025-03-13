@@ -21,9 +21,9 @@ $songs = $controller->index();
                         <div class="song-name"><?= $song['song']['name'] ?></div>
                         <div class="song-etc">
                             <span class="artist-name"><?= $song['artist']['name'] ?></span>
-                            <span> • </span>
+                            <span class="between-bar"></span>
                             <span class="album-name"><?= $song['album']['title'] ?></span>
-                            <span> • </span>
+                            <span class="between-bar"></span>
                             <span class="song-play-time"><?= $song['song']['play_time'] ?></span>
                         </div>
                     </div>
