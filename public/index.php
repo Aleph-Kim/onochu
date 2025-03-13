@@ -8,6 +8,8 @@ require_once $_SERVER['CORE_PATH'] . "ErrorHandler.php";
 require_once $_SERVER['CORE_PATH'] . 'Controller.php';
 require_once $_SERVER['CORE_PATH'] . 'Model.php';
 
+require_once $_SERVER['HELPER_PATH'] . 'FloApi.php';
+
 
 // path 체크
 $path = isset($_GET['path']) ? $_GET['path'] : 'home/main';
