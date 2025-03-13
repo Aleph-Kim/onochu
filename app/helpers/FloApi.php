@@ -63,13 +63,13 @@ class FloApi
         $url = $this->base_url . $path . ($params ? '?' . http_build_query($params) : "");
 
         // JSON 데이터 가져오기
-        $jsonData = @file_get_contents($url); // 경고 억제를 위해 @ 사용
-        if ($jsonData === false) {
+        $json_data = @file_get_contents($url); // 경고 억제를 위해 @ 사용
+        if ($json_data === false) {
             ErrorHandler::handleError(500);
         }
 
         // JSON 데이터 디코딩
-        $data = json_decode($jsonData, true);
+        $data = json_decode($json_data, true);
         if ($data === null) {
             ErrorHandler::handleError(500);
         }
