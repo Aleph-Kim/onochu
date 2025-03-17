@@ -136,8 +136,8 @@ class FloApi
 
         // 노래 정보 처리
         $song['song'] = [
-            'id' => $song_data['id'],
-            'name' => $song_data['name'],
+            'flo_id' => $song_data['id'],
+            'title' => $song_data['name'],
             'play_time' => $song_data['playTime'],
             'genre' => $song_data['album']['genreStyle'],
         ];
@@ -146,7 +146,7 @@ class FloApi
         if (isset($song_data['artistList'][0])) {
             $artist = $song_data['artistList'][0];
             $song['artist'] = [
-                'id'      => $artist['id'],
+                'flo_id'      => $artist['id'],
                 'name'    => $artist['name'],
                 'img_url' => strtok($artist['imgList'][0]['url'], '?'),
             ];
@@ -156,7 +156,7 @@ class FloApi
         if (isset($song_data['album'])) {
             $album = $song_data['album'];
             $song['album'] = [
-                'id'      => $album['id'],
+                'flo_id'      => $album['id'],
                 'title'   => $album['title'],
                 'img_url' => strtok($album['imgList'][0]['url'], '?'),
                 'release_date' => \DateTime::createFromFormat('Ymd', $album['releaseYmd'])->format("Y.m.d")

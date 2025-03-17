@@ -1,39 +1,40 @@
 <?
 $controller = new RecommendsController();
-$song = $controller->index();
+$songInfo = $controller->index();
+$_SESSION['songInfo'] = $songInfo;
 ?>
 
 <? include $_SERVER['LAYOUT_PATH'] . "header.php"; ?>
 
 <link rel="stylesheet" type="text/css" href="<?= $_SERVER['CSS_PATH'] . 'recommends.css' ?>">
 
-<div class="song-container">
+<form class="song-container" action="/recommends/post" method="post">
     <div class="artist-info">
-        <span><?= $song['artist']['name'] ?></span>
+        <span><?= $songInfo['artist']['name'] ?></span>
     </div>
     <div class="song-img">
-        <img src="<?= $song['album']['img_url'] ?>">
+        <img src="<?= $songInfo['album']['img_url'] ?>">
     </div>
     <div class="song-info">
-        <h2><?= $song['song']['name'] ?></h2>
+        <h2><?= $songInfo['song']['title'] ?></h2>
         <p>
-            <?= $song['album']['release_date'] ?>
+            <?= $songInfo['album']['release_date'] ?>
             <span class="between-bar"></span>
-            <?= $song['song']['genre'] ?>
+            <?= $songInfo['song']['genre'] ?>
             <span class="between-bar"></span>
-            <?= $song['song']['play_time'] ?>
+            <?= $songInfo['song']['play_time'] ?>
         </p>
     </div>
     <div class="recommends-rating">
-        <input type="radio" id="star5" name="rating" value="5">
+        <input type="radio" id="star5" name="score" value="5">
         <label for="star5">★</label>
-        <input type="radio" id="star4" name="rating" value="4">
+        <input type="radio" id="star4" name="score" value="4">
         <label for="star4">★</label>
-        <input type="radio" id="star3" name="rating" value="3">
+        <input type="radio" id="star3" name="score" value="3">
         <label for="star3">★</label>
-        <input type="radio" id="star2" name="rating" value="2">
+        <input type="radio" id="star2" name="score" value="2">
         <label for="star2">★</label>
-        <input type="radio" id="star1" name="rating" value="1">
+        <input type="radio" id="star1" name="score" value="1">
         <label for="star1">★</label>
     </div>
     <textarea name="comment" class="recommends-comment" placeholder="코멘트를 남겨주세요!"></textarea>
@@ -41,6 +42,6 @@ $song = $controller->index();
         <button class="btn btn-cancel" onclick="confirmBack()">뒤로가기</button>
         <button class="btn btn-submit">추천</button>
     </div>
-</div>
+</form>
 
 <? include $_SERVER['LAYOUT_PATH'] . "footer.php"; ?>
