@@ -1,4 +1,5 @@
-<? @session_start();
+<? 
+@session_start();
 require_once '../vendor/autoload.php';
 
 require_once '../config/config.php';
@@ -7,10 +8,10 @@ require_once $_SERVER['CONFIG_PATH'] . "loadEnv.php";
 require_once $_SERVER['CORE_PATH'] . "ErrorHandler.php";
 require_once $_SERVER['CORE_PATH'] . 'Controller.php';
 require_once $_SERVER['CORE_PATH'] . 'Model.php';
+require_once $_SERVER['CORE_PATH'] . 'Redis.php';
 
 require_once $_SERVER['HELPER_PATH'] . 'FloApiHelper.php';
 require_once $_SERVER['HELPER_PATH'] . 'ScriptHelper.php';
-require_once $_SERVER['HELPER_PATH'] . 'CacheHelper.php';
 
 // path 체크
 $path = isset($_REQUEST['path']) ? $_REQUEST['path'] : 'home/main';

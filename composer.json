@@ -1,6 +1,6 @@
 {
     "require": {
-        "symfony/cache": "^5.4.46"
+        "predis/predis": "^2.3.0"
     },
     "autoload": {
         "classmap": [
