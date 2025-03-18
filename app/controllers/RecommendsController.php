@@ -36,7 +36,7 @@ class RecommendsController extends Controller
 
     public function post()
     {
-        $song_info = $_SESSION['songInfo'];
+        $song_info = $_SESSION['song_info'];
 
         // 가수 조회
         $artist = $this->artists_model->getByFloId($song_info['artist']['flo_id']) ?: $song_info['artist'];

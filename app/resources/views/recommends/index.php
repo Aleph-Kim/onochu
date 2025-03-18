@@ -1,7 +1,7 @@
 <?
 $controller = new RecommendsController();
-$songInfo = $controller->index();
-$_SESSION['songInfo'] = $songInfo;
+$song_info = $controller->index();
+$_SESSION['song_info'] = $song_info;
 ?>
 
 <? include $_SERVER['LAYOUT_PATH'] . "header.php"; ?>
@@ -10,19 +10,19 @@ $_SESSION['songInfo'] = $songInfo;
 
 <form class="song-container" action="/recommends/post" method="post">
     <div class="artist-info">
-        <span><?= $songInfo['artist']['name'] ?></span>
+        <span><?= $song_info['artist']['name'] ?></span>
     </div>
     <div class="song-img">
-        <img src="<?= $songInfo['album']['img_url'] ?>">
+        <img src="<?= $song_info['album']['img_url'] ?>">
     </div>
     <div class="song-info">
-        <h2><?= $songInfo['song']['title'] ?></h2>
+        <h2><?= $song_info['song']['title'] ?></h2>
         <p>
-            <?= $songInfo['album']['release_date'] ?>
+            <?= $song_info['album']['release_date'] ?>
             <span class="between-bar"></span>
-            <?= $songInfo['song']['genre'] ?>
+            <?= $song_info['song']['genre'] ?>
             <span class="between-bar"></span>
-            <?= $songInfo['song']['play_time'] ?>
+            <?= $song_info['song']['play_time'] ?>
         </p>
     </div>
     <div class="recommends-rating">
