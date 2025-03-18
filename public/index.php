@@ -9,6 +9,7 @@ require_once $_SERVER['CORE_PATH'] . 'Controller.php';
 require_once $_SERVER['CORE_PATH'] . 'Model.php';
 
 require_once $_SERVER['HELPER_PATH'] . 'FloApi.php';
+require_once $_SERVER['HELPER_PATH'] . 'ScriptHelper.php';
 
 
 // path 체크

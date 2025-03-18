@@ -67,5 +67,7 @@ class RecommendsController extends Controller
         $recommends['user_id'] = 1; // 임시 유저 id 하드코딩
         $recommends['song_id'] = $song['id'];
         $this->recommends_model->insert($recommends);
+
+        ScriptHelper::msgGo("추천이 저장되었습니다.");
     }
 }
