@@ -1,8 +1,4 @@
 <?
-
-use Core\Controller;
-use Helpers\FloApi;
-
 /**
  * SearchController 클래스
  *

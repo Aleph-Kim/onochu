@@ -1,7 +1,4 @@
 <?
-
-namespace Helpers;
-
 class FloApi
 {
     // FLO API 기본 url

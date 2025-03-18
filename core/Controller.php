@@ -1,6 +1,4 @@
 <?
-namespace Core;
-
 class Controller
 {
     protected function model($model)

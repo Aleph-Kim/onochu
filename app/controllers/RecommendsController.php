@@ -1,8 +1,4 @@
 <?
-
-use Core\Controller;
-use Helpers\FloApi;
-
 class RecommendsController extends Controller
 {
 
