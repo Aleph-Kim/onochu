@@ -1,9 +1,14 @@
 <?
 class FloApiHelper
 {
+    protected $redis;
     // FLO API 기본 url
     protected $base_url = "https://www.music-flo.com/api";
 
+    public function __construct()
+    {
+        $this->redis = new Redis();
+    }
     /**
      * 노래 검색 메서드
      * @param string $keyword 검색어
@@ -147,6 +152,14 @@ class FloApiHelper
                 'name'    => $artist['name'],
                 'img_url' => strtok($artist['imgList'][0]['url'], '?'),
             ];
+
+            // 아티스트 이미지가 있다면 캐싱, 없다면 캐싱딘 이미지 사용
+            $cache_key = 'artist_img_' . $artist['id'];
+            if ($song['artist']['img_url']) {
+                $this->redis->set($cache_key, $song['artist']['img_url']);
+            } else {
+                $song['artist']['img_url'] = $this->redis->get($cache_key, $song['artist']['img_url']);
+            }
         }
 
         // 앨범 정보 처리
