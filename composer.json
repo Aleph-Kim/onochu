@@ -1,4 +1,7 @@
 {
+    "require": {
+        "symfony/cache": "^5.4.46"
+    },
     "autoload": {
         "classmap": [
             "app/Controllers/"

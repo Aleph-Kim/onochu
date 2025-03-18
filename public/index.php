@@ -10,7 +10,7 @@ require_once $_SERVER['CORE_PATH'] . 'Model.php';
 
 require_once $_SERVER['HELPER_PATH'] . 'FloApi.php';
 require_once $_SERVER['HELPER_PATH'] . 'ScriptHelper.php';
-
+require_once $_SERVER['HELPER_PATH'] . 'Cache.php';
 
 // path 체크
 $path = isset($_REQUEST['path']) ? $_REQUEST['path'] : 'home/main';
