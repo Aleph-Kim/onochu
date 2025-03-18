@@ -17,4 +17,16 @@ class Artists extends Model
             throw new Exception("Artist insertion failed: " . $e->getMessage());
         }
     }
+
+    public function getByFloId($flo_id)
+    {
+        try {
+            $sql = "SELECT * FROM artists WHERE flo_id = :flo_id";
+            $stmt = $this->db->prepare($sql);
+            $stmt->execute(['flo_id' => $flo_id]);
+            return $stmt->fetch(PDO::FETCH_ASSOC);
+        } catch (PDOException $e) {
+            throw new Exception("Failed to retrieve song: " . $e->getMessage());
+        }
+    }
 }

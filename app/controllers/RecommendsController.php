@@ -36,26 +36,36 @@ class RecommendsController extends Controller
 
     public function post()
     {
-        // 가수 저장
-        $artist = $_SESSION['songInfo']['artist'];
-        $artist['id'] = $this->artists_model->insert($artist);
+        $song_info = $_SESSION['songInfo'];
 
-        // 앨범 저장
-        $album = $_SESSION['songInfo']['album'];
-        $album['artist_id'] = $artist['id'];
-        $album['id'] = $this->albums_model->insert($album);
+        // 가수 조회
+        $artist = $this->artists_model->getByFloId($song_info['artist']['flo_id']) ?: $song_info['artist'];
+        if ($artist['id'] == null) {
+            // 가수 저장
+            $artist['id'] = $this->artists_model->insert($artist);
+        }
 
-        // 노래 저장
-        $song = $_SESSION['songInfo']['song'];
-        $song['album_id'] = $album['id'];
-        $song['artist_id'] = $album['artist_id'];
-        $song['id'] = $this->songs_model->insert($song);
+        // 앨범 조회
+        $album = $this->albums_model->getByFloId($song_info['album']['flo_id']) ?: $song_info['album'];
+        if ($album['id'] == null) {
+            $album['artist_id'] = $artist['id'];
+            // 앨범 저장
+            $album['id'] = $this->albums_model->insert($album);
+        }
+
+        // 노래 조회
+        $song = $this->songs_model->getByFloId($song_info['song']['flo_id']) ?: $song_info['song'];
+        if ($song['id'] == null) {
+            $song['album_id'] = $album['id'];
+            $song['artist_id'] = $album['artist_id'];
+            // 노래 저장
+            $song['id'] = $this->songs_model->insert($song);
+        }
 
         // 추천 저장
         $recommends = $_POST;
         $recommends['user_id'] = 1; // 임시 유저 id 하드코딩
-        $recommends['song_id'] = 1;
-        $recommends['score'] = 1;
+        $recommends['song_id'] = $song['id'];
         $this->recommends_model->insert($recommends);
     }
 }
