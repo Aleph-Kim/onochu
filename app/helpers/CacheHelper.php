@@ -3,7 +3,7 @@
 use Symfony\Component\Cache\Adapter\ArrayAdapter;
 use Symfony\Component\Cache\Adapter\AdapterInterface;
 
-class Cache
+class CacheHelper
 {
     private static ?AdapterInterface $cache = null;
 

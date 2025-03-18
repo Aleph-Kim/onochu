@@ -1,5 +1,5 @@
 <?
-class FloApi
+class FloApiHelper
 {
     // FLO API 기본 url
     protected $base_url = "https://www.music-flo.com/api";

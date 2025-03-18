@@ -2,14 +2,14 @@
 class RecommendsController extends Controller
 {
 
-    // FloApi 객체 프로퍼티
+    // FloApiHelper 객체 프로퍼티
     protected $flo_api;
 
     // 컨트롤러 클래스가 호출될 때
     public function __construct()
     {
-        // FloApi 객체를 인스턴스화하여 할당
-        $this->flo_api = new FloApi();
+        // FloApiHelper 객체를 인스턴스화하여 할당
+        $this->flo_api = new FloApiHelper();
 
         // model 인스턴스화
         $this->artists_model = $this->model('Artists');
