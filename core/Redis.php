@@ -23,7 +23,9 @@ class Redis
     public function set($key, $value, $ttl = 86400)
     {
         try {
-            $result = $this->redis->set($key, $value);
+            // 배열일 경우 JSON으로 변환
+            $storeValue = is_array($value) ? json_encode($value) : $value;
+            $result = $this->redis->set($key, $storeValue);
             if ($ttl) {
                 $this->redis->expire($key, $ttl); // 만료 시간 설정
             }
@@ -36,7 +38,10 @@ class Redis
     public function get($key)
     {
         try {
-            return $this->redis->get($key);
+            $value = $this->redis->get($key);
+            // JSON 형식일 경우 배열로 디코딩
+            $decoded = json_decode($value, true);
+            return (json_last_error() === JSON_ERROR_NONE && is_array($decoded)) ? $decoded : $value;
         } catch (Exception $e) {
             throw new Exception("GET 오류: " . $e->getMessage());
         }
