@@ -16,7 +16,7 @@ class Recommends extends Model
             ]);
             return $this->db->lastInsertId();
         } catch (PDOException $e) {
-            throw new Exception("Recommend insertion failed: " . $e->getMessage());
+            ErrorHandler::handleError(400);
         }
     }
 }

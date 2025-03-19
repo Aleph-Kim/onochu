@@ -1,5 +1,7 @@
 <?
 
+use Predis\Response\Error;
+
 class Songs extends Model
 {
     public function insert($song)
@@ -17,7 +19,7 @@ class Songs extends Model
             ]);
             return $this->db->lastInsertId();
         } catch (PDOException $e) {
-            throw new Exception("Song insertion failed: " . $e->getMessage());
+            ErrorHandler::handleError(400);
         }
     }
 
@@ -29,7 +31,7 @@ class Songs extends Model
             $stmt->execute(['flo_id' => $flo_id]);
             return $stmt->fetch(PDO::FETCH_ASSOC);
         } catch (PDOException $e) {
-            throw new Exception("Failed to retrieve song: " . $e->getMessage());
+            ErrorHandler::handleError(400);
         }
     }
 }
