@@ -45,7 +45,7 @@
 
                 <!-- 검색 -->
                 <form id="searchForm" action="/search">
-                    <input type="text" name="q" placeholder="검색어를 입력하세요" value="<?= $_GET['q'] ?>" />
+                    <input type="text" name="q" placeholder="검색어를 입력하세요" value="<?= $_GET['q'] ?>" required/>
                     <button class="btn-search">
                         <svg viewBox="0 0 24 24">
                             <g>
