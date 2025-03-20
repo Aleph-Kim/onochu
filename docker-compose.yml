@@ -2,14 +2,15 @@ version: '3.8'
 
 services:
   web:
+    container_name: local_php
     build: .
     ports:
       - "8080:80"
     volumes:
       - .:/var/www/html
     networks:
-      - mysql_net
+      - local_net
 
 networks:
-  mysql_net:
-    external: true
+  local_net:
+    name: local_net
