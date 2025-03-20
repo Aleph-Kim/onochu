@@ -1,4 +1,4 @@
-<? 
+<?
 @session_start();
 require_once '../vendor/autoload.php';
 
@@ -31,5 +31,5 @@ if (is_dir($fullPath)) {
 if (file_exists($viewFile)) {
     require $viewFile;
 } else {
-    ErrorHandler::handleError(404);
+    ErrorHandler::showErrorPage(404);
 }

@@ -17,7 +17,7 @@ class Albums extends Model
             ]);
             return $this->db->lastInsertId();
         } catch (PDOException $e) {
-            ErrorHandler::handleError(400);
+            ErrorHandler::showErrorPage(400);
         }
     }
 
@@ -29,7 +29,7 @@ class Albums extends Model
             $stmt->execute(['flo_id' => $flo_id]);
             return $stmt->fetch(PDO::FETCH_ASSOC);
         } catch (PDOException $e) {
-            ErrorHandler::handleError(400);
+            ErrorHandler::showErrorPage(400);
         }
     }
 }

@@ -28,7 +28,7 @@ class RecommendsController extends Controller
 
         // 빈 검색어 처리
         if (empty($song_id)) {
-            ErrorHandler::handleError(400);
+            ErrorHandler::showErrorPage(400);
         }
 
         return $this->flo_api->getSongByFloId($song_id);

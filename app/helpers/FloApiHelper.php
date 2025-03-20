@@ -67,13 +67,13 @@ class FloApiHelper
         // JSON 데이터 가져오기
         $json_data = @file_get_contents($url); // 경고 억제를 위해 @ 사용
         if ($json_data === false) {
-            ErrorHandler::handleError(500);
+            ErrorHandler::showErrorPage(500);
         }
 
         // JSON 데이터 디코딩
         $data = json_decode($json_data, true);
         if ($data === null) {
-            ErrorHandler::handleError(500);
+            ErrorHandler::showErrorPage(500);
         }
 
         return $data;
@@ -118,7 +118,7 @@ class FloApiHelper
     protected function extractGetSong($data)
     {
         if (!isset($data['data'])) {
-            ErrorHandler::handleError(400);
+            ErrorHandler::showErrorPage(400);
         }
 
         $song_data = $data['data'];

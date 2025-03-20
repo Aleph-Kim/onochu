@@ -16,7 +16,7 @@ class Recommends extends Model
             ]);
             return $this->db->lastInsertId();
         } catch (PDOException $e) {
-            ErrorHandler::handleError(400);
+            ErrorHandler::showErrorPage(400);
         }
     }
 }

@@ -5,7 +5,7 @@ $filePath = $_SERVER['ENV_PATH'];
 
 // 파일이 존재하지 않을 경우 예외처리
 if (!file_exists($filePath)) {
-    ErrorHandler::handleError(500);
+    ErrorHandler::showErrorPage(500);
 }
 
 // 파일 읽기
