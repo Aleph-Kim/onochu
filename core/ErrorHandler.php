@@ -22,6 +22,16 @@ class ErrorHandler
         E_USER_DEPRECATED => 'E_USER_DEPRECATED' // 16384
     ];
 
+    // 치명적인 에러 레벨
+    private static $fatalErrors = [
+        E_ERROR,
+        E_PARSE,
+        E_CORE_ERROR,
+        E_COMPILE_ERROR,
+        E_USER_ERROR,
+        E_RECOVERABLE_ERROR
+    ];
+
     /**
      * 에러 핸들러 초기 설정
      *
@@ -55,6 +65,11 @@ class ErrorHandler
      */
     public static function handleError($errno, $errstr, $errfile, $errline)
     {
+        // 치명적인 에러가 아닌 경우
+        if (!in_array($errno, self::$fatalErrors)) {
+            return false; // 기본 PHP 에러 처리로 넘김
+        }
+
         $date = date('Y-m-d H:i:s');
         $errorLevel = self::$errorLevels[$errno] ?? 'UNKNOWN_ERROR';
         $logMessage = "[{$date}] 오류 발생: {$errorLevel}\n메시지: {$errstr}\n파일: {$errfile}\n줄: {$errline}\n\n";
