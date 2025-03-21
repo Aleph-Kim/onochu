@@ -2,10 +2,6 @@
 class FloApiHelper
 {
     protected $redis;
-    // FLO API 기본 url
-    protected $base_url = "https://www.music-flo.com/api";
-    // api 조회 결과 캐시 키
-    protected $cache_key_prefix = "api-result-";
 
     public function __construct()
     {
@@ -18,9 +14,6 @@ class FloApiHelper
      */
     public function getSongsByKeyword($keyword)
     {
-        // 검색 api 경로
-        $search_path = "/search/v2/search";
-
         // 검색 파라미터
         $params = [
             'keyword'    => urlencode($keyword),
@@ -32,7 +25,7 @@ class FloApiHelper
         ];
 
         // 전체 경로
-        $full_path = $search_path . ($params ? '?' . http_build_query($params) : "");
+        $full_path = $_SERVER['FLO_API_SEARCH_PATH'] . ($params ? '?' . http_build_query($params) : "");
 
         // API 데이터 가져오기
         $data = $this->fetchData($full_path);
@@ -48,10 +41,8 @@ class FloApiHelper
      */
     public function getSongByFloId($song_id)
     {
-        // 조회 api 경로
-        $get_path = "/meta/v1/track/";
         // 전체 경로
-        $full_path = $get_path . $song_id;
+        $full_path = $_SERVER['FLO_API_DETAIL_PATH'] . $song_id;
 
         // API 데이터 가져오기
         $data = $this->fetchData($full_path);
@@ -68,7 +59,7 @@ class FloApiHelper
     protected function fetchData($path)
     {
         // 캐시 키
-        $cache_key = $this->cache_key_prefix . $path;
+        $cache_key = $_SERVER['REDIS_API_RESULT_PREFIX'] . $path;
         // 캐싱 데이터
         $cache_data = $this->redis->get($cache_key);
         // 캐싱된 데이터가 있다면 즉시 리턴
@@ -77,7 +68,7 @@ class FloApiHelper
         }
 
         // 요청 URL 생성
-        $url = $this->base_url . $path;
+        $url = $_SERVER['FLO_API_PATH'] . $path;
 
         // JSON 데이터 가져오기
         $json_data = @file_get_contents($url); // 경고 억제를 위해 @ 사용
@@ -177,7 +168,7 @@ class FloApiHelper
             ];
 
             // 아티스트 이미지가 있다면 캐싱, 없다면 캐싱딘 이미지 사용
-            $cache_key = 'artist_img_' . $artist['id'];
+            $cache_key = $_SERVER['REDIS_ARTIST_IMG_PREFIX'] . $artist['id'];
             if ($song_info['artist']['img_url']) {
                 $this->redis->set($cache_key, $song_info['artist']['img_url']);
             } else {
@@ -250,10 +241,14 @@ class FloApiHelper
     {
         // 사용자 접속환경 모바일 여부
         $is_mobile = UserHelper::isMobile();
+        // 검색 시 키워드
+        $keyword = "{$song_info['song']['title']} {$song_info['artist']['name']}";
+        // 플로에서 사용하는 노래 pk
+        $flo_id = $song_info['song']['flo_id'];
 
-        $youtube = "https://music.youtube.com/search?q={$song_info['song']['title']}+{$song_info['artist']['name']}";
-        $genie = $is_mobile ? "fb256937297704300://open" : "https://www.genie.co.kr/search/searchMain?query={$song_info['song']['title']}+{$song_info['artist']['name']}";
-        $flo = $is_mobile ? "flomusic://view/content?type=TRACK&id={$song_info['song']['flo_id']}" : "https://www.music-flo.com/detail/track/{$song_info['song']['flo_id']}/details";
+        $youtube = $_SERVER['YOUTUBE_MUSIC_SEARCH_PATH']($keyword);
+        $genie = $is_mobile ? $_SERVER['GENIE_APP_PATH'] : $_SERVER['GENIE_SEARCH_PATH']($keyword);
+        $flo = $is_mobile ? $_SERVER['FLO_APP_DETAIL_PATH']($flo_id) : $_SERVER['FLO_DETAIL_PATH']($flo_id);
 
         return [
             'youtube' => $youtube,
