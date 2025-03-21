@@ -27,7 +27,7 @@ class Redis
             $storeValue = is_array($value) ? json_encode($value) : $value;
             $result = $this->redis->set($key, $storeValue);
             if ($ttl) {
-                $this->redis->expire($key, $ttl); // 만료 시간 설정
+                $this->redis->expire($key, $this->resolveTtl($ttl)); // 만료 시간 설정
             }
             return $result;
         } catch (Exception $e) {
@@ -64,5 +64,31 @@ class Redis
     public function __destruct()
     {
         $this->close();
+    }
+
+    /**
+     * 현재 시간에서 다음 시 정각까지 남은 초 계산
+     *
+     * @return int 다음 정각까지 남은 초 수
+     */
+    private function calculateTtlToNextHour(): int
+    {
+        $now = new DateTime();
+        // 다음 정각 시간 계산
+        $nextHour = (clone $now)->setTime($now->format('H') + 1, 0, 0);
+        // 남은 초 계산
+        $ttl = $nextHour->getTimestamp() - $now->getTimestamp();
+        return $ttl;
+    }
+
+    /**
+     * TTL 값을 해석하여 초 단위로 반환
+     *
+     * @param mixed $ttl TTL 값
+     * @return int 초 단위 TTL
+     */
+    private function resolveTtl($ttl)
+    {
+        return $ttl === "next-hour" ? $this->calculateTtlToNextHour() : $ttl;
     }
 }

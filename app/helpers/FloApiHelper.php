@@ -4,6 +4,8 @@ class FloApiHelper
     protected $redis;
     // FLO API 기본 url
     protected $base_url = "https://www.music-flo.com/api";
+    // api 조회 결과 캐시 키
+    protected $cache_key_prefix = "api-result-";
 
     public function __construct()
     {
@@ -29,8 +31,11 @@ class FloApiHelper
             'queryType'  => 'system'
         ];
 
+        // 전체 경로
+        $full_path = $search_path . ($params ? '?' . http_build_query($params) : "");
+
         // API 데이터 가져오기
-        $data = $this->fetchData($search_path, $params);
+        $data = $this->fetchData($full_path);
 
         // 검색 결과 추출 및 반환
         return $this->extractSearchSongs($data);
@@ -45,9 +50,11 @@ class FloApiHelper
     {
         // 조회 api 경로
         $get_path = "/meta/v1/track/";
+        // 전체 경로
+        $full_path = $get_path . $song_id;
 
         // API 데이터 가져오기
-        $data = $this->fetchData($get_path . $song_id);
+        $data = $this->fetchData($full_path);
 
         // 검색 결과 추출 및 반환
         return $this->extractGetSong($data);
@@ -56,13 +63,21 @@ class FloApiHelper
     /**
      * API에서 데이터를 가져오는 메서드
      * @param string $path API 엔드포인트 경로
-     * @param array $params 쿼리 파라미터
      * @return array 디코딩된 JSON 데이터
      */
-    protected function fetchData($path, $params = null)
+    protected function fetchData($path)
     {
+        // 캐시 키
+        $cache_key = $this->cache_key_prefix . $path;
+        // 캐싱 데이터
+        $cache_data = $this->redis->get($cache_key);
+        // 캐싱된 데이터가 있다면 즉시 리턴
+        if ($cache_data) {
+            return $cache_data;
+        }
+
         // 요청 URL 생성
-        $url = $this->base_url . $path . ($params ? '?' . http_build_query($params) : "");
+        $url = $this->base_url . $path;
 
         // JSON 데이터 가져오기
         $json_data = @file_get_contents($url); // 경고 억제를 위해 @ 사용
@@ -75,6 +90,8 @@ class FloApiHelper
         if ($data === null) {
             ErrorHandler::showErrorPage(500);
         }
+        // 데이터 캐싱
+        $this->redis->set($cache_key, $data, "next-hour");
 
         return $data;
     }
@@ -198,7 +215,7 @@ class FloApiHelper
             'arrangers' => []
         ];
 
-        if (!isset($array)){
+        if (!isset($array)) {
             return $result;
         }
 
