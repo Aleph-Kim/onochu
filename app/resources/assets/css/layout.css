@@ -1,6 +1,9 @@
 :root {
     --main-color: #554DB4;
     --term-color: #716cab;
+    --youtube-color: #FF0000;
+    --flo-color: #8B00FF;
+    --genie-color: #0F7EFF;
 }
 
 @font-face {
@@ -10,6 +13,7 @@
 
 body {
     font-family: 'pretendard';
+    word-break: keep-all;
 }
 
 textarea {

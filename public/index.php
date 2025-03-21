@@ -12,6 +12,7 @@ require_once $_SERVER['CORE_PATH'] . 'Redis.php';
 
 require_once $_SERVER['HELPER_PATH'] . 'FloApiHelper.php';
 require_once $_SERVER['HELPER_PATH'] . 'ScriptHelper.php';
+require_once $_SERVER['HELPER_PATH'] . 'UserHelper.php';
 
 // 한국 시간대 설정
 date_default_timezone_set('Asia/Seoul');

@@ -134,20 +134,26 @@ class FloApiHelper
      */
     protected function extractSong($song_data)
     {
-        $song = [];
+        $song_info = [];
+
+        $writerRoles = $this->writerClassify($song_data['trackArtistList']);
 
         // 노래 정보 처리
-        $song['song'] = [
+        $song_info['song'] = [
             'flo_id' => $song_data['id'],
             'title' => $song_data['name'],
             'play_time' => $song_data['playTime'],
             'genre' => $song_data['album']['genreStyle'],
+            'lyrics' => $song_data['lyrics'],
+            'composer' => implode($writerRoles['composers'], ', '),
+            'lyricist' => implode($writerRoles['lyricists'], ', '),
+            'arranger' => implode($writerRoles['arrangers'], ', '),
         ];
 
         // 아티스트 정보 처리
         if (isset($song_data['artistList'][0])) {
             $artist = $song_data['artistList'][0];
-            $song['artist'] = [
+            $song_info['artist'] = [
                 'flo_id'      => $artist['id'],
                 'name'    => $artist['name'],
                 'img_url' => strtok($artist['imgList'][0]['url'], '?'),
@@ -155,17 +161,17 @@ class FloApiHelper
 
             // 아티스트 이미지가 있다면 캐싱, 없다면 캐싱딘 이미지 사용
             $cache_key = 'artist_img_' . $artist['id'];
-            if ($song['artist']['img_url']) {
-                $this->redis->set($cache_key, $song['artist']['img_url']);
+            if ($song_info['artist']['img_url']) {
+                $this->redis->set($cache_key, $song_info['artist']['img_url']);
             } else {
-                $song['artist']['img_url'] = $this->redis->get($cache_key, $song['artist']['img_url']);
+                $song_info['artist']['img_url'] = $this->redis->get($cache_key, $song_info['artist']['img_url']);
             }
         }
 
         // 앨범 정보 처리
         if (isset($song_data['album'])) {
             $album = $song_data['album'];
-            $song['album'] = [
+            $song_info['album'] = [
                 'flo_id'      => $album['id'],
                 'title'   => $album['title'],
                 'img_url' => strtok($album['imgList'][0]['url'], '?'),
@@ -173,6 +179,69 @@ class FloApiHelper
             ];
         }
 
-        return $song;
+        $song_info['song']['url'] = $this->getPlatformUrl($song_info);
+
+        return $song_info;
+    }
+
+    /**
+     * 작곡가, 작사가, 편곡자를 분류하는 함수
+     * 
+     * @param array $array 입력 배열
+     * @return array 각 역할별로 분류된 결과 (composers, lyricists, arrangers)
+     */
+    protected function writerClassify($array)
+    {
+        $result = [
+            'composers' => [],
+            'lyricists' => [],
+            'arrangers' => []
+        ];
+
+        if (!isset($array)){
+            return $result;
+        }
+
+        foreach ($array as $item) {
+            switch ($item['roleName']) {
+                case '작곡':
+                    $result['composers'][] = $item['name'];
+                    break;
+                case '작사':
+                    $result['lyricists'][] = $item['name'];
+                    break;
+                case '편곡':
+                    $result['arrangers'][] = $item['name'];
+                    break;
+            }
+        }
+
+        return $result;
+    }
+
+    /**
+     * 각 플랫폼별 노래 url을 반환하는 함수
+     * 
+     * 유튜브 - 노래 검색 페이지 url
+     * 지니뮤직 - 모바일일 경우 지니뮤직 앱 url 스키마 || pc일 경우 노래 검색 페이지 url
+     * 플로뮤직 - 모바일일 경우 노래 상세페이지 앱 url 스키마 || pc일 경우 노래 상세 페이지 url
+     * 
+     * @param array $song_info flo api에서 받아온 노래 정보
+     * @return array 각 플랫폼별 노래 url
+     */
+    protected function getPlatformUrl($song_info)
+    {
+        // 사용자 접속환경 모바일 여부
+        $is_mobile = UserHelper::isMobile();
+
+        $youtube = "https://music.youtube.com/search?q={$song_info['song']['title']}+{$song_info['artist']['name']}";
+        $genie = $is_mobile ? "fb256937297704300://open" : "https://www.genie.co.kr/search/searchMain?query={$song_info['song']['title']}+{$song_info['artist']['name']}";
+        $flo = $is_mobile ? "flomusic://view/content?type=TRACK&id={$song_info['song']['flo_id']}" : "https://www.music-flo.com/detail/track/{$song_info['song']['flo_id']}/details";
+
+        return [
+            'youtube' => $youtube,
+            'genie' => $genie,
+            'flo' => $flo,
+        ];
     }
 }

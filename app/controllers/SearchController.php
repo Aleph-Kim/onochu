@@ -1,4 +1,5 @@
 <?
+
 /**
  * SearchController 클래스
  *
@@ -33,5 +34,24 @@ class SearchController extends Controller
         }
 
         return $this->flo_api->getSongsByKeyword($keyword);
+    }
+
+    /**
+     * 노래 상세페이지
+     */
+    public function songDetail()
+    {
+        // XSS 방지 처리
+        $_GET['id'] = htmlspecialchars($_GET['id']);
+
+        // 노래 flo_id
+        $song_id = $_GET['id'];
+
+        // 빈 노래 id 처리
+        if (empty($song_id)) {
+            ErrorHandler::showErrorPage(400);
+        }
+
+        return $this->flo_api->getSongByFloId($song_id);
     }
 }
