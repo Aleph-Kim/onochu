@@ -13,9 +13,11 @@ $song_info = $controller->songDetail();
                 <h1 class="song-title"><?= $song_info['song']['title'] ?></h1>
                 <p class="song-artist"><?= $song_info['artist']['name'] ?></p>
             </div>
-            <div class="artist-profile">
-                <img src="<?= $song_info['artist']['img_url'] ?>" alt="Artist Profile">
-            </div>
+            <? if ($song_info['artist']['img_url']) { ?>
+                <div class="artist-profile">
+                    <img src="<?= $song_info['artist']['img_url'] ?>" alt="Artist Profile">
+                </div>
+            <? } ?>
         </div>
         <div class="toggle-buttons">
             <button class="toggle-btn cover-btn active" onclick="toggleView('cover')">커버보기</button>
