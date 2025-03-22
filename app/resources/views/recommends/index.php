@@ -13,7 +13,7 @@ $_SESSION['song_info'] = $song_info;
         <span><?= $song_info['artist']['name'] ?></span>
     </div>
     <div class="song-img">
-        <img src="<?= $song_info['album']['img_url'] ?>">
+        <img src="<?= $song_info['album']['img_url'] . $_SERVER['FLO_IMG_RESIZE_PATH']($_SERVER['IMG_MEDIUM_SIZE']) ?>">
     </div>
     <div class="song-info">
         <h2><?= $song_info['song']['title'] ?></h2>

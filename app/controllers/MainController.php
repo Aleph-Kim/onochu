@@ -5,23 +5,23 @@ class MainController extends Controller
     {
         return [
             [
-                'bg_img'    => 'https://cdn.music-flo.com/image/v2/album/680/611/05/04/405611680_60015105_s.jpg?1610699015696/dims/resize/1000x1000/quality/90',
+                'bg_img'    => 'https://cdn.music-flo.com/image/v2/album/680/611/05/04/405611680_60015105_s.jpg',
                 'link' => '#',
-                'artist_img'  => 'https://cdn.music-flo.com/image/v2/artist/779/965/02/04/402965779_665d55470_s.jpg?1717392720108/dims/resize/500x500/quality/90',
+                'artist_img'  => 'https://cdn.music-flo.com/image/v2/artist/779/965/02/04/402965779_665d55470_s.jpg',
                 'music_name' => '바람들',
                 'artist_name' => '알레프 (ALEPH)'
             ],
             [
-                'bg_img'    => 'https://cdn.music-flo.com/image/v2/album/546/045/06/04/406045546_606af016_s.jpg?1617621016057/dims/resize/1000x1000/quality/90',
+                'bg_img'    => 'https://cdn.music-flo.com/image/v2/album/546/045/06/04/406045546_606af016_s.jpg',
                 'link' => '#',
-                'artist_img'  => 'https://cdn.music-flo.com/image/v2/artist/779/965/02/04/402965779_665d55470_s.jpg?1717392720108/dims/resize/500x500/quality/90',
+                'artist_img'  => 'https://cdn.music-flo.com/image/v2/artist/779/965/02/04/402965779_665d55470_s.jpg',
                 'music_name' => '우리가 바라는 우리의 모습은',
                 'artist_name' => '알레프 (ALEPH)'
             ],
             [
-                'bg_img'    => 'https://cdn.music-flo.com/image/v2/album/768/695/13/04/413695768_6459acd7_o.jpg?1683598552281/dims/resize/1000x1000/quality/90',
+                'bg_img'    => 'https://cdn.music-flo.com/image/v2/album/768/695/13/04/413695768_6459acd7_o.jpg',
                 'link' => '#',
-                'artist_img'  => 'https://cdn.music-flo.com/image/v2/artist/779/965/02/04/402965779_665d55470_s.jpg?1717392720108/dims/resize/500x500/quality/90',
+                'artist_img'  => 'https://cdn.music-flo.com/image/v2/artist/779/965/02/04/402965779_665d55470_s.jpg',
                 'music_name' => '난 너만 사랑해서',
                 'artist_name' => '알레프 (ALEPH)'
             ],

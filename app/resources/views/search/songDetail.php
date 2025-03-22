@@ -15,7 +15,7 @@ $song_info = $controller->songDetail();
             </div>
             <? if ($song_info['artist']['img_url']) { ?>
                 <div class="artist-profile">
-                    <img src="<?= $song_info['artist']['img_url'] ?>" alt="Artist Profile">
+                    <img src="<?= $song_info['artist']['img_url'] . $_SERVER['FLO_IMG_RESIZE_PATH']($_SERVER['IMG_SMALL_SIZE']) ?>" alt="Artist Profile">
                 </div>
             <? } ?>
         </div>
@@ -24,7 +24,7 @@ $song_info = $controller->songDetail();
             <button class="toggle-btn lyrics-btn" onclick="toggleView('lyrics')">가사보기</button>
         </div>
         <div class="album-container" id="album-container">
-            <img src="<?= $song_info['album']['img_url'] ?>" alt="Album Cover" class="album-image">
+            <img src="<?= $song_info['album']['img_url'] . $_SERVER['FLO_IMG_RESIZE_PATH']($_SERVER['IMG_BIG_SIZE']) ?>" alt="Album Cover" class="album-image">
             <? if ($song_info['song']['lyrics']) { ?>
                 <div class="lyrics-overlay"><?= $song_info['song']['lyrics'] ?></div>
             <? } else { ?>

@@ -16,7 +16,7 @@ $songs = $controller->index();
                 <div class="song-box">
                     <div class="song-details">
                         <span class="album-img">
-                            <img src="<?= $song['album']['img_url'] ?>" alt="">
+                            <img src="<?= $song['album']['img_url'] . $_SERVER['FLO_IMG_RESIZE_PATH']($_SERVER['IMG_MEDIUM_SIZE']) ?>" alt="">
                         </span>
                         <div class="song-info">
                             <div class="song-name"><?= $song['song']['title'] ?></div>

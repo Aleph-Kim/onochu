@@ -42,6 +42,9 @@ $_SERVER['FLO_API_SEARCH_PATH'] = "https://www.music-flo.com/api/search/v2/searc
 // flo 상세페이지 api 경로
 $_SERVER['FLO_API_DETAIL_PATH'] = "https://www.music-flo.com/api/meta/v1/track/";
 
+// flo 이미지 resize path
+$_SERVER['FLO_IMG_RESIZE_PATH'] = fn($size) => "?/dims/resize/$size/quality/90";
+
 // 유튜브 뮤직 검색 경로
 $_SERVER['YOUTUBE_MUSIC_SEARCH_PATH'] = fn($q) => "https://music.youtube.com/search?q=$q";
 
@@ -57,7 +60,6 @@ $_SERVER['FLO_DETAIL_PATH'] = fn($id) => "https://www.music-flo.com/detail/track
 // 플로 앱 상세페이지 url 스키마
 $_SERVER['FLO_APP_DETAIL_PATH'] = fn($id) => "flomusic://view/content?type=TRACK&id=$id";
 
-
 /**
  * redis key
  */
@@ -66,3 +68,15 @@ $_SERVER['REDIS_API_RESULT_PREFIX'] = "api-result:";
 
 // 아티스트 이미지 캐시 키
 $_SERVER['REDIS_ARTIST_IMG_PREFIX'] = "artist-img:";
+
+/**
+ * img size
+ */
+// 큰 사이즈
+$_SERVER['IMG_BIG_SIZE'] = "600x600";
+
+// 중간 사이즈
+$_SERVER['IMG_MEDIUM_SIZE'] = "400x400";
+
+// 작은 사이즈
+$_SERVER['IMG_SMALL_SIZE'] = "200x200";

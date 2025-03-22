@@ -14,9 +14,9 @@ $musics = $controller->index();
                     <div class="music-card-box">
                         <div class="music-card-body">
                             <span class="music-card-artist-img">
-                                <img src="<?= $music['artist_img'] ?>">
+                                <img src="<?= $music['artist_img'] . $_SERVER['FLO_IMG_RESIZE_PATH']($_SERVER['IMG_MEDIUM_SIZE']) ?>">
                             </span>
-                            <div class="music-card-bg" style="background-image: url(<?= $music['bg_img'] ?>);"></div>
+                            <div class="music-card-bg" style="background-image: url(<?= $music['bg_img'] . $_SERVER['FLO_IMG_RESIZE_PATH']($_SERVER['IMG_BIG_SIZE']) ?>);"></div>
                         </div>
                         <div class="music-card-footer">
                             <div>
