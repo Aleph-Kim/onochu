@@ -18,8 +18,6 @@
     <link rel="icon" type="image/png" sizes="32x32" href="<?= $_SERVER['IMAGE_PATH'] . 'favicon/favicon-32x32.png' ?>">
     <link rel="icon" type="image/png" sizes="96x96" href="<?= $_SERVER['IMAGE_PATH'] . 'favicon/favicon-96x96.png' ?>">
     <link rel="icon" type="image/png" sizes="16x16" href="<?= $_SERVER['IMAGE_PATH'] . 'favicon/favicon-16x16.png' ?>">
-    <link rel="manifest" href="<?= $_SERVER['IMAGE_PATH'] . 'favicon/manifest.json' ?>">
-    <meta name="msapplication-TileImage" content="/ms-icon-144x144.png">
     <link rel="stylesheet" type="text/css" href="<?= $_SERVER['CSS_PATH'] . 'reset.css' ?>">
     <link rel="stylesheet" type="text/css" href="<?= $_SERVER['CSS_PATH'] . 'layout.css' ?>">
 </head>
@@ -45,7 +43,7 @@
 
                 <!-- 검색 -->
                 <form id="searchForm" action="/search">
-                    <input type="text" name="q" placeholder="검색어를 입력하세요" value="<?= $_GET['q'] ?>" required/>
+                    <input type="text" name="q" placeholder="검색어를 입력하세요" value="<?= $_GET['q'] ?>" required />
                     <button class="btn-search">
                         <svg viewBox="0 0 24 24">
                             <g>
