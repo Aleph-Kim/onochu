@@ -41,6 +41,8 @@ class RecommendsController extends Controller
         // 가수 조회
         $artist = $this->artists_model->getByFloId($song_info['artist']['flo_id']) ?: $song_info['artist'];
         if ($artist['id'] == null) {
+            // 이미지 서버에 업로드
+            $artist['img_url'] = ImageHelper::uploadImage($artist['img_url'], 'artist');
             // 가수 저장
             $artist['id'] = $this->artists_model->insert($artist);
         }
@@ -49,6 +51,8 @@ class RecommendsController extends Controller
         $album = $this->albums_model->getByFloId($song_info['album']['flo_id']) ?: $song_info['album'];
         if ($album['id'] == null) {
             $album['artist_id'] = $artist['id'];
+            // 이미지 서버에 업로드
+            $album['img_url'] = ImageHelper::uploadImage($album['img_url']);
             // 앨범 저장
             $album['id'] = $this->albums_model->insert($album);
         }
