@@ -60,6 +60,9 @@ $_SERVER['FLO_DETAIL_PATH'] = fn($id) => "https://www.music-flo.com/detail/track
 // 플로 앱 상세페이지 url 스키마
 $_SERVER['FLO_APP_DETAIL_PATH'] = fn($id) => "flomusic://view/content?type=TRACK&id=$id";
 
+// 이미지 호스트 서버 경로
+$_SERVER['IMG_SERVER_PATH'] = "https://img.aleph.kr/files";
+
 /**
  * redis key
  */
