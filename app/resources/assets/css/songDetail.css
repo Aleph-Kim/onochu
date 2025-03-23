@@ -150,7 +150,7 @@
     .album-container:hover .lyrics-overlay {
         display: flex;
         opacity: 1;
-        overflow-y: scroll;
+        overflow-y: auto;
     }
 }
 
@@ -163,7 +163,7 @@
     .album-container.lyrics-active .lyrics-overlay {
         display: flex;
         opacity: 1;
-        overflow-y: scroll;
+        overflow-y: auto;
     }
 }
 
