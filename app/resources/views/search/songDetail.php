@@ -47,10 +47,12 @@ $song_info = $controller->songDetail();
                     <p class="details-label">장르</p>
                     <p class="details-value"><?= $song_info['song']['genre'] ?></p>
                 </div>
-                <div class="details-item">
-                    <p class="details-label">작사</p>
-                    <p class="details-value"><?= $song_info['song']['lyricist'] ?></p>
-                </div>
+                <? if ($song_info['song']['lyricist']) { ?>
+                    <div class="details-item">
+                        <p class="details-label">작사</p>
+                        <p class="details-value"><?= $song_info['song']['lyricist'] ?></p>
+                    </div>
+                <? } ?>
                 <div class="details-item">
                     <p class="details-label">작곡</p>
                     <p class="details-value"><?= $song_info['song']['composer'] ?></p>
