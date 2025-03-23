@@ -121,6 +121,10 @@ textarea:focus {
     align-items: center;
 }
 
+.btn-search svg {
+    width: 100%;
+}
+
 #searchFormHideBtn svg,
 .btn-search svg,
 .mobile-btn-search svg {
