@@ -64,6 +64,9 @@ $song_info = $controller->songDetail();
                     </div>
                 <? } ?>
             </div>
+            <div class="buttons">
+                <a class="btn-recommends" href="/recommends?id=<?= $song_info['song']['flo_id'] ?>">추천하기</a>
+            </div>
         </div>
     </div>
 </div>

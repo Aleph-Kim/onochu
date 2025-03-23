@@ -212,3 +212,23 @@
     font-size: 1.2em;
     margin-bottom: 10px;
 }
+.buttons {
+    display: flex;
+    justify-content: flex-end;
+    margin: 10px 0;
+}
+.btn-recommends {
+    display: inline-block;
+    padding: 10px 20px;
+    border-radius: 4px;
+    cursor: pointer;
+    transition: 0.2s;
+    color: #fff;
+    background-color: var(--main-color);
+}
+
+.btn-recommends:active,
+.btn-recommends:hover {
+    background-color: var(--term-color);
+    ;
+}
