@@ -8,6 +8,9 @@ require_once '../vendor/autoload.php';
 
 require_once '../init/config.php';
 
+// error 핸들러 init
+ErrorHandler::init();
+
 require_once $_SERVER['INIT_PATH'] . "loadEnv.php";
 
 require_once $_SERVER['INIT_PATH'] . "loadView.php";

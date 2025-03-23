@@ -112,6 +112,3 @@ class ErrorHandler
         exit;
     }
 }
-
-// 파일 로드 시 자동으로 init 실행
-ErrorHandler::init();
