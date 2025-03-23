@@ -31,7 +31,7 @@ $_SESSION['song_info'] = $song_info;
         <label for="star5">★</label>
         <input type="radio" id="star4" name="score" value="4">
         <label for="star4">★</label>
-        <input type="radio" id="star3" name="score" value="3">
+        <input type="radio" id="star3" name="score" value="3" checked>
         <label for="star3">★</label>
         <input type="radio" id="star2" name="score" value="2">
         <label for="star2">★</label>
