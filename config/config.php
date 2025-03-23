@@ -76,10 +76,13 @@ $_SERVER['REDIS_ARTIST_IMG_PREFIX'] = "artist-img:";
  * img size
  */
 // 큰 사이즈
-$_SERVER['IMG_BIG_SIZE'] = "600x600";
+$_SERVER['IMG_FULL_SIZE'] = "1000x1000";
+
+// 큰 사이즈
+$_SERVER['IMG_BIG_SIZE'] = "500x500";
 
 // 중간 사이즈
-$_SERVER['IMG_MEDIUM_SIZE'] = "400x400";
+$_SERVER['IMG_MEDIUM_SIZE'] = "350x350";
 
 // 작은 사이즈
 $_SERVER['IMG_SMALL_SIZE'] = "200x200";
