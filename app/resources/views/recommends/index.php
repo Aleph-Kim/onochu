@@ -45,4 +45,5 @@ $_SESSION['song_info'] = $song_info;
     </div>
 </form>
 
+<script src="<?= $_SERVER['JS_PATH'] . 'recommends.js' ?>"></script>
 <? include $_SERVER['LAYOUT_PATH'] . "footer.php"; ?>
