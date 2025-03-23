@@ -1,31 +1,13 @@
 <?
 @session_start();
-require_once '../vendor/autoload.php';
-
-require_once '../config/config.php';
-
-require_once $_SERVER['CONFIG_PATH'] . "loadEnv.php";
 
 // 한국 시간대 설정
 date_default_timezone_set('Asia/Seoul');
 
-// path 체크
-$path = isset($_REQUEST['path']) ? $_REQUEST['path'] : 'home/main';
+require_once '../vendor/autoload.php';
 
-// xss 방지
-$path = htmlspecialchars($path, ENT_QUOTES, 'UTF-8');
+require_once '../init/config.php';
 
-// 뷰 파일 경로 구성
-$viewFile = $_SERVER['VIEW_PATH'] . $path . '.php';
+require_once $_SERVER['INIT_PATH'] . "loadEnv.php";
 
-// 경로가 디렉토리일 경우 index.php를 추가
-$fullPath = $_SERVER['VIEW_PATH'] . $path;
-if (is_dir($fullPath)) {
-    $viewFile = rtrim($fullPath, '/') . '/index.php';
-}
-
-if (file_exists($viewFile)) {
-    require $viewFile;
-} else {
-    ErrorHandler::showErrorPage(404);
-}
+require_once $_SERVER['INIT_PATH'] . "loadView.php";

@@ -7,7 +7,7 @@
 $_SERVER['CORE_PATH'] = $_SERVER['DOCUMENT_ROOT'] . "/core/";
 
 // config 경로
-$_SERVER['CONFIG_PATH'] = $_SERVER['DOCUMENT_ROOT'] . "/config/";
+$_SERVER['INIT_PATH'] = $_SERVER['DOCUMENT_ROOT'] . "/init/";
 
 // env 파일 경로
 $_SERVER['ENV_PATH'] = $_SERVER['DOCUMENT_ROOT'] . "/.env";
