@@ -1,0 +1,136 @@
+img {
+    aspect-ratio: 1 / 1;
+}
+
+.main-content {
+    padding: 20px;
+}
+
+/* 프로필 */
+.profile {
+    display: flex;
+    align-items: center;
+    margin-bottom: 60px;
+    flex-wrap: wrap;
+}
+
+.profile img {
+    width: 250px;
+    height: 250px;
+    border-radius: 50%;
+    object-fit: cover;
+    margin-right: 20px;
+}
+
+.profile-name {
+    font-size: 2.5em;
+    font-weight: 700;
+}
+
+.profile-info {
+    margin-top: 20px;
+    color: #999;
+}
+
+.albums-title {
+    font-size: 1.5em;
+    font-weight: 600;
+    margin-bottom: 30px;
+}
+
+.albums {
+    display: grid;
+    grid-template-columns: repeat(auto-fill, minmax(350px, 1fr));
+    gap: 40px;
+}
+
+/* 개별 앨범 카드 */
+.album {
+    display: flex;
+    flex-direction: row;
+    align-items: flex-start;
+    gap: 15px;
+    border-radius: 8px;
+}
+
+/* 이미지 */
+.album img {
+    max-width: 200px;
+    border-radius: 8px;
+}
+
+/* 텍스트 정보 */
+.album-info {
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    flex: 1;
+}
+
+.album-info div {
+    padding-top: 10px;
+}
+
+.album-title {
+    font-weight: bold;
+    font-size: 16px;
+    margin-bottom: 4px;
+}
+
+.album-artist {
+    font-size: 14px;
+    color: #666;
+}
+
+.album-meta {
+    font-size: 13px;
+    color: #999;
+    margin-top: 4px;
+    line-height: 1.4;
+}
+
+@media (max-width: 480px) {
+    .profile img {
+        width: 200px;
+        height: 200px;
+    }
+
+    .profile-name {
+        font-size: 2em;
+        font-weight: 700;
+    }
+
+    .albums {
+        grid-template-columns: repeat(auto-fill, minmax(140px, 1fr));
+        gap: 20px;
+    }
+
+    .album {
+        flex-direction: column;
+        gap: 5px;
+    }
+
+    .album img {
+        width: 100%;
+        height: auto;
+        max-width: 150px;
+    }
+
+    .album-info div {
+        padding-top: 0;
+    }
+}
+
+
+@media (max-width: 1024px) {
+    .profile {
+        display: flex;
+        flex-direction: column;
+        text-align: center;
+        gap: 20px;
+    }
+
+    .profile img {
+        margin-right: 0;
+    }
+}
