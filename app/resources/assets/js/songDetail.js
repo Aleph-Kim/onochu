@@ -4,7 +4,7 @@
  * @param {String} view 노출할 요소 (cover || lyrics)
  */
 function toggleView(view) {
-    const container = document.getElementById('album-container');
+    const container = document.querySelector('.album-container');
     const coverBtn = document.querySelector('.cover-btn');
     const lyricsBtn = document.querySelector('.lyrics-btn');
 

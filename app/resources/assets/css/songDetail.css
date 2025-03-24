@@ -18,11 +18,30 @@
     margin-bottom: 20px;
 }
 
+.song-header-info {
+    display: flex;
+    flex-direction: column;
+}
+
 .song-title,
 .section-title {
     font-size: 1.5em;
     font-weight: 600;
+    margin-bottom: 10px;
+}
+
+.song-artist {
+    color: #777;
     margin-bottom: 5px;
+}
+
+.song-album {
+    color: #999;
+}
+
+.song-artist:hover,
+.song-album:hover {
+    color: var(--main-color)
 }
 
 .music-platforms {
@@ -212,11 +231,13 @@
     font-size: 1.2em;
     margin-bottom: 10px;
 }
+
 .buttons {
     display: flex;
     justify-content: flex-end;
     margin: 10px 0;
 }
+
 .btn-recommends {
     display: inline-block;
     padding: 10px 20px;
