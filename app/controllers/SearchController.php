@@ -54,4 +54,26 @@ class SearchController extends Controller
 
         return $this->flo_api->getSongByFloId($song_id);
     }
+
+    /**
+     * 아티스트 상세페이지
+     */
+    public function artistDetail()
+    {
+        // XSS 방지 처리
+        $_GET['id'] = htmlspecialchars($_GET['id']);
+
+        // 노래 flo_id
+        $artist_id = $_GET['id'];
+
+        // 빈 노래 id 처리
+        if (empty($artist_id)) {
+            ErrorHandler::showErrorPage(400);
+        }
+
+        return [
+            'artist_info' => $this->flo_api->getArtistByFloId($artist_id),
+            'albums_info' => $this->flo_api->getAlbumsByArtistFloId($artist_id)
+        ];
+    }
 }

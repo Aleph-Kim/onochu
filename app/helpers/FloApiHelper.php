@@ -52,6 +52,50 @@ class FloApiHelper
     }
 
     /**
+     * 아티스트의 앨범 목록을 가져오는 메서드
+     * @param string $artist_id FLO 아티스트 ID
+     * @param int $page 페이지 번호 (기본값: 1)
+     * @param int $size 페이지당 항목 수 (기본값: 50)
+     * @return array 아티스트의 앨범 정보 배열
+     */
+    public function getArtistByFloId($artist_id)
+    {
+        // 전체 경로
+        $path = $_SERVER['FLO_API_ARTIST_PATH']($artist_id);
+
+        // API 데이터 가져오기
+        $data = $this->fetchData($path);
+
+        // 앨범 정보 추출 및 반환
+        return $this->extractArtist($data);
+    }
+
+    /**
+     * 아티스트의 앨범 목록을 가져오는 메서드
+     * @param string $artist_id FLO 아티스트 ID
+     * @return array 아티스트의 앨범 정보 배열
+     */
+    public function getAlbumsByArtistFloId($artist_id)
+    {
+        // 검색 파라미터
+        $params = [
+            'page' => '1',
+            'size' => '50',
+            'sortType'  => 'RECENT',
+            'roleType'  => 'RELEASE'
+        ];
+
+        // 전체 경로
+        $path = $_SERVER['FLO_API_ALBUMS_PATH']($artist_id) . http_build_query($params);
+
+        // API 데이터 가져오기
+        $data = $this->fetchData($path);
+
+        // 앨범 정보 추출 및 반환
+        return $this->extractArtistAlbums($data);
+    }
+
+    /**
      * API에서 데이터를 가져오는 메서드
      * @param string $path API 엔드포인트 경로
      * @return array 디코딩된 JSON 데이터
@@ -190,6 +234,64 @@ class FloApiHelper
         $song_info['song']['url'] = $this->getPlatformUrl($song_info);
 
         return $song_info;
+    }
+
+    /**
+     * 아티스트 API 응답에서 필요한 정보를 추출하는 메서드
+     * @param array $data API 응답 데이터
+     * @return array 추출된 아티스트 정보 배열
+     */
+    protected function extractArtist($data)
+    {
+        // 반환할 배열 초기화
+        $artist_info = [];
+
+        // 유효하지 않은 데이터면 빈 배열 반환
+        if (!isset($data['data'])) {
+            return $artist_info;
+        }
+
+        $artist_data = $data['data'];
+
+        // 앨범 정보 처리
+        $artist_info = [
+            'flo_id'       => $artist_data['id'],
+            'name'        => $artist_data['name'],
+            'genre'   => $artist_data['artistStyle'],
+            'group_type'   => $artist_data['artistGroupTypeStr'],
+            'img_url'    => strtok($artist_data['imgList'][0]['url'], '?')
+        ];
+
+        return $artist_info;
+    }
+
+    /**
+     * 앨범 API 응답에서 필요한 정보를 추출하는 메서드
+     * @param array $data API 응답 데이터
+     * @return array 추출된 앨범 정보 배열
+     */
+    protected function extractArtistAlbums($data)
+    {
+        // 반환할 배열 초기화
+        $albums_info = [];
+
+        // 유효하지 않은 데이터면 빈 배열 반환
+        if (!isset($data['data']) || !is_array($data['data']['list'] ?? [])) {
+            return $albums_info;
+        }
+
+        foreach ($data['data']['list'] as $album_data) {
+            // 앨범 정보 처리
+            $albums_info[] = [
+                'flo_id'       => $album_data['id'],
+                'title'        => $album_data['title'],
+                'type'   => $album_data['albumTypeStr'], // '싱글', '미니', '정규' 등
+                'release_date' => \DateTime::createFromFormat('Ymd', $album_data['releaseYmd'])->format("Y.m.d"),
+                'img_url'    => strtok($album_data['imgList'][0]['url'], '?')
+            ];
+        }
+
+        return $albums_info;
     }
 
     /**

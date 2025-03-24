@@ -42,6 +42,12 @@ $_SERVER['FLO_API_SEARCH_PATH'] = "https://www.music-flo.com/api/search/v2/searc
 // flo 상세페이지 api 경로
 $_SERVER['FLO_API_DETAIL_PATH'] = "https://www.music-flo.com/api/meta/v1/track/";
 
+// flo 아티스트 앨범 api 경로
+$_SERVER['FLO_API_ARTIST_PATH'] = fn($id) => "https://www.music-flo.com/api/meta/v1/artist/$id";
+
+// flo 아티스트 앨범 api 경로
+$_SERVER['FLO_API_ALBUMS_PATH'] = fn($id) => "https://www.music-flo.com/api/meta/v1/artist/{$id}/album?";
+
 // flo 이미지 resize path
 $_SERVER['FLO_IMG_RESIZE_PATH'] = fn($size) => "?/dims/resize/$size/quality/90";
 
