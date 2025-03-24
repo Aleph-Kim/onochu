@@ -54,8 +54,6 @@ class FloApiHelper
     /**
      * 아티스트의 앨범 목록을 가져오는 메서드
      * @param string $artist_id FLO 아티스트 ID
-     * @param int $page 페이지 번호 (기본값: 1)
-     * @param int $size 페이지당 항목 수 (기본값: 50)
      * @return array 아티스트의 앨범 정보 배열
      */
     public function getArtistByFloId($artist_id)
@@ -80,7 +78,7 @@ class FloApiHelper
         // 검색 파라미터
         $params = [
             'page' => '1',
-            'size' => '50',
+            'size' => '100',
             'sortType'  => 'RECENT',
             'roleType'  => 'RELEASE'
         ];
