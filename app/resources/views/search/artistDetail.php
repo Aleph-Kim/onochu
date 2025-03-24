@@ -2,7 +2,6 @@
 $controller = new SearchController();
 
 ['artist_info' => $artist_info, 'albums_info' => $albums_info] = $controller->artistDetail();
-
 ?>
 
 <? include $_SERVER['LAYOUT_PATH'] . "header.php"; ?>
@@ -20,22 +19,44 @@ $controller = new SearchController();
             </div>
         </div>
     </div>
-
-    <div class="albums-title">최근 앨범</div>
+    <div class="albums-title">앨범 목록</div>
+    <div class="albums-filter">
+        <div class="custom-selector">
+            <div class="selected-option">전체</div>
+            <div class="options">
+                <div class="option" data-type="all">전체</div>
+                <div class="option" data-type="싱글">싱글</div>
+                <div class="option" data-type="정규">정규</div>
+                <div class="option" data-type="미니">미니</div>
+            </div>
+        </div>
+        <div class="toggle-sort">
+            <span class="toggle-label latest active">최신순</span>
+            <label class="toggle-switch">
+                <input type="checkbox" id="sortToggle">
+                <span class="slider"></span>
+            </label>
+            <span class="toggle-label oldest">오래된순</span>
+        </div>
+        <div class="search-filter">
+            <input type="text" id="albumSearch" placeholder="앨범 검색">
+        </div>
+    </div>
     <div class="albums">
         <? foreach ($albums_info as $album): ?>
             <div class="album">
-                <div class="play-button">
-                    <img src="<?= $album['img_url'] . $_SERVER['FLO_IMG_RESIZE_PATH']($_SERVER['IMG_MEDIUM_SIZE']) ?>">
-                </div>
+                <img src="<?= $album['img_url'] . $_SERVER['FLO_IMG_RESIZE_PATH']($_SERVER['IMG_MEDIUM_SIZE']) ?>">
                 <div class="album-info">
                     <div class="album-title"><?= $album['title'] ?></div>
                     <div class="album-artist"><?= $artist_info['name'] ?></div>
-                    <div class="album-meta"><?= $album['type'] ?><br><?= $album['release_date'] ?></div>
+                    <div class="album-type"><?= $album['type'] ?></div>
+                    <div class="album-date"><?= $album['release_date'] ?></div>
                 </div>
             </div>
         <? endforeach; ?>
     </div>
 </div>
+
+<script src="<?= $_SERVER['JS_PATH'] . 'artistDetail.js' ?>"></script>
 
 <? include $_SERVER['LAYOUT_PATH'] . "footer.php"; ?>
