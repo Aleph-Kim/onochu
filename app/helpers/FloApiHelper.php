@@ -7,6 +7,7 @@ class FloApiHelper
     {
         $this->redis = new Redis();
     }
+
     /**
      * 노래 검색 메서드
      * @param string $keyword 검색어
@@ -14,7 +15,6 @@ class FloApiHelper
      */
     public function getSongsByKeyword($keyword)
     {
-        // 검색 파라미터
         $params = [
             'keyword'    => $keyword,
             'searchType' => 'TRACK',
@@ -24,48 +24,27 @@ class FloApiHelper
             'queryType'  => 'system'
         ];
 
-        // 전체 경로
-        $full_path = $_SERVER['FLO_API_SEARCH_PATH'] . ($params ? '?' . http_build_query($params) : "");
-
-        // API 데이터 가져오기
-        $data = $this->fetchData($full_path);
-
-        // 검색 결과 추출 및 반환
-        return $this->extractSearchSongs($data);
+        return $this->fetchAndExtract($_SERVER['FLO_API_SEARCH_PATH'], $params, 'getSongs');
     }
 
     /**
      * 단일 노래 조회 메서드
      * @param string $song_id flo 노래 id
-     * @return array 검색된 노래 데이터
+     * @return array 노래 정보 배열
      */
     public function getSongByFloId($song_id)
     {
-        // 전체 경로
-        $full_path = $_SERVER['FLO_API_DETAIL_PATH'] . $song_id;
-
-        // API 데이터 가져오기
-        $data = $this->fetchData($full_path);
-
-        // 검색 결과 추출 및 반환
-        return $this->extractGetSong($data);
+        return $this->fetchAndExtract($_SERVER['FLO_API_DETAIL_PATH'] . $song_id, null, 'getSong');
     }
 
     /**
-     * 아티스트의 앨범 목록을 가져오는 메서드
+     * 아티스트의 정보를 가져오는 메서드
      * @param string $artist_id FLO 아티스트 ID
-     * @return array 아티스트의 앨범 정보 배열
+     * @return array 아티스트 정보 배열
      */
     public function getArtistByFloId($artist_id)
     {
-        // 전체 경로
-        $path = $_SERVER['FLO_API_ARTIST_PATH']($artist_id);
-
-        // API 데이터 가져오기
-        $data = $this->fetchData($path);
-
-        // 앨범 정보 추출 및 반환
-        return $this->extractArtist($data);
+        return $this->fetchAndExtract($_SERVER['FLO_API_ARTIST_PATH']($artist_id), null, 'getArtist');
     }
 
     /**
@@ -75,7 +54,6 @@ class FloApiHelper
      */
     public function getAlbumsByArtistFloId($artist_id)
     {
-        // 검색 파라미터
         $params = [
             'page' => '1',
             'size' => '100',
@@ -83,31 +61,31 @@ class FloApiHelper
             'roleType'  => 'RELEASE'
         ];
 
-        // 전체 경로
-        $path = $_SERVER['FLO_API_ALBUMS_PATH']($artist_id) . http_build_query($params);
-
-        // API 데이터 가져오기
-        $data = $this->fetchData($path);
-
-        // 앨범 정보 추출 및 반환
-        return $this->extractArtistAlbums($data);
+        return $this->fetchAndExtract($_SERVER['FLO_API_ALBUMS_PATH']($artist_id), $params, 'getAlbums');
     }
 
     /**
-     * 앨범의 상세정보를 가져오는 메서드
-     * @param string $album_id FLO 아티스트 ID
-     * @return array 아티스트의 앨범 정보 배열
+     * 앨범의 정보를 가져오는 메서드
+     * @param string $album_id FLO 앨범 ID
+     * @return array 앨범 정보 배열
      */
     public function getAlbumByFloId($album_id)
     {
-        // 전체 경로
-        $path = $_SERVER['FLO_API_ALBUM_PATH']($album_id);
+        return $this->fetchAndExtract($_SERVER['FLO_API_ALBUM_PATH']($album_id), null, 'getAlbum');
+    }
 
-        // API 데이터 가져오기
-        $data = $this->fetchData($path);
-
-        // 앨범 정보 추출 및 반환
-        return $this->extractAlbum($data);
+    /**
+     * API에서 데이터를 가져오고 추출하는 메서드
+     * @param string $path API 엔드포인트 경로
+     * @param array|null $params 요청 파라미터
+     * @param string $getMethod 데이터를 가져오는 메서드 이름
+     * @return array 추출한 데이터
+     */
+    protected function fetchAndExtract($path, $params = null, $getMethod)
+    {
+        $full_path = $path . ($params ? '?' . http_build_query($params) : "");
+        $data = $this->fetchData($full_path);
+        return $this->$getMethod($data);
     }
 
     /**
@@ -117,20 +95,18 @@ class FloApiHelper
      */
     protected function fetchData($path)
     {
-        // 캐시 키
+        // 캐시 키 생성
         $cache_key = $_SERVER['REDIS_API_RESULT_PREFIX'] . $path;
-        // 캐싱 데이터
+        // 캐시 데이터 확인
         $cache_data = $this->redis->get($cache_key);
-        // 캐싱된 데이터가 있다면 즉시 리턴
         if ($cache_data) {
             return $cache_data;
         }
 
         // 요청 URL 생성
         $url = $_SERVER['FLO_API_PATH'] . $path;
-
         // JSON 데이터 가져오기
-        $json_data = @file_get_contents($url); // 경고 억제를 위해 @ 사용
+        $json_data = @file_get_contents($url);
         if ($json_data === false) {
             ErrorHandler::showErrorPage(500);
         }
@@ -147,211 +123,213 @@ class FloApiHelper
     }
 
     /**
+     * 노래 조회 API 응답에서 노래 정보를 추출하는 메서드
+     * @param array $data API 응답 데이터
+     * @return array 추출한 노래 정보 배열
+     */
+    protected function getSong($data)
+    {
+        if (!isset($data['data'])) {
+            ErrorHandler::showErrorPage(400);
+        }
+
+        return $this->extractTrack($data['data']);
+    }
+
+    /**
      * 검색 API 응답에서 노래 정보를 추출하는 메서드
      * @param array $data API 응답 데이터
-     * @return array 추출된 노래 정보 배열
+     * @return array 추출한 노래 정보 배열
      */
-    protected function extractSearchSongs($data)
+    protected function getSongs($data)
     {
-        // 반환할 배열 초기화
         $songs = [];
-
-        // 유효하지 않은 데이터면 빈 배열 반환
         if (!isset($data['data']) || !is_array($data['data']['list'] ?? [])) {
             return $songs;
         }
 
         $track = $data['data']['list'][0];
-
-        // 노래 데이터가 없으면 빈 배열 반환
         if (!isset($track['list'])) {
             return $songs;
         }
 
         foreach ($track['list'] as $song_data) {
-            $song = self::extractSong($song_data);
-
-            $songs[] = $song;
+            $songs[] = $this->extractTrack($song_data);
         }
 
         return $songs;
     }
 
     /**
-     * 노래 조회 API 응답에서 노래 정보를 추출하는 메서드
+     * 앨범 API 응답에서 앨범 정보를 추출하는 메서드
      * @param array $data API 응답 데이터
-     * @return array 추출된 노래 정보 배열
+     * @return array 추출한 앨범 정보 배열
      */
-    protected function extractGetSong($data)
+    protected function getAlbum($data)
     {
         if (!isset($data['data'])) {
             ErrorHandler::showErrorPage(400);
         }
 
-        $song_data = $data['data'];
-
-        return self::extractSong($song_data);
-    }
-
-    /**
-     * flo api에서 가져온 노래 데이터에서 필요한 정보만 추출하여 반환하는 메서드
-     * 
-     * @param array $song_data API 응답 노래 데이터
-     * @return array 추출된 노래 정보 배열
-     */
-    protected function extractSong($song_data)
-    {
-        $song_info = [];
-
-        $writerRoles = $this->writerClassify($song_data['trackArtistList']);
-
-        // 노래 정보 처리
-        $song_info['song'] = [
-            'flo_id' => $song_data['id'],
-            'title' => $song_data['name'],
-            'play_time' => $song_data['playTime'],
-            'genre' => $song_data['album']['genreStyle'],
-            'title_yn' => $song_data['titleYn'],
-            'lyrics' => $song_data['lyrics'],
-            'composer' => implode(', ', $writerRoles['composers']),
-            'lyricist' => implode(', ', $writerRoles['lyricists']),
-            'arranger' => implode(', ', $writerRoles['arrangers']),
-        ];
-
-        // 아티스트 정보 처리
-        $song_info['artists'] = [];
-        if (isset($song_data['artistList']) && is_array($song_data['artistList'])) {
-            foreach ($song_data['artistList'] as $artist) {
-                $artist_info = [
-                    'flo_id' => $artist['id'],
-                    'name' => $artist['name'],
-                    'img_url' => strtok($artist['imgList'][0]['url'], '?'),
-                ];
-
-                $cache_key = $_SERVER['REDIS_ARTIST_IMG_PREFIX'] . $artist['id'];
-                if ($artist_info['img_url']) {
-                    $this->redis->set($cache_key, $artist_info['img_url']);
-                } else {
-                    $artist_info['img_url'] = $this->redis->get($cache_key);
-                }
-
-                $song_info['artists'][] = $artist_info;
-            }
-        }
-
-        // 앨범 정보 처리
-        if (isset($song_data['album'])) {
-            $album = $song_data['album'];
-            $song_info['album'] = [
-                'flo_id'      => $album['id'],
-                'title'   => $album['title'],
-                'img_url' => strtok($album['imgList'][0]['url'], '?'),
-                'release_date' => \DateTime::createFromFormat('Ymd', $album['releaseYmd'])->format("Y.m.d")
-            ];
-        }
-
-        $song_info['song']['url'] = $this->getPlatformUrl($song_info);
-
-        return $song_info;
-    }
-
-    /**
-     * 아티스트 API 응답에서 필요한 정보를 추출하는 메서드
-     * @param array $data API 응답 데이터
-     * @return array 추출된 아티스트 정보 배열
-     */
-    protected function extractArtist($data)
-    {
-        // 반환할 배열 초기화
-        $artist_info = [];
-
-        // 유효하지 않은 데이터면 빈 배열 반환
-        if (!isset($data['data'])) {
-            return $artist_info;
-        }
-
-        $artist_data = $data['data'];
-
-        // 앨범 정보 처리
-        $artist_info = [
-            'flo_id'       => $artist_data['id'],
-            'name'        => $artist_data['name'],
-            'genre'   => $artist_data['artistStyle'],
-            'group_type'   => $artist_data['artistGroupTypeStr'],
-            'img_url'    => strtok($artist_data['imgList'][0]['url'], '?')
-        ];
-
-        return $artist_info;
-    }
-
-    /**
-     * 앨범 API 응답에서 필요한 정보를 추출하는 메서드
-     * @param array $data API 응답 데이터
-     * @return array 추출된 앨범 정보 배열
-     */
-    protected function extractArtistAlbums($data)
-    {
-        // 반환할 배열 초기화
-        $albums_info = [];
-
-        // 유효하지 않은 데이터면 빈 배열 반환
-        if (!isset($data['data']) || !is_array($data['data']['list'] ?? [])) {
-            return $albums_info;
-        }
-
-        foreach ($data['data']['list'] as $album_data) {
-            // 앨범 정보 처리
-            $albums_info[] = [
-                'flo_id'       => $album_data['id'],
-                'title'        => $album_data['title'],
-                'type'   => $album_data['albumTypeStr'], // '싱글', '미니', '정규' 등
-                'release_date' => \DateTime::createFromFormat('Ymd', $album_data['releaseYmd'])->format("Y.m.d"),
-                'img_url'    => strtok($album_data['imgList'][0]['url'], '?')
-            ];
-        }
-
-        return $albums_info;
-    }
-
-    /**
-     * 앨범 API 응답에서 필요한 정보를 추출하는 메서드
-     * @param array $data API 응답 데이터
-     * @return array 추출된 앨범 정보 배열
-     */
-    protected function extractAlbum($data)
-    {
-        // 반환할 배열 초기화
         $result = [
             'album_info' => [],
             'songs_info' => []
         ];
 
-        // 유효하지 않은 데이터면 빈 배열 반환
         if (!isset($data['data']) || !is_array($data['data']['list'] ?? [])) {
             return $result;
         }
 
         $album_data = $data['data']['list'][0]['album'];
-
-        $result['album_info'] = [
-            'flo_id'      => $album_data['id'],
-            'title'   => $album_data['title'],
-            'genre'   => $album_data['genreStyle'],
-            'type'   => $album_data['albumTypeStr'],
-            'img_url' => strtok($album_data['imgList'][0]['url'], '?'),
-            'release_date' => \DateTime::createFromFormat('Ymd', $album_data['releaseYmd'])->format("Y.m.d")
-        ];
+        $result['album_info'] = $this->extractAlbum($album_data);
 
         foreach ($data['data']['list'] as $song_data) {
-            $result['songs_info'][] = $this->extractSong($song_data);
+            $result['songs_info'][] = $this->extractTrack($song_data);
         }
 
         return $result;
     }
 
     /**
+     * 앨범 API 응답에서 앨범 정보를 추출하는 메서드
+     * @param array $data API 응답 데이터
+     * @return array 추출한 앨범 정보 배열
+     */
+    protected function getAlbums($data)
+    {
+        $albums_info = [];
+        if (!isset($data['data']) || !is_array($data['data']['list'] ?? [])) {
+            return $albums_info;
+        }
+
+        foreach ($data['data']['list'] as $album) {
+            $albums_info[] = $this->extractAlbum($album);
+        }
+
+        return $albums_info;
+    }
+
+    /**
+     * 아티스트 API 응답에서 아티스트 정보를 추출하는 메서드
+     * @param array $data API 응답 데이터
+     * @return array 추출한 아티스트 정보 배열
+     */
+    protected function getArtist($data)
+    {
+        if (!isset($data['data'])) {
+            ErrorHandler::showErrorPage(400);
+        }
+
+        return $this->extractArtist($data['data']);
+    }
+
+    /**
+     * 데이터에서 트랙 정보를 추출하는 메서드
+     * @param array $song_data 노래 데이터
+     * @return array 추출한 노래 정보 배열
+     */
+    protected function extractTrack($song_data)
+    {
+        $song_info = [];
+        $song_info['song'] = $this->extractSong($song_data);
+        $song_info['artists'] = $this->extractArtists($song_data['artistList'] ?? []);
+        $song_info['album'] = $this->extractAlbum($song_data['album'] ?? []);
+        $song_info['song']['url'] = $this->getPlatformUrl($song_info);
+
+        return $song_info;
+    }
+
+    /**
+     * 데이터에서 노래 정보를 추출하는 메서드
+     * @param array $song_data 노래 데이터
+     * @return array 추출한 노래 정보
+     */
+    protected function extractSong($song_data): array
+    {
+        $writerRoles = $this->writerClassify($song_data['trackArtistList'] ?? []);
+
+        return [
+            'flo_id' => $song_data['id'],
+            'title' => $song_data['name'],
+            'play_time' => $song_data['playTime'],
+            'genre' => $song_data['album']['genreStyle'] ?? null,
+            'title_yn' => $song_data['titleYn'] ?? null,
+            'lyrics' => $song_data['lyrics'] ?? null,
+            'composer' => implode(', ', $writerRoles['composers']),
+            'lyricist' => implode(', ', $writerRoles['lyricists']),
+            'arranger' => implode(', ', $writerRoles['arrangers']),
+        ];
+    }
+
+
+    /**
+     * 데이터에서 앨범 정보를 추출하는 메서드
+     * @param array $album 앨범 데이터
+     * @return array 추출한 앨범 정보
+     */
+    protected function extractAlbum($album)
+    {
+        return [
+            'flo_id' => $album['id'],
+            'title' => $album['title'],
+            'type' => $album['albumTypeStr'],
+            'genre' => $album['genreStyle'],
+            'img_url' => strtok($album['imgList'][0]['url'] ?? '', '?'),
+            'release_date' => \DateTime::createFromFormat('Ymd', $album['releaseYmd'] ?? '')->format("Y.m.d")
+        ];
+    }
+
+    /**
+     * 데이터에서 아티스트 정보를 추출하는 메서드
+     * @param array $artistList 아티스트 리스트
+     * @return array 추출한 아티스트 정보 배열
+     */
+    protected function extractArtists($artistList)
+    {
+        $artists = [];
+
+        if (!isset($artistList) || !is_array($artistList)) {
+            return $artists;
+        }
+
+        foreach ($artistList as $artist) {
+            $artists[] = $this->extractArtist($artist);
+        }
+
+        return $artists;
+    }
+
+    /**
+     * 데이터에서 아티스트 정보를 추출하는 메서드
+     * @param array $artist 아티스트 데이터
+     * @return array 추출한 아티스트 정보
+     */
+    protected function extractArtist($artist)
+    {
+        if (!isset($artist)) {
+            return [];
+        }
+
+        // 캐시 키 생성
+        $cache_key = $_SERVER['REDIS_ARTIST_IMG_PREFIX'] . $artist['id'];
+        // 캐시 데이터 확인
+        if ($artist['imgList'][0]['url']) {
+            $this->redis->set($cache_key, $artist['imgList'][0]['url']);
+        } else {
+            $artist['imgList'][0]['url'] = $this->redis->get($cache_key);
+        }
+
+        return [
+            'flo_id' => $artist['id'],
+            'name' => $artist['name'],
+            'genre' => $artist['artistStyle'],
+            'group_type' => $artist['artistGroupTypeStr'],
+            'img_url' => strtok($artist['imgList'][0]['url'] ?? '', '?')
+        ];
+    }
+
+    /**
      * 작곡가, 작사가, 편곡자를 분류하는 함수
-     * 
      * @param array $array 입력 배열
      * @return array 각 역할별로 분류된 결과 (composers, lyricists, arrangers)
      */
@@ -380,7 +358,6 @@ class FloApiHelper
                     break;
             }
         }
-
         return $result;
     }
 
@@ -398,8 +375,8 @@ class FloApiHelper
     {
         // 사용자 접속환경 모바일 여부
         $is_mobile = UserHelper::isMobile();
-        $artists_name = implode(' ', array_column($song_info['artists'], 'name'));
         // 검색 시 키워드
+        $artists_name = implode(' ', array_column($song_info['artists'], 'name'));
         $keyword = "{$song_info['song']['title']} {$artists_name}";
         // 플로에서 사용하는 노래 pk
         $flo_id = $song_info['song']['flo_id'];
