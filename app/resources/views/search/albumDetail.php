@@ -37,7 +37,7 @@ $controller = new SearchController();
                             <?= $song['song']['title'] ?>
                         </div>
                         <div class="song-etc">
-                            <span class="artist-name"><?= $song['artist']['name'] ?></span>
+                            <span class="artist-name" onclick="window.location.href = '/search/artistDetail?id=<?= $song['artist']['flo_id'] ?>'"><?= $song['artist']['name'] ?></span>
                             <span class="between-bar"></span>
                             <span class="album-name" onclick="window.location.href = '/search/albumDetail?id=<?= $song['album']['flo_id'] ?>'"><?= $song['album']['title'] ?></span>
                             <span class="between-bar"></span>
