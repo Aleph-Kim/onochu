@@ -19,7 +19,7 @@ class FloApiHelper
             'keyword'    => $keyword,
             'searchType' => 'TRACK',
             'sortType'   => 'ACCURACY',
-            'size'       => 10,
+            'size'       => 30,
             'page'       => 1,
             'queryType'  => 'system'
         ];
