@@ -94,6 +94,23 @@ class FloApiHelper
     }
 
     /**
+     * 앨범의 상세정보를 가져오는 메서드
+     * @param string $album_id FLO 아티스트 ID
+     * @return array 아티스트의 앨범 정보 배열
+     */
+    public function getAlbumByFloId($album_id)
+    {
+        // 전체 경로
+        $path = $_SERVER['FLO_API_ALBUM_PATH']($album_id);
+
+        // API 데이터 가져오기
+        $data = $this->fetchData($path);
+
+        // 앨범 정보 추출 및 반환
+        return $this->extractAlbum($data);
+    }
+
+    /**
      * API에서 데이터를 가져오는 메서드
      * @param string $path API 엔드포인트 경로
      * @return array 디코딩된 JSON 데이터
@@ -194,6 +211,7 @@ class FloApiHelper
             'title' => $song_data['name'],
             'play_time' => $song_data['playTime'],
             'genre' => $song_data['album']['genreStyle'],
+            'title_yn' => $song_data['titleYn'],
             'lyrics' => $song_data['lyrics'],
             'composer' => implode(', ', $writerRoles['composers']),
             'lyricist' => implode(', ', $writerRoles['lyricists']),
@@ -290,6 +308,42 @@ class FloApiHelper
         }
 
         return $albums_info;
+    }
+
+    /**
+     * 앨범 API 응답에서 필요한 정보를 추출하는 메서드
+     * @param array $data API 응답 데이터
+     * @return array 추출된 앨범 정보 배열
+     */
+    protected function extractAlbum($data)
+    {
+        // 반환할 배열 초기화
+        $result = [
+            'album_info' => [],
+            'songs_info' => []
+        ];
+
+        // 유효하지 않은 데이터면 빈 배열 반환
+        if (!isset($data['data']) || !is_array($data['data']['list'] ?? [])) {
+            return $result;
+        }
+
+        $album_data = $data['data']['list'][0]['album'];
+
+        $result['album_info'] = [
+            'flo_id'      => $album_data['id'],
+            'title'   => $album_data['title'],
+            'genre'   => $album_data['genreStyle'],
+            'type'   => $album_data['albumTypeStr'],
+            'img_url' => strtok($album_data['imgList'][0]['url'], '?'),
+            'release_date' => \DateTime::createFromFormat('Ymd', $album_data['releaseYmd'])->format("Y.m.d")
+        ];
+
+        foreach ($data['data']['list'] as $song_data) {
+            $result['songs_info'][] = $this->extractSong($song_data);
+        }        
+
+        return $result;
     }
 
     /**
