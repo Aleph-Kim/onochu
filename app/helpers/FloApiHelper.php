@@ -398,8 +398,9 @@ class FloApiHelper
     {
         // 사용자 접속환경 모바일 여부
         $is_mobile = UserHelper::isMobile();
+        $artists_name = implode(' ', array_column($song_info['artists'], 'name'));
         // 검색 시 키워드
-        $keyword = "{$song_info['song']['title']} {$song_info['artist']['name']}";
+        $keyword = "{$song_info['song']['title']} {$artists_name}";
         // 플로에서 사용하는 노래 pk
         $flo_id = $song_info['song']['flo_id'];
 
