@@ -16,7 +16,7 @@ class FloApiHelper
     {
         // 검색 파라미터
         $params = [
-            'keyword'    => urlencode($keyword),
+            'keyword'    => $keyword,
             'searchType' => 'TRACK',
             'sortType'   => 'ACCURACY',
             'size'       => 10,
