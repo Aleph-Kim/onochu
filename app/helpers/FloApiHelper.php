@@ -195,9 +195,9 @@ class FloApiHelper
             'play_time' => $song_data['playTime'],
             'genre' => $song_data['album']['genreStyle'],
             'lyrics' => $song_data['lyrics'],
-            'composer' => implode($writerRoles['composers'], ', '),
-            'lyricist' => implode($writerRoles['lyricists'], ', '),
-            'arranger' => implode($writerRoles['arrangers'], ', '),
+            'composer' => implode(', ', $writerRoles['composers']),
+            'lyricist' => implode(', ', $writerRoles['lyricists']),
+            'arranger' => implode(', ', $writerRoles['arrangers']),
         ];
 
         // 아티스트 정보 처리
