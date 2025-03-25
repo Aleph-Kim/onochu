@@ -214,7 +214,7 @@ class FloApiHelper
             if ($song_info['artist']['img_url']) {
                 $this->redis->set($cache_key, $song_info['artist']['img_url']);
             } else {
-                $song_info['artist']['img_url'] = $this->redis->get($cache_key, $song_info['artist']['img_url']);
+                $song_info['artist']['img_url'] = $this->redis->get($cache_key);
             }
         }
 
