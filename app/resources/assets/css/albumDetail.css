@@ -102,6 +102,17 @@ img {
     font-size: 14px;
 }
 
+.song-etc .artist-name,
+.song-etc .album-name {
+    transition: all 0.2s ease;
+}
+
+.song-etc .artist-name:hover,
+.song-etc .album-name:hover {
+    color: var(--main-color);
+    cursor: pointer;
+}
+
 /* 아이콘 박스 */
 .song-box:hover .icon-box {
     display: flex;

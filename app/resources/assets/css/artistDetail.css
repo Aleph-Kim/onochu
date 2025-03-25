@@ -1,6 +1,6 @@
 html {
     /* 스크롤의 유무가 전체 넓이에 영향을 주지 않도록 */
-    width: calc(100vw - 8px); 
+    width: calc(100vw - 8px);
 }
 
 img {
@@ -45,7 +45,7 @@ img {
 .albums {
     display: grid;
     grid-template-columns: repeat(auto-fill, minmax(350px, 1fr));
-    gap: 40px;
+    gap: 25px;
 }
 
 /* 개별 앨범 카드 */
@@ -53,8 +53,16 @@ img {
     display: flex;
     flex-direction: row;
     align-items: flex-start;
+    padding: 15px;
     gap: 15px;
     border-radius: 8px;
+    transition: all 0.2s ease;
+}
+
+.album:hover {
+    color: var(--main-color);
+    background-color: #e3e3e3;
+    cursor: pointer;
 }
 
 /* 이미지 */

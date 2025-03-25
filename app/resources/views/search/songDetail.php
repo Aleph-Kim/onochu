@@ -12,7 +12,7 @@ $song_info = $controller->songDetail();
             <div class="song-header-info">
                 <h1 class="song-title"><?= $song_info['song']['title'] ?></h1>
                 <a class="song-artist" href="/search/artistDetail?id=<?= $song_info['artist']['flo_id'] ?>"><?= $song_info['artist']['name'] ?></a>
-                <a class="song-album"><?= $song_info['album']['title'] ?> ></a>
+                <a class="song-album" href="/search/albumDetail?id=<?= $song_info['album']['flo_id'] ?>"><?= $song_info['album']['title'] ?></a>
             </div>
             <? if ($song_info['artist']['img_url']) { ?>
                 <div class="artist-profile">

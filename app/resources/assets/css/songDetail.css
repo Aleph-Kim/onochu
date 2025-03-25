@@ -37,11 +37,13 @@
 
 .song-album {
     color: #999;
+    transition: all 0.2s ease;
 }
 
 .song-artist:hover,
 .song-album:hover {
-    color: var(--main-color)
+    color: var(--main-color);
+    cursor: pointer;
 }
 
 .music-platforms {

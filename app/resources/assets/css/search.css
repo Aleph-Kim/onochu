@@ -74,6 +74,17 @@
     white-space: nowrap;
 }
 
+.song-etc .artist-name,
+.song-etc .album-name {
+    transition: all 0.2s ease;
+}
+
+.song-etc .artist-name:hover,
+.song-etc .album-name:hover {
+    color: var(--main-color);
+    cursor: pointer;
+}
+
 @media (max-width: 480px) {
     .song-wrap {
         margin: 0;
