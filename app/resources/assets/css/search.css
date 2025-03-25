@@ -86,6 +86,11 @@
     color: var(--main-color);
 }
 
+.song-etc .artist-name:not(:last-child)::after {
+    content: ' & ';
+    color: black;
+}
+
 @media (max-width: 480px) {
     .song-wrap {
         margin: 0;

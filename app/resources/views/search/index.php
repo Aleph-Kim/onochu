@@ -21,7 +21,11 @@ $songs = $controller->index();
                         <div class="song-info">
                             <div class="song-name" onclick="window.location.href = '/search/songDetail?id=<?= $song['song']['flo_id'] ?>'"><?= $song['song']['title'] ?></div>
                             <div class="song-etc">
-                                <span class="artist-name" onclick="window.location.href = '/search/artistDetail?id=<?= $song['artist']['flo_id'] ?>'"><?= $song['artist']['name'] ?></span>
+                                <span>
+                                    <? foreach ($song['artists'] as $artist): ?>
+                                        <span class="artist-name" onclick="window.location.href = '/search/artistDetail?id=<?= $artist['flo_id'] ?>'"><?= $artist['name'] ?></span>
+                                    <? endforeach; ?>
+                                </span>
                                 <span class="between-bar"></span>
                                 <span class="album-name" onclick="window.location.href = '/search/albumDetail?id=<?= $song['album']['flo_id'] ?>'"><?= $song['album']['title'] ?></span>
                                 <span class="between-bar"></span>

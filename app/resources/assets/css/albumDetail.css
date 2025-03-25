@@ -114,6 +114,11 @@ img {
     color: var(--main-color);
 }
 
+.song-etc .artist-name:not(:last-child)::after {
+    content: ' & ';
+    color: #999;
+}
+
 /* 아이콘 박스 */
 .song-box:hover .icon-box {
     display: flex;

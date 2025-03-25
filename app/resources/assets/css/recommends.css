@@ -20,6 +20,21 @@
     margin-right: 5px;
 }
 
+.artist-info img,
+.artist-name {
+    cursor: pointer;
+    transition: all 0.2s;
+}
+
+.artist-name:not(:last-child)::after {
+    content: ' & ';
+    color: black;
+}
+
+.artist-name:hover {
+    color: var(--main-color);
+}
+
 .song-img img {
     width: 250px;
     height: 250px;

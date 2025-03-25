@@ -219,20 +219,23 @@ class FloApiHelper
         ];
 
         // 아티스트 정보 처리
-        if (isset($song_data['artistList'][0])) {
-            $artist = $song_data['artistList'][0];
-            $song_info['artist'] = [
-                'flo_id'      => $artist['id'],
-                'name'    => $artist['name'],
-                'img_url' => strtok($artist['imgList'][0]['url'], '?'),
-            ];
+        $song_info['artists'] = [];
+        if (isset($song_data['artistList']) && is_array($song_data['artistList'])) {
+            foreach ($song_data['artistList'] as $artist) {
+                $artist_info = [
+                    'flo_id' => $artist['id'],
+                    'name' => $artist['name'],
+                    'img_url' => strtok($artist['imgList'][0]['url'], '?'),
+                ];
 
-            // 아티스트 이미지가 있다면 캐싱, 없다면 캐싱딘 이미지 사용
-            $cache_key = $_SERVER['REDIS_ARTIST_IMG_PREFIX'] . $artist['id'];
-            if ($song_info['artist']['img_url']) {
-                $this->redis->set($cache_key, $song_info['artist']['img_url']);
-            } else {
-                $song_info['artist']['img_url'] = $this->redis->get($cache_key);
+                $cache_key = $_SERVER['REDIS_ARTIST_IMG_PREFIX'] . $artist['id'];
+                if ($artist_info['img_url']) {
+                    $this->redis->set($cache_key, $artist_info['img_url']);
+                } else {
+                    $artist_info['img_url'] = $this->redis->get($cache_key);
+                }
+
+                $song_info['artists'][] = $artist_info;
             }
         }
 
@@ -341,7 +344,7 @@ class FloApiHelper
 
         foreach ($data['data']['list'] as $song_data) {
             $result['songs_info'][] = $this->extractSong($song_data);
-        }        
+        }
 
         return $result;
     }

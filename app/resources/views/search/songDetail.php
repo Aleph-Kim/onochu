@@ -11,7 +11,13 @@ $song_info = $controller->songDetail();
         <div class="song-header">
             <div class="song-header-info">
                 <h1 class="song-title"><?= $song_info['song']['title'] ?></h1>
-                <a class="song-artist" href="/search/artistDetail?id=<?= $song_info['artist']['flo_id'] ?>"><?= $song_info['artist']['name'] ?></a>
+                <div>
+                    <? foreach ($song_info['artists'] as $artist): ?>
+                        <a class="song-artist" href="/search/artistDetail?id=<?= $artist['flo_id'] ?>">
+                            <?= $artist['name'] ?>
+                        </a>
+                    <? endforeach; ?>
+                </div>
                 <a class="song-album" href="/search/albumDetail?id=<?= $song_info['album']['flo_id'] ?>"><?= $song_info['album']['title'] ?></a>
             </div>
             <? if ($song_info['artist']['img_url']) { ?>

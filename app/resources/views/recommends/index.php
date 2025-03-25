@@ -10,8 +10,12 @@ $_SESSION['song_info'] = $song_info;
 
 <form class="song-container" action="/recommends/post" method="post">
     <div class="artist-info">
-        <img src="<?= $song_info['artist']['img_url'] . $_SERVER['FLO_IMG_RESIZE_PATH']($_SERVER['IMG_SMALL_SIZE']) ?>" alt="Artist Profile">
-        <span><?= $song_info['artist']['name'] ?></span>
+        <img src="<?= $song_info['artists'][0]['img_url'] . $_SERVER['FLO_IMG_RESIZE_PATH']($_SERVER['IMG_SMALL_SIZE']) ?>" onclick="window.location.href = '/search/artistDetail?id=<?= $song_info['artists'][0]['flo_id'] ?>'">
+        <span>
+            <? foreach ($song_info['artists'] as $artist): ?>
+                <span class="artist-name" onclick="window.location.href = '/search/artistDetail?id=<?= $artist['flo_id'] ?>'"><?= $artist['name'] ?></span>
+            <? endforeach; ?>
+        </span>
     </div>
     <div class="song-img">
         <img src="<?= $song_info['album']['img_url'] . $_SERVER['FLO_IMG_RESIZE_PATH']($_SERVER['IMG_MEDIUM_SIZE']) ?>">

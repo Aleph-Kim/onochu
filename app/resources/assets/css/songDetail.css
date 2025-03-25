@@ -35,6 +35,11 @@
     margin-bottom: 5px;
 }
 
+.song-artist:not(:last-child)::after {
+    content: ' & ';
+    color: #777;
+}
+
 .song-album {
     color: #999;
     transition: all 0.2s ease;
