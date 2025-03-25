@@ -96,7 +96,6 @@ textarea:focus {
         width: 80%;
         margin: 0;
     }
-
 }
 
 #searchForm input[type="text"] {
@@ -189,6 +188,7 @@ main {
     max-width: 1200px;
     margin: 0 auto;
     padding: 15px;
+    padding-bottom: 50px;
 }
 
 @media (max-width: 768px) {
