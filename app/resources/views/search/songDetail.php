@@ -20,10 +20,10 @@ $song_info = $controller->songDetail();
                 </div>
                 <a class="song-album" href="/search/albumDetail?id=<?= $song_info['album']['flo_id'] ?>"><?= $song_info['album']['title'] ?></a>
             </div>
-            <? if ($song_info['artist']['img_url']) { ?>
+            <? if ($song_info['artists'][0]['img_url']) { ?>
                 <div class="artist-profile">
-                    <a href="/search/artistDetail?id=<?= $song_info['artist']['flo_id'] ?>">
-                        <img src="<?= $song_info['artist']['img_url'] . $_SERVER['FLO_IMG_RESIZE_PATH']($_SERVER['IMG_SMALL_SIZE']) ?>" alt="Artist Profile">
+                    <a href="/search/artistDetail?id=<?= $song_info['artists'][0]['flo_id'] ?>">
+                        <img src="<?= $song_info['artists'][0]['img_url'] . $_SERVER['FLO_IMG_RESIZE_PATH']($_SERVER['IMG_SMALL_SIZE']) ?>" alt="Artist Profile">
                     </a>
                 </div>
             <? } ?>
@@ -38,7 +38,7 @@ $song_info = $controller->songDetail();
                 <div class="lyrics-overlay"><?= $song_info['song']['lyrics'] ?></div>
             <? } else { ?>
                 <div class="lyrics-overlay none"><?= '가사가 제공되지 않는 곡입니다.' ?></div>
-            <? } ?>
+                <? } ?>
         </div>
         <div class="music-platforms">
             <a href="<?= $song_info['song']['url']['youtube'] ?>" target="_blank" class="platform-btn platform-youtube">YouTube Music</a>
