@@ -1,5 +1,6 @@
 -- 기존 테이블 삭제
 DROP TABLE IF EXISTS recommends;
+DROP TABLE IF EXISTS song_artists;
 DROP TABLE IF EXISTS songs;
 DROP TABLE IF EXISTS albums;
 DROP TABLE IF EXISTS artists;
@@ -25,20 +26,17 @@ CREATE TABLE artists (
 -- 앨범 정보를 저장하는 테이블
 CREATE TABLE albums (
     id INT AUTO_INCREMENT PRIMARY KEY COMMENT '앨범 고유 ID',
-    artist_id INT NOT NULL COMMENT '연관 아티스트 ID',
     title VARCHAR(100) NOT NULL COMMENT '앨범 제목',
     release_date DATE COMMENT '발매일',
     img_url VARCHAR(255) COMMENT '앨범 커버 사진 URL',
     flo_id int UNIQUE KEY COMMENT 'FLO music에서 사용하는 고유 ID',
     created_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP COMMENT '생성 일시',
-    updated_at timestamp NULL DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP COMMENT '업데이트 일시',
-    FOREIGN KEY (artist_id) REFERENCES artists(id)
+    updated_at timestamp NULL DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP COMMENT '업데이트 일시'
 ) COMMENT = '앨범 정보를 저장하는 테이블';
 -- 노래 정보를 저장하는 테이블
 CREATE TABLE songs (
     id INT AUTO_INCREMENT PRIMARY KEY COMMENT '노래 고유 ID',
     album_id INT NOT NULL COMMENT '연관 앨범 ID',
-    artist_id INT NOT NULL COMMENT '연관 아티스트 ID',
     title VARCHAR(100) NOT NULL COMMENT '노래 제목',
     genre VARCHAR(50) COMMENT '장르 정보',
     lyrics TEXT COMMENT '노래 가사',
@@ -48,9 +46,19 @@ CREATE TABLE songs (
     flo_id int UNIQUE KEY COMMENT 'FLO music에서 사용하는 고유 ID',
     created_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP COMMENT '생성 일시',
     updated_at timestamp NULL DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP COMMENT '업데이트 일시',
-    FOREIGN KEY (album_id) REFERENCES albums(id),
-    FOREIGN KEY (artist_id) REFERENCES artists(id)
+    FOREIGN KEY (album_id) REFERENCES albums(id)
 ) COMMENT = '노래 정보를 저장하는 테이블';
+-- 노래와 아티스트의 관계를 저장하는 테이블
+CREATE TABLE song_artists (
+    id INT AUTO_INCREMENT PRIMARY KEY COMMENT '노래-아티스트 관계 고유 ID',
+    song_id INT NOT NULL COMMENT '노래 ID',
+    artist_id INT NOT NULL COMMENT '아티스트 ID',
+    created_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP COMMENT '생성 일시',
+    updated_at timestamp NULL DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP COMMENT '업데이트 일시',
+    FOREIGN KEY (song_id) REFERENCES songs(id),
+    FOREIGN KEY (artist_id) REFERENCES artists(id),
+    UNIQUE KEY (song_id, artist_id)
+) COMMENT = '노래와 아티스트의 관계를 저장하는 테이블';
 -- 노래 추천 정보를 저장하는 테이블
 CREATE TABLE recommends (
     id INT AUTO_INCREMENT PRIMARY KEY COMMENT '추천 정보 고유 ID',

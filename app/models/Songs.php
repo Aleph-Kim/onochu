@@ -7,12 +7,11 @@ class Songs extends Model
     public function insert($song)
     {
         try {
-            $sql = "INSERT INTO songs (album_id, artist_id, title, genre, lyrics, composer, lyricist, arranger, flo_id) 
-                    VALUES (:album_id, :artist_id, :title, :genre, :lyrics, :composer, :lyricist, :arranger, :flo_id)";
+            $sql = "INSERT INTO songs (album_id, title, genre, lyrics, composer, lyricist, arranger, flo_id) 
+                    VALUES (:album_id, :title, :genre, :lyrics, :composer, :lyricist, :arranger, :flo_id)";
             $stmt = $this->db->prepare($sql);
             $stmt->execute([
                 ':album_id' => $song['album_id'],
-                ':artist_id' => $song['artist_id'],
                 ':title' => $song['title'],
                 ':genre' => $song['genre'],
                 ':lyrics' => $song['lyrics'],
@@ -34,6 +33,25 @@ class Songs extends Model
             $stmt = $this->db->prepare($sql);
             $stmt->execute(['flo_id' => $flo_id]);
             return $stmt->fetch(PDO::FETCH_ASSOC);
+        } catch (PDOException $e) {
+            ErrorHandler::showErrorPage(400);
+        }
+    }
+
+    /**
+     * 노래와 아티스트 관계 저장
+     * @param int $song_id 노래 id
+     * @param int $artist_id 아티스트 id
+     */
+    public function insertSongArtistRelation($song_id, $artist_id)
+    {
+        try {
+            $sql = "INSERT INTO song_artists (song_id, artist_id) VALUES (:song_id, :artist_id)";
+            $stmt = $this->db->prepare($sql);
+            $stmt->execute([
+                ':song_id' => $song_id,
+                ':artist_id' => $artist_id
+            ]);
         } catch (PDOException $e) {
             ErrorHandler::showErrorPage(400);
         }

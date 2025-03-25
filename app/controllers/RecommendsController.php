@@ -44,20 +44,23 @@ class RecommendsController extends Controller
     {
         $song_info = $_SESSION['song_info'];
 
-        // 가수 조회
-        $artist = $this->artists_model->getByFloId($song_info['artist']['flo_id']) ?: $song_info['artist'];
-        if ($artist['id'] == null) {
-            // 이미지 서버에 업로드
-            $upload_img_url = $artist['img_url'] . $_SERVER['FLO_IMG_RESIZE_PATH']($_SERVER['IMG_FULL_SIZE']);
-            $artist['img_url'] = ImageHelper::uploadImage($upload_img_url, 'artist');
-            // 가수 저장
-            $artist['id'] = $this->artists_model->insert($artist);
+        // 가수 조회 및 저장
+        $artists = [];
+        foreach ($song_info['artists'] as $artist_info) {
+            $artist = $this->artists_model->getByFloId($artist_info['flo_id']) ?: $artist_info;
+            if ($artist['id'] == null) {
+                // 이미지 서버에 업로드
+                $upload_img_url = $artist['img_url'] . $_SERVER['FLO_IMG_RESIZE_PATH']($_SERVER['IMG_FULL_SIZE']);
+                $artist['img_url'] = ImageHelper::uploadImage($upload_img_url, 'artist');
+                // 가수 저장
+                $artist['id'] = $this->artists_model->insert($artist);
+            }
+            $artists[] = $artist;
         }
 
         // 앨범 조회
         $album = $this->albums_model->getByFloId($song_info['album']['flo_id']) ?: $song_info['album'];
         if ($album['id'] == null) {
-            $album['artist_id'] = $artist['id'];
             $upload_img_url = $album['img_url'] . $_SERVER['FLO_IMG_RESIZE_PATH']($_SERVER['IMG_FULL_SIZE']);
             // 이미지 서버에 업로드
             $album['img_url'] = ImageHelper::uploadImage($upload_img_url);
@@ -69,9 +72,11 @@ class RecommendsController extends Controller
         $song = $this->songs_model->getByFloId($song_info['song']['flo_id']) ?: $song_info['song'];
         if ($song['id'] == null) {
             $song['album_id'] = $album['id'];
-            $song['artist_id'] = $album['artist_id'];
-            // 노래 저장
+            // 노래와 아티스트 관계 저장
             $song['id'] = $this->songs_model->insert($song);
+            foreach ($artists as $artist) {
+                $this->songs_model->insertSongArtistRelation($song['id'], $artist['id']);
+            }
         }
 
         // 추천 저장
