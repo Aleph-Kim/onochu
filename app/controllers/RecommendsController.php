@@ -5,6 +5,12 @@ class RecommendsController extends Controller
     // FloApiHelper 객체 프로퍼티
     protected $flo_api;
 
+    // model 프로퍼티
+    protected $artists_model;
+    protected $albums_model;
+    protected $songs_model;
+    protected $recommends_model;
+
     // 컨트롤러 클래스가 호출될 때
     public function __construct()
     {
