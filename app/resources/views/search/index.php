@@ -19,7 +19,7 @@ $songs = $controller->index();
                             <img src="<?= $song['album']['img_url'] . $_SERVER['FLO_IMG_RESIZE_PATH']($_SERVER['IMG_MEDIUM_SIZE']) ?>" alt="">
                         </span>
                         <div class="song-info">
-                            <div class="song-name"><?= $song['song']['title'] ?></div>
+                            <div class="song-name" onclick="window.location.href = '/search/songDetail?id=<?= $song['song']['flo_id'] ?>'"><?= $song['song']['title'] ?></div>
                             <div class="song-etc">
                                 <span class="artist-name" onclick="window.location.href = '/search/artistDetail?id=<?= $song['artist']['flo_id'] ?>'"><?= $song['artist']['name'] ?></span>
                                 <span class="between-bar"></span>

@@ -28,7 +28,7 @@ $controller = new SearchController();
                         <img src="<?= $album_info['img_url'] . $_SERVER['FLO_IMG_RESIZE_PATH']($_SERVER['IMG_MEDIUM_SIZE']) ?>" alt="">
                     </span>
                     <div class="song-info">
-                        <div class="song-name">
+                        <div class="song-name" onclick="window.location.href = '/search/songDetail?id=<?= $song['song']['flo_id'] ?>'">
                             <? if ($song['song']['title_yn'] == 'Y'): ?>
                                 <span class="title-mark">
                                     title

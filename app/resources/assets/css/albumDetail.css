@@ -102,15 +102,16 @@ img {
     font-size: 14px;
 }
 
+.song-box .song-name,
 .song-etc .artist-name,
 .song-etc .album-name {
+    cursor: pointer;
     transition: all 0.2s ease;
 }
 
 .song-etc .artist-name:hover,
 .song-etc .album-name:hover {
     color: var(--main-color);
-    cursor: pointer;
 }
 
 /* 아이콘 박스 */
