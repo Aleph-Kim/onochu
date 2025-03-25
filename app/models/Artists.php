@@ -4,18 +4,16 @@ class Artists extends Model
 {
     public function insert($artist)
     {
-        try {
-            $sql = "INSERT INTO artists (name, img_url, flo_id) VALUES (:name, :img_url, :flo_id)";
+            $sql = "INSERT INTO artists (name, genre, group_type, img_url, flo_id) VALUES (:name, :genre, :group_type, :img_url, :flo_id)";
             $stmt = $this->db->prepare($sql);
             $stmt->execute([
                 ':name' => $artist['name'],
-                ':img_url' => $artist['img_url'] ?: null,
+                ':genre' => $artist['genre'],
+                ':group_type' => $artist['group_type'],
+                ':img_url' => $artist['img_url'],
                 ':flo_id' => $artist['flo_id']
             ]);
             return $this->db->lastInsertId();
-        } catch (PDOException $e) {
-            ErrorHandler::showErrorPage(400);
-        }
     }
 
     public function getByFloId($flo_id)

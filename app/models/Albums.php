@@ -5,12 +5,14 @@ class Albums extends Model
     public function insert($album)
     {
         try {
-            $sql = "INSERT INTO albums (title, release_date, img_url, flo_id) 
-                    VALUES (:title, :release_date, :img_url, :flo_id)";
+            $sql = "INSERT INTO albums (title, release_date, genre, type, img_url, flo_id) 
+                    VALUES (:title, :release_date, :genre, :type, :img_url, :flo_id)";
             $stmt = $this->db->prepare($sql);
             $stmt->execute([
                 ':title' => $album['title'],
                 ':release_date' => $album['release_date'],
+                ':genre' => $album['genre'],
+                ':type' => $album['type'],
                 ':img_url' => $album['img_url'],
                 ':flo_id' => $album['flo_id']
             ]);

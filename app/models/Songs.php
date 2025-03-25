@@ -7,13 +7,15 @@ class Songs extends Model
     public function insert($song)
     {
         try {
-            $sql = "INSERT INTO songs (album_id, title, genre, lyrics, composer, lyricist, arranger, flo_id) 
-                    VALUES (:album_id, :title, :genre, :lyrics, :composer, :lyricist, :arranger, :flo_id)";
+            $sql = "INSERT INTO songs (album_id, title, genre, title_yn, play_time, lyrics, composer, lyricist, arranger, flo_id) 
+                    VALUES (:album_id, :title, :genre, :title_yn, :play_time, :lyrics, :composer, :lyricist, :arranger, :flo_id)";
             $stmt = $this->db->prepare($sql);
             $stmt->execute([
                 ':album_id' => $song['album_id'],
                 ':title' => $song['title'],
                 ':genre' => $song['genre'],
+                ':title_yn' => $song['title_yn'],
+                ':play_time' => $song['play_time'],
                 ':lyrics' => $song['lyrics'],
                 ':composer' => $song['composer'],
                 ':lyricist' => $song['lyricist'],
