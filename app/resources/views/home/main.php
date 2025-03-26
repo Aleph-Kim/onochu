@@ -1,6 +1,6 @@
 <?
 $controller = new MainController();
-$musics = $controller->index();
+['recommends' => $recommends] = $controller->index();
 ?>
 
 <? include $_SERVER['LAYOUT_PATH'] . "header.php"; ?>
@@ -8,20 +8,20 @@ $musics = $controller->index();
 
 <div class="slide-container">
     <div class="music-slider">
-        <? foreach ($musics as $music): ?>
+        <? foreach ($recommends as $recommend): ?>
             <div class="music-slide">
                 <div class="music-card-wrap">
                     <div class="music-card-box">
                         <div class="music-card-body">
                             <span class="music-card-artist-img">
-                                <img src="<?= $music['artist_img'] . $_SERVER['FLO_IMG_RESIZE_PATH']($_SERVER['IMG_MEDIUM_SIZE']) ?>">
+                                <img src="<?= $recommend['artist_img_url'] . $_SERVER['FLO_IMG_RESIZE_PATH']($_SERVER['IMG_MEDIUM_SIZE']) ?>">
                             </span>
-                            <div class="music-card-bg" style="background-image: url(<?= $music['bg_img'] . $_SERVER['FLO_IMG_RESIZE_PATH']($_SERVER['IMG_BIG_SIZE']) ?>);"></div>
+                            <div class="music-card-bg" style="background-image: url(<?= $recommend['album_img_url'] . $_SERVER['FLO_IMG_RESIZE_PATH']($_SERVER['IMG_BIG_SIZE']) ?>);"></div>
                         </div>
                         <div class="music-card-footer">
                             <div>
-                                <span class="music-card-title"><?= $music['music_name'] ?></span>
-                                <span class="music-card-artist-name"><?= $music['artist_name'] ?></span>
+                                <span class="music-card-title"><?= $recommend['song_title'] ?></span>
+                                <span class="music-card-artist-name"><?= $recommend['artist_name'] ?></span>
                             </div>
                         </div>
                     </div>
