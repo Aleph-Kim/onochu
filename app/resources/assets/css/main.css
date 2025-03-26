@@ -33,7 +33,6 @@ main {
 
 .music-card-box {
     width: 300px;
-    background-color: #FFF;
     overflow: hidden;
     box-shadow: 0 10px 20px 0 rgba(0, 0, 35, .25);
     border-radius: 8px;
