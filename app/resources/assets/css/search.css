@@ -1,3 +1,9 @@
+@media (min-width: 768px) {
+    .container {
+        padding: 0 20px;
+    }
+}
+
 .search-text-box {
     font-size: 1.5rem;
     padding: 20px;
@@ -18,10 +24,10 @@
     width: 100%;
     padding: 20px;
     transition: 0.3s;
-    border-radius: 10px;
 }
 
 .song-box:hover {
+    border-radius: 10px;
     background-color: #e5e5e5;
 }
 

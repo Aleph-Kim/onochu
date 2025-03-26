@@ -7,7 +7,7 @@ $controller = new SearchController();
 <? include $_SERVER['LAYOUT_PATH'] . "header.php"; ?>
 <link rel="stylesheet" type="text/css" href="<?= $_SERVER['CSS_PATH'] . 'artistDetail.css' ?>">
 
-<div class="main-content">
+<div class="container">
     <div class="profile">
         <img src="<?= $artist_info['img_url'] . $_SERVER['FLO_IMG_RESIZE_PATH']($_SERVER['IMG_BIG_SIZE']) ?>">
         <div>

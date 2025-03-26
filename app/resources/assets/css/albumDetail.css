@@ -2,8 +2,14 @@ img {
     aspect-ratio: 1 / 1;
 }
 
-.main-content {
-    padding: 20px 20px 60px;
+.container {
+    padding: 20px;
+}
+
+@media (min-width: 768px) {
+    .container {
+        padding: 40px 30px;
+    }
 }
 
 /* 프로필 */
@@ -50,10 +56,10 @@ img {
     width: 100%;
     padding: 20px;
     transition: 0.3s;
-    border-radius: 10px;
 }
 
 .song-box:hover {
+    border-radius: 10px;
     background-color: #e5e5e5;
 }
 
