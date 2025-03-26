@@ -9,7 +9,7 @@ $controller = new MainController();
 <div class="slide-container">
     <div class="music-slider">
         <? foreach ($recommends as $recommend): ?>
-            <div class="music-slide">
+            <a class="music-slide" href="/recommends/detail?id=<?= $recommend['id'] ?>">
                 <div class="music-card-wrap">
                     <div class="music-card-box">
                         <div class="music-card-body">
@@ -26,7 +26,7 @@ $controller = new MainController();
                         </div>
                     </div>
                 </div>
-            </div>
+            </a>
         <? endforeach; ?>
     </div>
 </div>
