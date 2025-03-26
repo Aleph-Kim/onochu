@@ -22,26 +22,36 @@ class Recommends extends Model
 
     public function getRecentRecommends($limit = 10)
     {
-        $sql = "
-            SELECT 
-                recommends.id,
-                songs.id as song_id,
-                songs.title as song_title,
-                songs.album_id,
-                albums.img_url as album_img_url,
-                artists.id as artist_id,
-                artists.name as artist_name,
-                artists.img_url as artist_img_url
-            FROM recommends 
-            JOIN songs ON recommends.song_id = songs.id
-            JOIN song_artists ON songs.id = song_artists.song_id
-            JOIN artists ON song_artists.artist_id = artists.id
-            JOIN albums ON songs.album_id = albums.id
-            ORDER BY recommends.created_at DESC 
-            LIMIT $limit
-        ";
-        $stmt = $this->db->prepare($sql);
-        $stmt->execute();
-        return $stmt->fetchAll(PDO::FETCH_ASSOC);
+        try {
+            $sql = "
+                SELECT 
+                    r.id,
+                    s.id AS song_id,
+                    s.title AS song_title,
+                    s.album_id,
+                    a.img_url AS album_img_url,
+                    SUBSTRING_INDEX(GROUP_CONCAT(art.id), ',', 1) AS artist_id,
+                    GROUP_CONCAT(art.name SEPARATOR ' & ') AS artist_name,
+                    SUBSTRING_INDEX(GROUP_CONCAT(art.img_url), ',', 1) AS artist_img_url
+                FROM (
+                    SELECT id, song_id, created_at
+                    FROM recommends
+                    ORDER BY created_at DESC
+                    LIMIT :limit
+                ) AS r
+                JOIN songs s ON r.song_id = s.id
+                JOIN song_artists sa ON s.id = sa.song_id
+                JOIN artists art ON sa.artist_id = art.id
+                JOIN albums a ON s.album_id = a.id
+                GROUP BY r.id, s.id, s.title, s.album_id, a.img_url
+                ORDER BY r.created_at DESC
+            ";
+            $stmt = $this->db->prepare($sql);
+            $stmt->bindParam(':limit', $limit, PDO::PARAM_INT);
+            $stmt->execute();
+            return $stmt->fetchAll(PDO::FETCH_ASSOC);
+        } catch (PDOException $e) {
+            ErrorHandler::showErrorPage(400);
+        }
     }
 }
