@@ -6,7 +6,7 @@ $songs = $controller->index();
 <? include $_SERVER['LAYOUT_PATH'] . "header.php"; ?>
 <link rel="stylesheet" type="text/css" href="<?= $_SERVER['CSS_PATH'] . 'search.css' ?>">
 
-<div class="search-container">
+<div class="container">
     <? if ($songs) { ?>
         <div class="search-text-box">
             <span class="search-text"><?= $_GET['q'] ?></span> 검색 결과
@@ -19,15 +19,15 @@ $songs = $controller->index();
                             <img src="<?= $song['album']['img_url'] . $_SERVER['FLO_IMG_RESIZE_PATH']($_SERVER['IMG_MEDIUM_SIZE']) ?>" alt="">
                         </span>
                         <div class="song-info">
-                            <div class="song-name" onclick="window.location.href = '/search/songDetail?id=<?= $song['song']['flo_id'] ?>'"><?= $song['song']['title'] ?></div>
+                            <div class="song-name"><?= $song['song']['title'] ?></div>
                             <div class="song-etc">
                                 <span>
                                     <? foreach ($song['artists'] as $artist): ?>
-                                        <span class="artist-name" onclick="window.location.href = '/search/artistDetail?id=<?= $artist['flo_id'] ?>'"><?= $artist['name'] ?></span>
+                                        <span class="artist-name"><?= $artist['name'] ?></span>
                                     <? endforeach; ?>
                                 </span>
                                 <span class="between-bar"></span>
-                                <span class="album-name" onclick="window.location.href = '/search/albumDetail?id=<?= $song['album']['flo_id'] ?>'"><?= $song['album']['title'] ?></span>
+                                <span class="album-name"><?= $song['album']['title'] ?></span>
                                 <span class="between-bar"></span>
                                 <span class="song-play-time"><?= $song['song']['play_time'] ?></span>
                             </div>

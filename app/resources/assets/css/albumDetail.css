@@ -109,20 +109,12 @@ img {
 }
 
 .song-box .song-name,
-.song-etc .artist-name,
-.song-etc .album-name {
-    cursor: pointer;
-    transition: all 0.2s ease;
-}
-
-.song-etc .artist-name:hover,
-.song-etc .album-name:hover {
-    color: var(--main-color);
+.song-etc span {
+    cursor: default;
 }
 
 .song-etc .artist-name:not(:last-child)::after {
     content: ' & ';
-    color: #999;
 }
 
 /* 아이콘 박스 */

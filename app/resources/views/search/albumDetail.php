@@ -28,7 +28,7 @@ $controller = new SearchController();
                         <img src="<?= $album_info['img_url'] . $_SERVER['FLO_IMG_RESIZE_PATH']($_SERVER['IMG_MEDIUM_SIZE']) ?>" alt="">
                     </span>
                     <div class="song-info">
-                        <div class="song-name" onclick="window.location.href = '/search/songDetail?id=<?= $song['song']['flo_id'] ?>'">
+                        <div class="song-name">
                             <? if ($song['song']['title_yn'] == 'Y'): ?>
                                 <span class="title-mark">
                                     title
@@ -39,11 +39,11 @@ $controller = new SearchController();
                         <div class="song-etc">
                             <span>
                                 <? foreach ($song['artists'] as $artist): ?>
-                                    <span class="artist-name" onclick="window.location.href = '/search/artistDetail?id=<?= $artist['flo_id'] ?>'"><?= $artist['name'] ?></span>
+                                    <span class="artist-name"><?= $artist['name'] ?></span>
                                 <? endforeach; ?>
                             </span>
                             <span class="between-bar"></span>
-                            <span class="album-name" onclick="window.location.href = '/search/albumDetail?id=<?= $song['album']['flo_id'] ?>'"><?= $song['album']['title'] ?></span>
+                            <span class="album-name"><?= $song['album']['title'] ?></span>
                             <span class="between-bar"></span>
                             <span class="song-play-time"><?= $song['song']['play_time'] ?></span>
                         </div>
@@ -64,7 +64,7 @@ $controller = new SearchController();
                             </g>
                         </svg>
                     </a>
-                    <a href="/search/artistDetail?id=<?= $song['artist']['flo_id'] ?>">
+                    <a href="/search/artistDetail?id=<?= $song['artists'][0]['flo_id'] ?>">
                         <svg viewBox="0 0 24 24">
                             <g>
                                 <path d="M22,10h-4v2v3.51C17.58,15.19,17.07,15,16.5,15c-1.38,0-2.5,1.12-2.5,2.5c0,1.38,1.12,2.5,2.5,2.5 c1.36,0,2.46-1.08,2.5-2.43V12h3V10z M3.06,19c0.38-3.11,2.61-6.1,7.94-6.1c0.62,0,1.19,0.05,1.73,0.13l0.84-0.84 c-0.58-0.13-1.19-0.23-1.85-0.26C13.58,11.59,15,9.96,15,8c0-2.21-1.79-4-4-4C8.79,4,7,5.79,7,8c0,1.96,1.42,3.59,3.28,3.93 C4.77,12.21,2,15.76,2,20h10.02L12,19H3.06z M8,8c0-1.65,1.35-3,3-3s3,1.35,3,3s-1.35,3-3,3S8,9.65,8,8z" class="style-scope yt-icon"></path>
