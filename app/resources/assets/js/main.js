@@ -6,7 +6,7 @@ document.addEventListener('DOMContentLoaded', function () {
         imagesLoaded: true,
         prevNextButtons: false,
         pageDots: false,
-        wrapAround: true,
+        wrapAround: false,
     });
 
     // 드래그 시작 시 터치 이벤트의 기본 동작 방지
@@ -22,4 +22,10 @@ document.addEventListener('DOMContentLoaded', function () {
             return true;
         };
     });
+
+    // 슬라이드가 5개 미만일 경우 무한 스크롤 삭제
+    if (flkty.cells.length > 5) {
+        flkty.options.wrapAround = true;
+        flkty.updateDraggable();
+    }
 });
