@@ -44,8 +44,8 @@ $_SESSION['song_info'] = $song_info;
     </div>
     <textarea name="comment" class="recommends-comment" placeholder="코멘트를 남겨주세요!"></textarea>
     <div class="buttons">
-        <button class="btn btn-cancel" onclick="confirmBack()">뒤로가기</button>
-        <button class="btn btn-submit">추천</button>
+        <button type="button" class="btn btn-cancel" onclick="confirmBack()">뒤로가기</button>
+        <button type="submit" class="btn btn-submit">추천</button>
     </div>
 </form>
 
