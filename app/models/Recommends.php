@@ -54,4 +54,60 @@ class Recommends extends Model
             ErrorHandler::showErrorPage(400);
         }
     }
+
+    /**
+     * 추천 상세 조회
+     * @param int $id 추천 id
+     */
+    public function getById($id)
+    {
+        try {
+            $recommend_sql = "
+                SELECT 
+                    recommends.id,
+                    recommends.score,
+                    recommends.comment,
+                    recommends.created_at as recommend_date,
+                    songs.id as song_id,
+                    songs.title as song_title,
+                    songs.album_id,
+                    songs.lyrics,
+                    songs.flo_id as song_flo_id,
+                    albums.img_url as album_img_url,
+                    albums.release_date as release_date,
+                    songs.genre as genre,
+                    songs.play_time as play_time
+                FROM recommends 
+                JOIN songs ON recommends.song_id = songs.id
+                JOIN albums ON songs.album_id = albums.id
+                WHERE recommends.id = :id
+            ";
+            $stmt = $this->db->prepare($recommend_sql);
+            $stmt->execute([':id' => $id]);
+            $result = $stmt->fetch(PDO::FETCH_ASSOC);
+
+            $artist_sql = "
+                SELECT 
+                    artists.id,
+                    artists.name,
+                    artists.img_url
+                FROM song_artists
+                JOIN artists ON song_artists.artist_id = artists.id
+                WHERE song_artists.song_id = :song_id
+            ";
+            $stmt_artists = $this->db->prepare($artist_sql);
+            $stmt_artists->execute([':song_id' => $result['song_id']]);
+            $result['artists'] = $stmt_artists->fetchAll(PDO::FETCH_ASSOC);
+
+            $song = [
+                'flo_id' => $result['song_flo_id'],
+                'title' => $result['song_title'],
+            ];
+            $result['url'] = PlatformHelper::getPlatformUrl($song, $result['artists']);
+
+            return $result;
+        } catch (PDOException $e) {
+            ErrorHandler::showErrorPage(400);
+        }
+    }
 }

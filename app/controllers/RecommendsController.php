@@ -87,4 +87,23 @@ class RecommendsController extends Controller
 
         ScriptHelper::msgGo("추천이 저장되었습니다.");
     }
+
+    /**
+     * 추천 상세 조회
+     */
+    public function detail()
+    {
+        // XSS 방지 처리
+        $_GET['id'] = htmlspecialchars($_GET['id']);
+
+        // 검색어
+        $recommend_id = $_GET['id'];
+
+        // 빈 검색어 처리
+        if (empty($recommend_id)) {
+            ErrorHandler::showErrorPage(400);
+        }
+
+        return $this->recommends_model->getById($recommend_id);
+    }
 }
