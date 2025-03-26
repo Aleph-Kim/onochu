@@ -34,9 +34,10 @@ class Recommends extends Model
                     GROUP_CONCAT(art.name SEPARATOR ' & ') AS artist_name,
                     SUBSTRING_INDEX(GROUP_CONCAT(art.img_url), ',', 1) AS artist_img_url
                 FROM (
-                    SELECT id, song_id, created_at
+                    SELECT MAX(id) AS id, song_id
                     FROM recommends
-                    ORDER BY created_at DESC
+                    GROUP BY song_id
+                    ORDER BY MAX(created_at) DESC
                     LIMIT :limit
                 ) AS r
                 JOIN songs s ON r.song_id = s.id
@@ -44,7 +45,7 @@ class Recommends extends Model
                 JOIN artists art ON sa.artist_id = art.id
                 JOIN albums a ON s.album_id = a.id
                 GROUP BY r.id, s.id, s.title, s.album_id, a.img_url
-                ORDER BY r.created_at DESC
+                ORDER BY r.id DESC;
             ";
             $stmt = $this->db->prepare($sql);
             $stmt->bindParam(':limit', $limit, PDO::PARAM_INT);
