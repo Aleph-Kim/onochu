@@ -234,7 +234,7 @@ class FloApiHelper
         $song_info['song'] = $this->extractSong($song_data);
         $song_info['artists'] = $this->extractArtists($song_data['artistList'] ?? []);
         $song_info['album'] = $this->extractAlbum($song_data['album'] ?? []);
-        $song_info['song']['url'] = $this->getPlatformUrl($song_info);
+        $song_info['song']['url'] = PlatformHelper::getPlatformUrl($song_info['song'], $song_info['artists']);
 
         return $song_info;
     }
@@ -359,36 +359,5 @@ class FloApiHelper
             }
         }
         return $result;
-    }
-
-    /**
-     * 각 플랫폼별 노래 url을 반환하는 함수
-     * 
-     * 유튜브 - 노래 검색 페이지 url
-     * 지니뮤직 - 모바일일 경우 지니뮤직 앱 url 스키마 || pc일 경우 노래 검색 페이지 url
-     * 플로뮤직 - 모바일일 경우 노래 상세페이지 앱 url 스키마 || pc일 경우 노래 상세 페이지 url
-     * 
-     * @param array $song_info flo api에서 받아온 노래 정보
-     * @return array 각 플랫폼별 노래 url
-     */
-    protected function getPlatformUrl($song_info)
-    {
-        // 사용자 접속환경 모바일 여부
-        $is_mobile = UserHelper::isMobile();
-        // 검색 시 키워드
-        $artists_name = implode(' ', array_column($song_info['artists'], 'name'));
-        $keyword = "{$song_info['song']['title']} {$artists_name}";
-        // 플로에서 사용하는 노래 pk
-        $flo_id = $song_info['song']['flo_id'];
-
-        $youtube = $_SERVER['YOUTUBE_MUSIC_SEARCH_PATH']($keyword);
-        $genie = $is_mobile ? $_SERVER['GENIE_APP_PATH'] : $_SERVER['GENIE_SEARCH_PATH']($keyword);
-        $flo = $is_mobile ? $_SERVER['FLO_APP_DETAIL_PATH']($flo_id) : $_SERVER['FLO_DETAIL_PATH']($flo_id);
-
-        return [
-            'youtube' => $youtube,
-            'genie' => $genie,
-            'flo' => $flo,
-        ];
     }
 }
