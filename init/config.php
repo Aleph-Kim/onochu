@@ -57,6 +57,9 @@ $_SERVER['FLO_IMG_RESIZE_PATH'] = fn($size) => "?/dims/resize/$size/quality/90";
 // 유튜브 뮤직 검색 경로
 $_SERVER['YOUTUBE_MUSIC_SEARCH_PATH'] = fn($q) => "https://music.youtube.com/search?q=$q";
 
+// 유튜브 뮤직 앱 검색 경로
+$_SERVER['YOUTUBE_MUSIC_APP_PATH'] = fn($q) => "vnd.youtube.music:/search?q=$q";
+
 // 지니 검색 경로
 $_SERVER['GENIE_SEARCH_PATH'] = fn($q) => "https://www.genie.co.kr/search/searchMain?query=$q";
 

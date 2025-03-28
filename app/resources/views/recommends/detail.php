@@ -72,7 +72,9 @@ $recommend_info = $controller->detail();
             RECOMMEND_ID: '<?= $recommend_info['id'] ?>',
             ALBUM_IMG_URL: '<?= $recommend_info['album_img_url'] . $_SERVER['IMG_RESIZE_PATH']($_SERVER['IMG_BIG_SIZE']) ?>',
             SONG_TITLE: '<?= $recommend_info['song_title'] ?>',
-            ARTIST_NAME: '<?= $recommend_info['artists'][0]['name'] ?>'
+            ARTIST_NAME: '<?= $recommend_info['artists'][0]['name'] ?>',
+            YOUTUBE_Q: "<?= $recommend_info['song_title'] . ' ' . $recommend_info['artists'][0]['name'] ?>",
+            FLO_ID: '<?= $recommend_info['song_flo_id'] ?>'
         },
     });
 </script>
