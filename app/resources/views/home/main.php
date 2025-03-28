@@ -31,6 +31,6 @@ $controller = new MainController();
     </div>
 </div>
 
-<script src="<?= $_SERVER['JS_PATH'] . 'flickity.js' ?>"></script>
+<script src="<?= $_SERVER['JS_PATH'] . 'lib/flickity.js' ?>"></script>
 <script src="<?= $_SERVER['JS_PATH'] . 'main.js' ?>"></script>
 <? include $_SERVER['LAYOUT_PATH'] . "footer.php"; ?>
