@@ -72,6 +72,9 @@ $_SERVER['FLO_APP_DETAIL_PATH'] = fn($id) => "flomusic://view/content?type=TRACK
 // 이미지 호스트 서버 경로
 $_SERVER['IMG_SERVER_PATH'] = "https://img.aleph.kr/files";
 
+// 이미지 resize path
+$_SERVER['IMG_RESIZE_PATH'] = fn($size) => "?size=$size";
+
 /**
  * redis key
  */

@@ -14,9 +14,9 @@ $controller = new MainController();
                     <div class="music-card-box">
                         <div class="music-card-body">
                             <span class="music-card-artist-img">
-                                <img src="<?= $recommend['artist_img_url'] . $_SERVER['FLO_IMG_RESIZE_PATH']($_SERVER['IMG_MEDIUM_SIZE']) ?>">
+                                <img src="<?= $recommend['artist_img_url'] . $_SERVER['IMG_RESIZE_PATH']($_SERVER['IMG_MEDIUM_SIZE']) ?>">
                             </span>
-                            <div class="music-card-bg" style="background-image: url(<?= $recommend['album_img_url'] . $_SERVER['FLO_IMG_RESIZE_PATH']($_SERVER['IMG_BIG_SIZE']) ?>);"></div>
+                            <div class="music-card-bg" style="background-image: url(<?= $recommend['album_img_url'] . $_SERVER['IMG_RESIZE_PATH']($_SERVER['IMG_BIG_SIZE']) ?>);"></div>
                         </div>
                         <div class="music-card-footer">
                             <div>

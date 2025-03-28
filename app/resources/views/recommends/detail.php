@@ -9,7 +9,7 @@ $recommend_info = $controller->detail();
 
 <div class="container">
     <div class="artist-info">
-        <img src="<?= $recommend_info['artists'][0]['img_url'] . $_SERVER['FLO_IMG_RESIZE_PATH']($_SERVER['IMG_SMALL_SIZE']) ?>" onclick="window.location.href = '/search/artistDetail?id=<?= $recommend_info['artists'][0]['flo_id'] ?>'">
+        <img src="<?= $recommend_info['artists'][0]['img_url'] . $_SERVER['IMG_RESIZE_PATH']($_SERVER['IMG_SMALL_SIZE']) ?>" onclick="window.location.href = '/search/artistDetail?id=<?= $recommend_info['artists'][0]['flo_id'] ?>'">
         <span>
             <? foreach ($recommend_info['artists'] as $artist): ?>
                 <span class="artist-name" onclick="window.location.href = '/search/artistDetail?id=<?= $artist['flo_id'] ?>'"><?= $artist['name'] ?></span>
@@ -22,7 +22,7 @@ $recommend_info = $controller->detail();
         <a href="<?= $recommend_info['url']['genie'] ?>" target="_blank" class="platform-btn platform-genie">Genie</a>
     </div>
     <div class="song-img">
-        <img src="<?= $recommend_info['album_img_url'] . $_SERVER['FLO_IMG_RESIZE_PATH']($_SERVER['IMG_MEDIUM_SIZE']) ?>">
+        <img src="<?= $recommend_info['album_img_url'] . $_SERVER['IMG_RESIZE_PATH']($_SERVER['IMG_MEDIUM_SIZE']) ?>">
     </div>
     <div class="song-info">
         <h2><?= $recommend_info['song_title'] ?></h2>
