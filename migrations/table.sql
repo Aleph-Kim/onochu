@@ -8,9 +8,8 @@ DROP TABLE IF EXISTS users;
 -- 유저 정보를 저장하는 테이블
 CREATE TABLE `users` (
     id INT AUTO_INCREMENT PRIMARY KEY COMMENT '유저 고유 ID',
-    username varchar(50) NOT NULL COMMENT '유저 이름',
-    password varchar(255) NOT NULL COMMENT '유저 비밀번호',
-    email varchar(100) NOT NULL COMMENT '유저 이메일',
+    kakao_id varchar(50) NOT NULL COMMENT '카카오 고유 ID',
+    nickname varchar(50) NOT NULL COMMENT '유저 닉네임',
     created_at timestamp NULL DEFAULT CURRENT_TIMESTAMP COMMENT '생성 일시',
     updated_at timestamp NULL DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP COMMENT '업데이트 일시'
 ) COMMENT = '유저 정보를 저장하는 테이블';

@@ -8,12 +8,16 @@ class AuthController extends Controller
     private $kakaoApiUrl = 'https://kauth.kakao.com';
     private $kakaoApiUrlV2 = 'https://kapi.kakao.com';
 
+    private $user_model;
+
     public function __construct()
     {
         $this->clientId = getenv('KAKAO_CLIENT_ID');
         $this->clientSecret = getenv('KAKAO_CLIENT_SECRET');
         // 현재 페이지의 프로토콜과 호스트를 사용하여 리다이렉트 URI 생성
         $this->redirectUri = $_SERVER['REQUEST_SCHEME'] . '://' . $_SERVER['HTTP_HOST'] . getenv('KAKAO_REDIRECT_URI');
+
+        $this->user_model = $this->model('User');
     }
 
     /**
@@ -54,10 +58,18 @@ class AuthController extends Controller
         // 사용자 정보 받기
         $userInfo = $this->getUserInfo($token);
 
+        // 사용자 정보 조회
+        $user = $this->user_model->getUserByKakaoId($userInfo['id']);
+
+        // 사용자 정보가 없으면 생성
+        if (!$user) {
+            $this->user_model->createUser($userInfo);
+        }
+
         // 사용자 정보를 세션에 저장
         $_SESSION['user'] = [
-            'id' => $userInfo['id'],
-            'nickname' => $userInfo['properties']['nickname'],
+            'id' => $user['id'],
+            'nickname' => $user['nickname'],
         ];
 
         // 로그인 성공 후 메인 페이지로 리다이렉트
