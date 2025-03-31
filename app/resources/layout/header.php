@@ -65,7 +65,7 @@
 
                 <!-- 유저 메뉴 -->
                 <div class="user-menu">
-                    <button type="button" class="btn-login">로그인</button>
+                    <a href="/login" type="button" class="btn-login">로그인</a>
                 </div>
             </div>
         </div>
