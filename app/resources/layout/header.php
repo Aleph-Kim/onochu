@@ -65,7 +65,11 @@
 
                 <!-- 유저 메뉴 -->
                 <div class="user-menu">
-                    <a href="/login" type="button" class="btn-login">로그인</a>
+                    <?php if (isset($_SESSION['user'])): ?>
+                        <a href="/auth/logout" type="button" class="btn">로그아웃</a>
+                    <?php else: ?>
+                        <a href="/login" type="button" class="btn">로그인</a>
+                    <?php endif; ?>
                 </div>
             </div>
         </div>
