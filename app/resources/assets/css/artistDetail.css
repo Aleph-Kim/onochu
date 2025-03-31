@@ -46,6 +46,7 @@ img {
     display: grid;
     grid-template-columns: repeat(auto-fill, minmax(350px, 1fr));
     gap: 25px;
+    min-height: 250px;
 }
 
 /* 개별 앨범 카드 */
@@ -284,8 +285,8 @@ input:checked+.slider:before {
 
 .no-results {
     text-align: center;
-    padding: 20px;
+    padding: 70px 0;
     font-size: 16px;
     color: #888;
-    grid-column: 1 / span 2;
+    grid-column: 1 / span 3;
 }
