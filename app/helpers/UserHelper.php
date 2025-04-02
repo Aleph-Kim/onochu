@@ -13,4 +13,14 @@ class UserHelper
         $is_mobile = preg_match($pattern, $user_agent);
         return $is_mobile;
     }
+
+    /**
+     * 로그인 여부를 확인하는 함수
+     * 
+     * @return boolean - 로그인 여부
+     */
+    public static function checkLogin()
+    {
+        return isset($_SESSION['user']);
+    }
 }

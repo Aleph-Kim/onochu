@@ -26,6 +26,10 @@ class RecommendsController extends Controller
 
     public function index()
     {
+        if (!UserHelper::checkLogin()) {
+            ScriptHelper::msgGo("로그인 후 이용해주세요.", "/login");
+        }
+
         // XSS 방지 처리
         $_GET['id'] = htmlspecialchars($_GET['id']);
 
@@ -42,6 +46,10 @@ class RecommendsController extends Controller
 
     public function post()
     {
+        if (!UserHelper::checkLogin()) {
+            ScriptHelper::msgGo("로그인 후 이용해주세요.", "/login");
+        }
+
         $song_info = $_SESSION['song_info'];
 
         // 가수 조회 및 저장
