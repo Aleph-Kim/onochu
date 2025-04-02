@@ -89,7 +89,7 @@ class RecommendsController extends Controller
 
         // 추천 저장
         $recommends = $_POST;
-        $recommends['user_id'] = 1; // 임시 유저 id 하드코딩
+        $recommends['user_id'] = $_SESSION['user']['id'];
         $recommends['song_id'] = $song['id'];
         $recommends['id'] = $this->recommends_model->insert($recommends);
 
