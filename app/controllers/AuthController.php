@@ -26,7 +26,7 @@ class AuthController extends Controller
     public function login()
     {
         // 로그인 상태 확인
-        if (isset($_SESSION['user'])) {
+        if (UserHelper::checkLogin()) {
             header('Location: /');
             exit;
         }
@@ -137,7 +137,7 @@ class AuthController extends Controller
      */
     public function logout()
     {
-        if (isset($_SESSION['user'])) {
+        if (UserHelper::checkLogin()) {
             unset($_SESSION['user']);
         }
         header('Location: /');
