@@ -1,7 +1,7 @@
 <?
 
 // path 체크
-$path = isset($_REQUEST['path']) ? $_REQUEST['path'] : 'home/main';
+$path = isset($_REQUEST['path']) ? $_REQUEST['path'] : 'main/index';
 
 // xss 방지
 $path = htmlspecialchars($path, ENT_QUOTES, 'UTF-8');
