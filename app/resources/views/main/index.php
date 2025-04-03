@@ -2,42 +2,58 @@
 $controller = new MainController();
 ['recommends' => $recommends, 'artists' => $artists, 'new_albums' => $new_albums] = $controller->index();
 
-$new_album_section_title = UserHelper::checkLogin() ? "{$_SESSION['user']['nickname']}님이 추천한 아티스트의 신규 앨범" : "사용자들 추천 아티스트의 신규 앨범";
-$artist_section_title = UserHelper::checkLogin() ? "{$_SESSION['user']['nickname']}님이 추천한 아티스트" : "사용자들 추천 아티스트";
+$new_album_section_title = UserHelper::checkLogin() ? "{$_SESSION['user']['nickname']}님이 추천한 아티스트의 신규 앨범" : "추천 많은 아티스트의 신규 앨범";
+$artist_section_title = UserHelper::checkLogin() ? "{$_SESSION['user']['nickname']}님이 추천한 아티스트" : "추천 많은 아티스트";
 ?>
 
 <? include $_SERVER['LAYOUT_PATH'] . "header.php"; ?>
 <link rel="stylesheet" type="text/css" href="<?= $_SERVER['CSS_PATH'] . 'main.css' ?>">
 
 <div class="slide-container">
-    <div class="music-slider">
-        <? foreach ($recommends as $recommend): ?>
-            <a class="music-slide" href="/recommends/detail?id=<?= $recommend['id'] ?>">
-                <div class="music-card-wrap">
-                    <div class="music-card-box">
-                        <div class="music-card-body">
-                            <span class="music-card-artist-img">
-                                <img src="<?= $recommend['artist_img_url'] . $_SERVER['IMG_RESIZE_PATH']($_SERVER['IMG_MEDIUM_SIZE']) ?>">
-                            </span>
-                            <div class="music-card-bg" style="background-image: url(<?= $recommend['album_img_url'] . $_SERVER['IMG_RESIZE_PATH']($_SERVER['IMG_BIG_SIZE']) ?>);"></div>
-                        </div>
-                        <div class="music-card-footer">
-                            <div>
-                                <span class="music-card-title"><?= $recommend['song_title'] ?></span>
-                                <span class="music-card-artist-name"><?= $recommend['artist_name'] ?></span>
+    <? if (isset($recommends) && !empty($recommends)): ?>
+        <div class="music-slider">
+            <? foreach ($recommends as $recommend): ?>
+                <a class="music-slide" href="/recommends/detail?id=<?= $recommend['id'] ?>">
+                    <div class="music-card-wrap">
+                        <div class="music-card-box">
+                            <div class="music-card-body">
+                                <span class="music-card-artist-img">
+                                    <img src="<?= $recommend['artist_img_url'] . $_SERVER['IMG_RESIZE_PATH']($_SERVER['IMG_MEDIUM_SIZE']) ?>">
+                                </span>
+                                <div class="music-card-bg" style="background-image: url(<?= $recommend['album_img_url'] . $_SERVER['IMG_RESIZE_PATH']($_SERVER['IMG_BIG_SIZE']) ?>);"></div>
+                            </div>
+                            <div class="music-card-footer">
+                                <div>
+                                    <span class="music-card-title"><?= $recommend['song_title'] ?></span>
+                                    <span class="music-card-artist-name"><?= $recommend['artist_name'] ?></span>
+                                </div>
                             </div>
                         </div>
                     </div>
-                </div>
-            </a>
-        <? endforeach; ?>
-    </div>
+                </a>
+            <? endforeach; ?>
+        </div>
+    <? else: ?>
+        <div class="skeleton-container" data-text="다른 유저들의 추천 노래를 이 곳에서 보여드릴게요!">
+            <div class="skeleton-scroll">
+                <? for ($i = 0; $i < 10; $i++): ?>
+                    <div class="skeleton-slide">
+                        <div class="skeleton skeleton-card"></div>
+                        <div class="skeleton-footer">
+                            <div class="skeleton skeleton-title"></div>
+                            <div class="skeleton skeleton-artist"></div>
+                        </div>
+                    </div>
+                <? endfor; ?>
+            </div>
+        </div>
+    <? endif; ?>
 </div>
 <div class="main-container">
     <div class="new-album-section">
         <h2><?= $new_album_section_title ?></h2>
-        <div class="new-album-container">
-            <? if (isset($new_albums)): ?>
+        <? if (isset($new_albums) && !empty($new_albums)): ?>
+            <div class="new-album-container">
                 <? foreach ($new_albums as $new_album): ?>
                     <a class="album-card" href="/search/albumDetail?id=<?= $new_album['flo_id'] ?>">
                         <img src="<?= $new_album['img_url'] . $_SERVER['IMG_RESIZE_PATH']($_SERVER['IMG_MEDIUM_SIZE']) ?>" />
@@ -49,15 +65,27 @@ $artist_section_title = UserHelper::checkLogin() ? "{$_SESSION['user']['nickname
                         </div>
                     </a>
                 <? endforeach; ?>
-            <? else: ?>
-                <p class="no-results">신규 앨범이 없습니다.</p>
-            <? endif; ?>
-        </div>
+            </div>
+        <? else: ?>
+            <div class="skeleton-container" data-text="새로 나온 앨범이 있다면 이 곳에서 알려드릴게요!">
+                <div class="skeleton-scroll">
+                    <? for ($i = 0; $i < 10; $i++): ?>
+                        <div class="skeleton-album-card">
+                            <div class="skeleton skeleton-image"></div>
+                            <div class="skeleton-content">
+                                <div class="skeleton skeleton-title"></div>
+                                <div class="skeleton skeleton-artist"></div>
+                            </div>
+                        </div>
+                    <? endfor; ?>
+                </div>
+            </div>
+        <? endif; ?>
     </div>
     <div class="artist-section">
         <h2><?= $artist_section_title ?></h2>
-        <div class="artist-container">
-            <? if (isset($artists)): ?>
+        <? if (isset($artists) && !empty($artists)): ?>
+            <div class="artist-container">
                 <? foreach ($artists as $artist): ?>
                     <a class="artist-card" href="/search/artistDetail?id=<?= $artist['flo_id'] ?>">
                         <img src="<?= $artist['img_url'] . $_SERVER['IMG_RESIZE_PATH']($_SERVER['IMG_MEDIUM_SIZE']) ?>" />
@@ -76,10 +104,22 @@ $artist_section_title = UserHelper::checkLogin() ? "{$_SESSION['user']['nickname
                         </div>
                     </a>
                 <? endforeach; ?>
-            <? else: ?>
-                <p class="no-results">추천 아티스트가 없습니다.</p>
-            <? endif; ?>
-        </div>
+            </div>
+        <? else: ?>
+            <div class="skeleton-container" data-text="아직 추천 아티스트가 없네요!&#10;나만의 노래를 추천해주세요!">
+                <div class="skeleton-scroll">
+                    <? for ($i = 0; $i < 10; $i++): ?>
+                        <div class="skeleton-artist-card">
+                            <div class="skeleton skeleton-image"></div>
+                            <div class="skeleton-content">
+                                <div class="skeleton skeleton-name"></div>
+                                <div class="skeleton skeleton-count"></div>
+                            </div>
+                        </div>
+                    <? endfor; ?>
+                </div>
+            </div>
+        <? endif; ?>
     </div>
 </div>
 

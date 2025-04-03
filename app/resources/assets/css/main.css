@@ -8,11 +8,11 @@ main {
 }
 
 .slide-container {
-    padding: 60px 0;
     overflow: hidden;
 }
 
 .music-slider {
+    padding: 60px 0;
     overflow: visible;
 }
 
@@ -141,12 +141,7 @@ main {
 .new-album-section h2 {
     font-size: 1.5rem;
     font-weight: 700;
-}
-
-.new-album-container {
-    display: flex;
-    gap: 1rem;
-    padding: 1rem 0;
+    margin-bottom: 20px;
 }
 
 .album-card {
@@ -177,12 +172,7 @@ main {
 .artist-section h2 {
     font-size: 1.5rem;
     font-weight: 700;
-}
-
-.artist-container {
-    display: flex;
-    gap: 1rem;
-    padding: 1rem 0;
+    margin-bottom: 20px;
 }
 
 .artist-card {
@@ -221,15 +211,127 @@ main {
     height: 16px;
 }
 
-.no-results {
-    width: 100%;
-    height: 252px;
-    text-align: center;
-    color: #999;
-    background-color: #f5f5f5;
+.skeleton {
+    background-color: #f0f0f0;
+    border-radius: 4px;
+}
+
+.skeleton-content {
+    padding: 0.5rem;
+}
+
+.skeleton-title {
+    height: 1rem;
+    margin-bottom: 0.5rem;
+}
+
+.skeleton-artist,
+.skeleton-count {
+    height: 0.8rem;
+}
+
+.skeleton-slide {
+    width: 300px;
+    padding: 15px;
+    flex-shrink: 0;
+}
+
+.skeleton-slide .skeleton-card {
+    width: 300px;
+    height: 300px;
     border-radius: 8px;
-    text-align: center;
+}
+
+.skeleton-slide .skeleton-footer {
+    padding: 15px 30px;
+    background-color: #FFF;
+}
+
+.skeleton-slide .skeleton-title {
+    width: 60%;
+}
+
+.skeleton-slide .skeleton-artist {
+    width: 40%;
+}
+
+.skeleton-album-card {
+    border-radius: 0.5rem;
+    box-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.1);
+}
+
+.skeleton-album-card .skeleton-image {
+    width: 12rem;
+    height: 12rem;
+    border-top-left-radius: 0.5rem;
+    border-top-right-radius: 0.5rem;
+}
+
+.skeleton-album-card .skeleton-title {
+    width: 80%;
+}
+
+.skeleton-album-card .skeleton-artist {
+    width: 60%;
+}
+
+.skeleton-artist-card .skeleton-image {
+    width: 12rem;
+    height: 12rem;
+    border-radius: 50%;
+    margin: 0 auto;
+}
+
+.skeleton-artist-card .skeleton-name {
+    width: 70%;
+    margin: 0 auto 0.5rem;
+}
+
+.skeleton-artist-card .skeleton-count {
+    width: 40%;
+    margin: 0 auto;
+}
+
+@keyframes scroll {
+    0% {
+        transform: translateX(0);
+    }
+
+    100% {
+        transform: translateX(-50%);
+    }
+}
+
+.skeleton-container {
+    display: flex;
+    gap: 1rem;
+    padding: 10px;
+    overflow: hidden;
+    position: relative;
+}
+
+.skeleton-container::before {
+    content: attr(data-text);
+    white-space: pre-wrap;
     display: flex;
     align-items: center;
     justify-content: center;
+    width: 100%;
+    height: 100%;
+    background-color: #00000030;
+    color: #fff;
+    font-size: 20px;
+    border-radius: 8px;
+    position: absolute;
+    top: 0;
+    left: 0;
+    z-index: 10;
+    text-align: center;
+}
+
+.skeleton-scroll {
+    display: flex;
+    animation: scroll 10s linear infinite;
+    gap: 1rem;
+    margin-bottom: 10px;
 }
