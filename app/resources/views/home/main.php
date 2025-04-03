@@ -1,6 +1,6 @@
 <?
 $controller = new MainController();
-['recommends' => $recommends] = $controller->index();
+['recommends' => $recommends, 'artists' => $artists, 'new_albums' => $new_albums] = $controller->index();
 ?>
 
 <? include $_SERVER['LAYOUT_PATH'] . "header.php"; ?>

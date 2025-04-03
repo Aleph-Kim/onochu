@@ -75,6 +75,32 @@ class FloApiHelper
     }
 
     /**
+     * 새로 발매된 케이팝 앨범 정보를 가져오는 메서드
+     * @return array 새로 발매된 케이팝 앨범 정보 배열
+     */
+    public function getNewKpopAlbum()
+    {
+        $params = [
+            'page' => '1',
+            'size' => '100',
+        ];
+        return $this->fetchAndExtract($_SERVER['FLO_API_NEW_KPOP_ALBUM_PATH'], $params, 'getNewAlbums');
+    }
+
+    /**
+     * 새로 발매된 팝 앨범 정보를 가져오는 메서드
+     * @return array 새로 발매된 팝 앨범 정보 배열
+     */
+    public function getNewPopAlbum()
+    {
+        $params = [
+            'page' => '1',
+            'size' => '100',
+        ];
+        return $this->fetchAndExtract($_SERVER['FLO_API_NEW_POP_ALBUM_PATH'], $params, 'getNewAlbums');
+    }
+
+    /**
      * API에서 데이터를 가져오고 추출하는 메서드
      * @param string $path API 엔드포인트 경로
      * @param array|null $params 요청 파라미터
@@ -210,6 +236,54 @@ class FloApiHelper
     }
 
     /**
+     * 새로 발매된 앨범 정보를 가져오는 메서드
+     * @param array $data API 응답 데이터
+     * @return array {
+     *   albums_info: array {
+     *     [album_flo_id]: {
+     *       flo_id: string,
+     *       title: string,
+     *       type: string,
+     *       genre: string,
+     *       img_url: string,
+     *       release_date: string,
+     *       artist: array[] {
+     *         flo_id: string,
+     *         name: string,
+     *         genre: string,
+     *         group_type: string,
+     *         img_url: string
+     *       }
+     *     }
+     *   },
+     *   artists_flo_id: array {
+     *     [artist_flo_id]: album_flo_id
+     *   }
+     */
+    protected function getNewAlbums($data)
+    {
+        $albums_info = [];
+        $artists_flo_id = [];
+        if (!isset($data['data']) || !is_array($data['data']['list'] ?? [])) {
+            return $albums_info;
+        }
+
+        foreach ($data['data']['list'] as $album) {
+            $albums_info[$album['id']] = $this->extractAlbum($album);
+            $albums_info[$album['id']]['artist'] = $this->extractArtists($album['artistList']);
+
+            foreach ($albums_info[$album['id']]['artist'] as $artist) {
+                $artists_flo_id[$artist['flo_id']] = $album['id'];
+            }
+        }
+
+        return [
+            'albums_info' => $albums_info,
+            'artists_flo_id' => $artists_flo_id
+        ];
+    }
+
+    /**
      * 아티스트 API 응답에서 아티스트 정보를 추출하는 메서드
      * @param array $data API 응답 데이터
      * @return array 추출한 아티스트 정보 배열
@@ -260,7 +334,6 @@ class FloApiHelper
             'arranger' => implode(', ', $writerRoles['arrangers']),
         ];
     }
-
 
     /**
      * 데이터에서 앨범 정보를 추출하는 메서드
