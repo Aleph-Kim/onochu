@@ -198,13 +198,24 @@ main {
     min-height: calc(100vh - 71px);
 }
 
+@media (min-width: 1024px) {
+    .main-container {
+        width: 70%;
+        max-width: 1200px;
+        margin: 0 auto;
+        padding: 15px;
+    }
+}
+
 .container {
     background-color: #fff;
     min-height: calc(100vh - 71px - 65px);
 }
 
 @media (max-width: 768px) {
-    main {
+
+    main,
+    .main-container {
         width: 100%;
         padding: 0 10px;
     }

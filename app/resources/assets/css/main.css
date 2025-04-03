@@ -1,3 +1,7 @@
+body {
+    background-color: #fff;
+}
+
 main {
     width: 100%;
     max-width: 100vw;
@@ -107,4 +111,125 @@ main {
     display: block;
     line-height: 1.3;
     font-size: 12px;
+}
+
+@media (min-width: 768px) {
+    .container {
+        padding: 0 20px;
+    }
+}
+
+.new-album-container,
+.artist-container {
+    display: flex;
+    gap: 1rem;
+    padding: 1rem 0;
+    overflow-x: auto;
+    scrollbar-width: none;
+    -ms-overflow-style: none;
+}
+
+.new-album-container::-webkit-scrollbar,
+.artist-container::-webkit-scrollbar {
+    display: none;
+}
+
+.new-album-section {
+    margin-top: 30px;
+}
+
+.new-album-section h2 {
+    font-size: 1.5rem;
+    font-weight: 700;
+}
+
+.new-album-container {
+    display: flex;
+    gap: 1rem;
+    padding: 1rem 0;
+}
+
+.album-card {
+    flex: 0 0 12rem;
+    border-radius: 0.5rem;
+    box-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.1), 0 2px 4px -1px rgba(0, 0, 0, 0.06);
+}
+
+.album-card img {
+    border-top-left-radius: 0.5rem;
+    border-top-right-radius: 0.5rem;
+    width: 100%;
+    height: auto;
+}
+
+.album-card-content {
+    padding: 0.5rem;
+}
+
+.album-card-title {
+    font-weight: 600;
+}
+
+.artist-section {
+    margin-top: 40px;
+}
+
+.artist-section h2 {
+    font-size: 1.5rem;
+    font-weight: 700;
+}
+
+.artist-container {
+    display: flex;
+    gap: 1rem;
+    padding: 1rem 0;
+}
+
+.artist-card {
+    flex: 0 0 12rem;
+}
+
+.artist-card img {
+    border-radius: 50%;
+    width: 100%;
+    height: auto;
+    object-fit: cover;
+    box-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.1), 0 2px 4px -1px rgba(0, 0, 0, 0.06);
+}
+
+.artist-card-content {
+    padding: 0.5rem;
+    text-align: center;
+}
+
+.artist-card-name {
+    font-weight: 600;
+}
+
+.artist-card-recommend-count {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
+.artist-card-recommend-count svg {
+    height: 20px;
+    width: 20px;
+}
+
+.artist-card-recommend-count span {
+    height: 16px;
+}
+
+.no-results {
+    width: 100%;
+    height: 252px;
+    text-align: center;
+    color: #999;
+    background-color: #f5f5f5;
+    border-radius: 8px;
+    text-align: center;
+    display: flex;
+    align-items: center;
+    justify-content: center;
 }
