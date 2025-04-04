@@ -25,9 +25,8 @@ $controller = new SearchController();
             <div class="selected-option">전체</div>
             <div class="options">
                 <div class="option" data-type="all">전체</div>
+                <div class="option" data-type="정규/미니">정규/미니</div>
                 <div class="option" data-type="싱글">싱글</div>
-                <div class="option" data-type="정규">정규</div>
-                <div class="option" data-type="미니">미니</div>
                 <div class="option" data-type="참여">참여</div>
             </div>
         </div>

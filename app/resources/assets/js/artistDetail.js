@@ -25,7 +25,7 @@ function renderAlbums() {
     const albumList = document.querySelector('.albums');
     const filteredAlbums = albums
         .filter(album =>
-            (currentType === 'all' || album.type === currentType) &&
+            (currentType === 'all' || currentType.includes(album.type)) &&
             (searchQuery === '' || album.title.includes(searchQuery) || separateKoreanCharacters(album.title).includes(separateKoreanCharacters(searchQuery)))
         )
         .sort((a, b) =>
