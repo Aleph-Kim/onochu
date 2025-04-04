@@ -28,6 +28,7 @@ $controller = new SearchController();
                 <div class="option" data-type="싱글">싱글</div>
                 <div class="option" data-type="정규">정규</div>
                 <div class="option" data-type="미니">미니</div>
+                <div class="option" data-type="참여">참여</div>
             </div>
         </div>
         <div class="toggle-sort">
@@ -48,7 +49,7 @@ $controller = new SearchController();
                 <img src="<?= $album['img_url'] . $_SERVER['FLO_IMG_RESIZE_PATH']($_SERVER['IMG_MEDIUM_SIZE']) ?>">
                 <div class="album-info">
                     <div class="album-title"><?= $album['title'] ?></div>
-                    <div class="album-artist"><?= $artist_info['name'] ?></div>
+                    <div class="album-artist"><?= implode(' & ', array_column($album['artists'], 'name')) ?></div>
                     <div class="album-type"><?= $album['type'] ?></div>
                     <div class="album-date"><?= $album['release_date'] ?? '발매일 미상' ?></div>
                 </div>

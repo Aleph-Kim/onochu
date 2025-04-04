@@ -58,10 +58,10 @@ class FloApiHelper
             'page' => '1',
             'size' => '100',
             'sortType'  => 'RECENT',
-            'roleType'  => 'RELEASE'
+            'roleType'  => 'ALL'
         ];
 
-        return $this->fetchAndExtract($_SERVER['FLO_API_ALBUMS_PATH']($artist_id), $params, 'getAlbums');
+        return $this->fetchAndExtract($_SERVER['FLO_API_ALBUMS_PATH']($artist_id), $params, 'getAlbums', $artist_id);
     }
 
     /**
@@ -105,13 +105,14 @@ class FloApiHelper
      * @param string $path API 엔드포인트 경로
      * @param array|null $params 요청 파라미터
      * @param string $getMethod 데이터를 가져오는 메서드 이름
+     * @param string|null $other_params 추가 파라미터
      * @return array 추출한 데이터
      */
-    protected function fetchAndExtract($path, $params = null, $getMethod)
+    protected function fetchAndExtract($path, $params = null, $getMethod, $other_params = null)
     {
         $full_path = $path . ($params ? '?' . http_build_query($params) : "");
         $data = $this->fetchData($full_path);
-        return $this->$getMethod($data);
+        return $this->$getMethod($data, $other_params);
     }
 
     /**
@@ -221,7 +222,7 @@ class FloApiHelper
      * @param array $data API 응답 데이터
      * @return array 추출한 앨범 정보 배열
      */
-    protected function getAlbums($data)
+    protected function getAlbums($data, $artist_id)
     {
         $albums_info = [];
         if (!isset($data['data']) || !is_array($data['data']['list'] ?? [])) {
@@ -229,7 +230,14 @@ class FloApiHelper
         }
 
         foreach ($data['data']['list'] as $album) {
-            $albums_info[] = $this->extractAlbum($album);
+            $album_info = $this->extractAlbum($album);
+            $album_info['artists'] = $this->extractArtists($album['artistList']);
+
+            if (count($album_info['artists']) > 1 || $artist_id != $album_info['artists'][0]['flo_id']) {
+                $album_info['type'] = '참여';
+            }
+
+            $albums_info[] = $album_info;
         }
 
         return $albums_info;
