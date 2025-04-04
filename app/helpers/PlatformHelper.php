@@ -15,16 +15,22 @@ class PlatformHelper
     {
         // 사용자 접속환경 모바일 여부
         $is_mobile = UserHelper::isMobile();
+        $is_android = UserHelper::isAndroid();
         // 검색 시 키워드
         $artists_name = implode(' ', array_column($artists, 'name'));
         $keyword = "{$song['title']} {$artists_name}";
         // 플로에서 사용하는 노래 pk
         $flo_id = $song['flo_id'];
 
-        $youtube = $_SERVER['YOUTUBE_MUSIC_SEARCH_PATH']($keyword);
-        $genie = $is_mobile ? $_SERVER['GENIE_APP_PATH'] : $_SERVER['GENIE_SEARCH_PATH']($keyword);
-        $flo = $is_mobile ? $_SERVER['FLO_APP_DETAIL_PATH']($flo_id) : $_SERVER['FLO_DETAIL_PATH']($flo_id);
-
+        if ($is_mobile) {
+            $youtube = $is_android ? $_SERVER['YOUTUBE_MUSIC_ANDROID_APP_PATH']($keyword) : $_SERVER['YOUTUBE_MUSIC_IOS_APP_PATH']($keyword);
+            $genie = $_SERVER['GENIE_APP_PATH'];
+            $flo = $_SERVER['FLO_APP_DETAIL_PATH']($flo_id);
+        } else {
+            $youtube = $_SERVER['YOUTUBE_MUSIC_SEARCH_PATH']($keyword);
+            $genie = $_SERVER['GENIE_SEARCH_PATH']($keyword);
+            $flo = $_SERVER['FLO_DETAIL_PATH']($flo_id);
+        }
         return [
             'youtube' => $youtube,
             'genie' => $genie,

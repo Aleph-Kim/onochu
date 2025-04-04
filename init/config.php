@@ -57,15 +57,17 @@ $_SERVER['FLO_API_NEW_KPOP_ALBUM_PATH'] = "https://www.music-flo.com/api/meta/v1
 // flo pop 새 앨범 리스트 api 경로
 $_SERVER['FLO_API_NEW_POP_ALBUM_PATH'] = "https://www.music-flo.com/api/meta/v1/album/POP/new";
 
-
 // flo 이미지 resize path
 $_SERVER['FLO_IMG_RESIZE_PATH'] = fn($size) => "?/dims/resize/$size/quality/90";
 
 // 유튜브 뮤직 검색 경로
 $_SERVER['YOUTUBE_MUSIC_SEARCH_PATH'] = fn($q) => "https://music.youtube.com/search?q=$q";
 
-// 유튜브 뮤직 앱 검색 경로
-$_SERVER['YOUTUBE_MUSIC_APP_PATH'] = fn($q) => "vnd.youtube.music:/search?q=$q";
+// 유튜브 뮤직 안드로이드 앱 검색 경로
+$_SERVER['YOUTUBE_MUSIC_ANDROID_APP_PATH'] = fn($q) => "vnd.youtube.music:/search?q=$q";
+
+// 유튜브 뮤직 ios 앱 검색 경로
+$_SERVER['YOUTUBE_MUSIC_IOS_APP_PATH'] = fn($q) => "youtubemusic:/search?q=$q";
 
 // 지니 검색 경로
 $_SERVER['GENIE_SEARCH_PATH'] = fn($q) => "https://www.genie.co.kr/search/searchMain?query=$q";

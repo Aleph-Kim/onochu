@@ -9,9 +9,20 @@ class UserHelper
     public static function isMobile()
     {
         $user_agent = $_SERVER['HTTP_USER_AGENT'];
-        $pattern = '/Android|webOS|iPhone|iPad|iPod|BlackBerry|IEMobile|Opera Mini/';
-        $is_mobile = preg_match($pattern, $user_agent);
-        return $is_mobile;
+        $pattern = '/android|samsung|webos|iphone|ipad|ipod|blackberry|iemobile|opera mini/i';
+        return preg_match($pattern, $user_agent);
+    }
+
+    /**
+     * 접속 기기의 운영체제가 안드로이드인지 확인하는 함수
+     * 
+     * @return boolean - 안드로이드 여부
+     */
+    public static function isAndroid()
+    {
+        $user_agent = $_SERVER['HTTP_USER_AGENT'];
+        $pattern = '/android|samsung/i';
+        return preg_match($pattern, $user_agent);
     }
 
     /**
