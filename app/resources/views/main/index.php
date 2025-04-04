@@ -55,13 +55,12 @@ $artist_section_title = UserHelper::checkLogin() ? "{$_SESSION['user']['nickname
         <? if (isset($new_albums) && !empty($new_albums)): ?>
             <div class="new-album-container">
                 <? foreach ($new_albums as $new_album): ?>
+                    <? $artist_name = implode(' & ', array_column($new_album['artist'], 'name')); ?>
                     <a class="album-card" href="/search/albumDetail?id=<?= $new_album['flo_id'] ?>">
                         <img src="<?= $new_album['img_url'] . $_SERVER['IMG_RESIZE_PATH']($_SERVER['IMG_MEDIUM_SIZE']) ?>" />
                         <div class="album-card-content">
                             <h3 class="album-card-title"><?= $new_album['title'] ?></h3>
-                            <? foreach ($new_album['artist'] as $artist): ?>
-                                <p class="album-card-artist"><?= $artist['name'] ?></p>
-                            <? endforeach; ?>
+                            <p class="album-card-artist"><?= $artist_name ?></p>
                         </div>
                     </a>
                 <? endforeach; ?>

@@ -58,7 +58,7 @@ class MainController extends Controller
             $new_albums[] = $new_album_data['albums_info'][$new_album_data['artists_flo_id'][$artist_id]];
         }
 
-        return $new_albums;
+        return array_unique($new_albums);;
     }
 
     /**
