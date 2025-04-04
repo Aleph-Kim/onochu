@@ -1,6 +1,6 @@
 <?
-$controller = new SearchController();
-$song_info = $controller->songDetail();
+$controller = new SongController();
+$song_info = $controller->detail();
 ?>
 
 <? include $_SERVER['LAYOUT_PATH'] . "header.php"; ?>
@@ -12,16 +12,16 @@ $song_info = $controller->songDetail();
             <h1 class="song-title"><?= $song_info['song']['title'] ?></h1>
             <div>
                 <? foreach ($song_info['artists'] as $artist): ?>
-                    <a class="song-artist" href="/search/artistDetail?id=<?= $artist['flo_id'] ?>">
+                    <a class="song-artist" href="/artist/detail?id=<?= $artist['flo_id'] ?>">
                         <?= $artist['name'] ?>
                     </a>
                 <? endforeach; ?>
             </div>
-            <a class="song-album" href="/search/albumDetail?id=<?= $song_info['album']['flo_id'] ?>"><?= $song_info['album']['title'] ?></a>
+            <a class="song-album" href="/album/detail?id=<?= $song_info['album']['flo_id'] ?>"><?= $song_info['album']['title'] ?></a>
         </div>
         <? if ($song_info['artists'][0]['img_url']) { ?>
             <div class="artist-profile">
-                <a href="/search/artistDetail?id=<?= $song_info['artists'][0]['flo_id'] ?>">
+                <a href="/artist/detail?id=<?= $song_info['artists'][0]['flo_id'] ?>">
                     <img src="<?= $song_info['artists'][0]['img_url'] . $_SERVER['FLO_IMG_RESIZE_PATH']($_SERVER['IMG_SMALL_SIZE']) ?>" alt="Artist Profile">
                 </a>
             </div>

@@ -1,7 +1,7 @@
 <?
-$controller = new SearchController();
+$controller = new ArtistController();
 
-['artist_info' => $artist_info, 'albums_info' => $albums_info] = $controller->artistDetail();
+['artist_info' => $artist_info, 'albums_info' => $albums_info] = $controller->detail();
 ?>
 
 <? include $_SERVER['LAYOUT_PATH'] . "header.php"; ?>
@@ -44,7 +44,7 @@ $controller = new SearchController();
     </div>
     <div class="albums">
         <? foreach ($albums_info as $album): ?>
-            <div class="album" onclick="window.location.href = '/search/albumDetail?id=<?= $album['flo_id'] ?>'">
+            <div class="album" onclick="window.location.href = '/album/detail?id=<?= $album['flo_id'] ?>'">
                 <img src="<?= $album['img_url'] . $_SERVER['FLO_IMG_RESIZE_PATH']($_SERVER['IMG_MEDIUM_SIZE']) ?>">
                 <div class="album-info">
                     <div class="album-title"><?= $album['title'] ?></div>

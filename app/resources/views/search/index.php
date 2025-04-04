@@ -41,14 +41,14 @@ $songs = $controller->index();
                                 </g>
                             </svg>
                         </a>
-                        <a href="/search/songDetail?id=<?= $song['song']['flo_id'] ?>">
+                        <a href="/song/detail?id=<?= $song['song']['flo_id'] ?>">
                             <svg viewBox="0 0 24 24">
                                 <g>
                                     <path d="M16,6v2h-2v5c0,1.1-0.9,2-2,2s-2-0.9-2-2s0.9-2,2-2c0.37,0,0.7,0.11,1,0.28V6H16z M18,20H4V6H3v15h15V20z M21,3H6v15h15V3z M7,4h13v13H7V4z" class="style-scope yt-icon"></path>
                                 </g>
                             </svg>
                         </a>
-                        <a href="/search/artistDetail?id=<?= $song['artists'][0]['flo_id'] ?>">
+                        <a href="/artist/detail?id=<?= $song['artists'][0]['flo_id'] ?>">
                             <svg viewBox="0 0 24 24">
                                 <g>
                                     <path d="M22,10h-4v2v3.51C17.58,15.19,17.07,15,16.5,15c-1.38,0-2.5,1.12-2.5,2.5c0,1.38,1.12,2.5,2.5,2.5 c1.36,0,2.46-1.08,2.5-2.43V12h3V10z M3.06,19c0.38-3.11,2.61-6.1,7.94-6.1c0.62,0,1.19,0.05,1.73,0.13l0.84-0.84 c-0.58-0.13-1.19-0.23-1.85-0.26C13.58,11.59,15,9.96,15,8c0-2.21-1.79-4-4-4C8.79,4,7,5.79,7,8c0,1.96,1.42,3.59,3.28,3.93 C4.77,12.21,2,15.76,2,20h10.02L12,19H3.06z M8,8c0-1.65,1.35-3,3-3s3,1.35,3,3s-1.35,3-3,3S8,9.65,8,8z" class="style-scope yt-icon"></path>
