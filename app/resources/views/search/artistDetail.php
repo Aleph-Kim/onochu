@@ -50,7 +50,7 @@ $controller = new SearchController();
                     <div class="album-title"><?= $album['title'] ?></div>
                     <div class="album-artist"><?= $artist_info['name'] ?></div>
                     <div class="album-type"><?= $album['type'] ?></div>
-                    <div class="album-date"><?= $album['release_date'] ?></div>
+                    <div class="album-date"><?= $album['release_date'] ?? '발매일 미상' ?></div>
                 </div>
             </div>
         <? endforeach; ?>

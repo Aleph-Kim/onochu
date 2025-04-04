@@ -348,7 +348,7 @@ class FloApiHelper
             'type' => $album['albumTypeStr'],
             'genre' => $album['genreStyle'],
             'img_url' => strtok($album['imgList'][0]['url'] ?? '', '?'),
-            'release_date' => \DateTime::createFromFormat('Ymd', $album['releaseYmd'] ?? '')->format("Y.m.d")
+            'release_date' => $album['releaseYmd'] ? DateTime::createFromFormat('Ymd', $album['releaseYmd'])->format("Y.m.d") : null
         ];
     }
 

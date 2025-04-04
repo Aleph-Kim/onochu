@@ -36,7 +36,7 @@ $recommend_info = $controller->detail();
     <div class="song-info">
         <h2><?= $recommend_info['song_title'] ?></h2>
         <p>
-            <?= $recommend_info['release_date'] ?>
+            <?= $recommend_info['release_date'] ?? '발매일 미상' ?>
             <span class="between-bar"></span>
             <?= $recommend_info['genre'] ?>
             <span class="between-bar"></span>

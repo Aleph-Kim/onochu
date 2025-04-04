@@ -24,7 +24,7 @@ $_SESSION['song_info'] = $song_info;
         <div class="song-info">
             <h2><?= $song_info['song']['title'] ?></h2>
             <p>
-                <?= $song_info['album']['release_date'] ?>
+                <?= $song_info['album']['release_date'] ?? '발매일 미상' ?>
                 <span class="between-bar"></span>
                 <?= $song_info['song']['genre'] ?>
                 <span class="between-bar"></span>

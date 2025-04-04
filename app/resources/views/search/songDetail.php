@@ -49,7 +49,7 @@ $song_info = $controller->songDetail();
         <div class="details-grid">
             <div class="details-item">
                 <p class="details-label">발매일</p>
-                <p class="details-value"><?= $song_info['album']['release_date'] ?></p>
+                <p class="details-value"><?= $song_info['album']['release_date'] ?? '발매일 미상' ?></p>
             </div>
             <div class="details-item">
                 <p class="details-label">장르</p>
@@ -63,7 +63,7 @@ $song_info = $controller->songDetail();
             <? } ?>
             <div class="details-item">
                 <p class="details-label">작곡</p>
-                <p class="details-value"><?= $song_info['song']['composer'] ?></p>
+                <p class="details-value"><?= $song_info['song']['composer'] ?: '작곡가 미상' ?></p>
             </div>
             <? if ($song_info['song']['arranger']) { ?>
                 <div class="details-item">
