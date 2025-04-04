@@ -76,6 +76,7 @@ class Recommends extends Model
                     songs.flo_id as song_flo_id,
                     albums.img_url as album_img_url,
                     albums.release_date as release_date,
+                    albums.flo_id as album_flo_id,
                     songs.genre as genre,
                     songs.play_time as play_time
                 FROM recommends 
@@ -91,7 +92,8 @@ class Recommends extends Model
                 SELECT 
                     artists.id,
                     artists.name,
-                    artists.img_url
+                    artists.img_url,
+                    artists.flo_id
                 FROM song_artists
                 JOIN artists ON song_artists.artist_id = artists.id
                 WHERE song_artists.song_id = :song_id

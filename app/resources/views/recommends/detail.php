@@ -22,7 +22,7 @@ $recommend_info = $controller->detail();
         <a href="<?= $recommend_info['url']['genie'] ?>" target="_blank" class="platform-btn platform-genie">Genie</a>
     </div>
     <div class="song-img">
-        <img src="<?= $recommend_info['album_img_url'] . $_SERVER['IMG_RESIZE_PATH']($_SERVER['IMG_BIG_SIZE']) ?>">
+        <img src="<?= $recommend_info['album_img_url'] . $_SERVER['IMG_RESIZE_PATH']($_SERVER['IMG_BIG_SIZE']) ?>" onclick="window.location.href = '/search/songDetail?id=<?= $recommend_info['song_flo_id'] ?>'">
         <span class="share-btn">
             <span class="tooltip">공유하기</span>
             <svg xmlns="http://www.w3.org/2000/svg" height="1.5em" fill="currentColor" viewBox="0 0 208 191.94">
@@ -34,7 +34,11 @@ $recommend_info = $controller->detail();
         </span>
     </div>
     <div class="song-info">
-        <h2><?= $recommend_info['song_title'] ?></h2>
+        <a href="/search/songDetail?id=<?= $recommend_info['song_flo_id'] ?>">
+            <h2>
+                <?= $recommend_info['song_title'] ?>
+            </h2>
+        </a>
         <p>
             <?= $recommend_info['release_date'] ?? '발매일 미상' ?>
             <span class="between-bar"></span>

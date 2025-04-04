@@ -94,6 +94,7 @@
     width: 100%;
     height: 100%;
     object-fit: cover;
+    cursor: pointer;
 }
 
 .share-btn {
@@ -171,6 +172,11 @@
     font-weight: bold;
     margin-bottom: 8px;
     color: #333;
+    transition: 0.2s;
+}
+
+.song-info h2:hover {
+    color: var(--main-color);
 }
 
 .song-info p {
@@ -192,6 +198,7 @@
     direction: rtl;
     font-size: 40px;
     margin: 16px 0;
+    cursor: default;
 }
 
 .recommends-rating input {
@@ -200,7 +207,6 @@
 
 .recommends-rating label {
     color: #ddd;
-    cursor: pointer;
 }
 
 .recommends-rating input:checked~label {
