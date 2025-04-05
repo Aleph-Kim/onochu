@@ -52,4 +52,4 @@ jobs:
           sudo docker pull ${{ secrets.DOCKER_USERNAME }}/${{ secrets.PROJECT_NAME }}:latest # 새로운 Docker 이미지 pull
           sudo docker stop ${{ secrets.PROJECT_NAME }} || true # 기존 Docker 컨테이너 중지 (오류 무시)
           sudo docker rm ${{ secrets.PROJECT_NAME }} || true # 기존 Docker 컨테이너 삭제 (오류 무시)
-          sudo docker run -d -p 8080:8080 --name ${{ secrets.PROJECT_NAME }} --env-file ${{ secrets.ENV_PATH }} ${{ secrets.DOCKER_USERNAME }}/${{ secrets.PROJECT_NAME }}:latest # 새로운 Docker 컨테이너 실행
+          sudo docker run -d -p 8080:80 --name ${{ secrets.PROJECT_NAME }} --env-file ${{ secrets.ENV_PATH }} ${{ secrets.DOCKER_USERNAME }}/${{ secrets.PROJECT_NAME }}:latest # 새로운 Docker 컨테이너 실행
