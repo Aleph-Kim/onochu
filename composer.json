@@ -6,7 +6,7 @@
         "classmap": [
             "core/",
             "app/helpers/",
-            "app/Controllers/"
+            "app/controllers/"
         ]
     }
 }
