@@ -30,5 +30,10 @@ class User extends Model
 
         $stmt = $this->db->prepare($sql);
         $stmt->execute(['kakaoId' => $userInfo['id'], 'nickname' => $userInfo['properties']['nickname']]);
+
+        return [
+            'id' => $this->db->lastInsertId(),
+            'nickname' => $userInfo['properties']['nickname']
+        ];
     }
 }

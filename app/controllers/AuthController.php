@@ -63,7 +63,7 @@ class AuthController extends Controller
 
         // 사용자 정보가 없으면 생성
         if (!$user) {
-            $this->user_model->createUser($userInfo);
+            $user = $this->user_model->createUser($userInfo);
         }
 
         // 사용자 정보를 세션에 저장
