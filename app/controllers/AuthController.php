@@ -15,7 +15,7 @@ class AuthController extends Controller
         $this->clientId = getenv('KAKAO_CLIENT_ID');
         $this->clientSecret = getenv('KAKAO_CLIENT_SECRET');
         // 현재 페이지의 프로토콜과 호스트를 사용하여 리다이렉트 URI 생성
-        $this->redirectUri = $_SERVER['REQUEST_SCHEME'] . '://' . $_SERVER['HTTP_HOST'] . getenv('KAKAO_REDIRECT_URI');
+        $this->redirectUri = (UserHelper::isHttps() ? 'https' : 'http') . '://' . $_SERVER['HTTP_HOST'] . getenv('KAKAO_REDIRECT_URI');
 
         $this->user_model = $this->model('User');
     }

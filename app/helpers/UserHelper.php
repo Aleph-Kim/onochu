@@ -34,4 +34,26 @@ class UserHelper
     {
         return isset($_SESSION['user']);
     }
+
+    /**
+     * https 요청 여부를 확인하는 함수
+     * 
+     * @return boolean - https 여부
+     */
+    public static function isHttps()
+    {
+        // X-Forwarded-Scheme 확인
+        if (!empty($_SERVER['HTTP_X_FORWARDED_SCHEME']) && $_SERVER['HTTP_X_FORWARDED_SCHEME'] === 'https') {
+            return true;
+        }
+        // 기본 HTTPS 변수 확인
+        if (!empty($_SERVER['HTTPS']) && $_SERVER['HTTPS'] !== 'off') {
+            return true;
+        }
+        // REQUEST_SCHEME 확인
+        if (!empty($_SERVER['REQUEST_SCHEME']) && $_SERVER['REQUEST_SCHEME'] === 'https') {
+            return true;
+        }
+        return false;
+    }
 }
