@@ -10,14 +10,11 @@
 }
 
 @font-face {
-    font-family: 'pretendard';
-    src: url('../fonts/Pretendard.woff2') format('truetype');
     font-family: 'Eczar';
-    src: url('../fonts/Eczar.ttf');
+    src: url('../fonts/Eczar.woff2') format('woff2');
 }
 
 body {
-    font-family: 'pretendard';
     word-break: keep-all;
     background-color: var(--background-color);
 }
