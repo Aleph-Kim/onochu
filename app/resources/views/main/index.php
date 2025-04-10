@@ -18,7 +18,7 @@ $artist_section_title = UserHelper::checkLogin() ? "{$_SESSION['user']['nickname
                         <div class="music-card-box">
                             <div class="music-card-body">
                                 <span class="music-card-artist-img">
-                                    <img src="<?= $recommend['artist_img_url'] . $_SERVER['IMG_RESIZE_PATH']($_SERVER['IMG_MEDIUM_SIZE']) ?>">
+                                    <img src="<?= $recommend['artist_img_url'] . $_SERVER['IMG_RESIZE_PATH']($_SERVER['IMG_MEDIUM_SIZE']) ?>" loading="lazy">
                                 </span>
                                 <div class="music-card-bg" style="background-image: url(<?= $recommend['album_img_url'] . $_SERVER['IMG_RESIZE_PATH']($_SERVER['IMG_BIG_SIZE']) ?>);"></div>
                             </div>
@@ -57,7 +57,7 @@ $artist_section_title = UserHelper::checkLogin() ? "{$_SESSION['user']['nickname
                 <? foreach ($new_albums as $new_album): ?>
                     <? $artist_name = implode(' & ', array_column($new_album['artist'], 'name')); ?>
                     <a class="album-card" href="/album/detail?id=<?= $new_album['flo_id'] ?>">
-                        <img src="<?= $new_album['img_url'] . $_SERVER['IMG_RESIZE_PATH']($_SERVER['IMG_MEDIUM_SIZE']) ?>" />
+                        <img src="<?= $new_album['img_url'] . $_SERVER['IMG_RESIZE_PATH']($_SERVER['IMG_MEDIUM_SIZE']) ?>" loading="lazy" />
                         <div class="album-card-content">
                             <h3 class="album-card-title"><?= $new_album['title'] ?></h3>
                             <p class="album-card-artist"><?= $artist_name ?></p>
@@ -87,7 +87,7 @@ $artist_section_title = UserHelper::checkLogin() ? "{$_SESSION['user']['nickname
             <div class="artist-container">
                 <? foreach ($artists as $artist): ?>
                     <a class="artist-card" href="/artist/detail?id=<?= $artist['flo_id'] ?>">
-                        <img src="<?= $artist['img_url'] . $_SERVER['IMG_RESIZE_PATH']($_SERVER['IMG_MEDIUM_SIZE']) ?>" />
+                        <img src="<?= $artist['img_url'] . $_SERVER['IMG_RESIZE_PATH']($_SERVER['IMG_MEDIUM_SIZE']) ?>" loading="lazy" />
                         <div class="artist-card-content">
                             <p class="artist-card-name"><?= $artist['name'] ?></p>
                             <div class="artist-card-recommend-count">
