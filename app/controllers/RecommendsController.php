@@ -112,6 +112,12 @@ class RecommendsController extends Controller
             ErrorHandler::showErrorPage(400);
         }
 
-        return $this->recommends_model->getById($recommend_id);
+        $recommend = $this->recommends_model->getById($recommend_id);
+
+        if (empty($recommend['id'])) {
+            ErrorHandler::showErrorPage(400);
+        }
+
+        return $recommend;
     }
 }
