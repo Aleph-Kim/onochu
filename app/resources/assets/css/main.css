@@ -69,12 +69,6 @@ main {
 }
 
 .music-card-artist-img {
-    opacity: 0;
-    transition: opacity 0.2s;
-}
-
-.music-slider .is-selected .music-card-body:hover .music-card-artist-img {
-    opacity: 1;
     height: 100px;
     width: 100px;
     position: absolute;
@@ -82,6 +76,12 @@ main {
     left: 50%;
     transform: translateX(-50%) translateY(-50%);
     z-index: 10;
+    opacity: 0;
+    transition: opacity 0.2s;
+}
+
+.music-slider .is-selected .music-card-body:hover .music-card-artist-img {
+    opacity: 1;
 }
 
 .music-card-artist-img img {
