@@ -10,6 +10,7 @@ services:
       - ./app:/var/www/html/app
       - ./init:/var/www/html/init
       - ./public:/var/www/html/public
+      - ./logs:/var/log/apache2
     networks:
       - local_net
 

@@ -1,4 +1,4 @@
 *.env
 .DS_Store
 /vendor
-/public/error_log.txt
+/logs

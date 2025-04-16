@@ -2,7 +2,7 @@
 
 class ErrorHandler
 {
-    private static $logFile;
+    private static $logFile = "/var/log/apache2/php_errors.log";
 
     private static $errorLevels = [
         E_ERROR => 'E_ERROR', // 1
@@ -35,13 +35,10 @@ class ErrorHandler
     /**
      * 에러 핸들러 초기 설정
      *
-     * @param string $logFile 로그 파일 경로 (기본값: 'error_log.txt')
      * @return void
      */
-    public static function init($logFile = 'error_log.txt')
+    public static function init()
     {
-        self::$logFile = $logFile;
-
         // 브라우저 에러 표시 비활성화
         ini_set('display_errors', 0);
         // 에러 로깅 활성화
@@ -87,7 +84,7 @@ class ErrorHandler
         $date = date('Y-m-d H:i:s');
         $logMessage = "[{$date}] 예외 발생: {$exception}\n\n";
         error_log($logMessage, 3, self::$logFile);
-        
+
         // 에러 로깅 후 서버 에러 페이지 출력
         self::showErrorPage(500);
     }
