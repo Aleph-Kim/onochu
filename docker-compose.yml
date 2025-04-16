@@ -7,7 +7,9 @@ services:
     ports:
       - "8080:80"
     volumes:
-      - .:/var/www/html
+      - ./app:/var/www/html/app
+      - ./init:/var/www/html/init
+      - ./public:/var/www/html/public
     networks:
       - local_net
 

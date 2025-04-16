@@ -25,5 +25,8 @@ RUN curl -sS https://getcomposer.org/installer | php -- --install-dir=/usr/local
 # 애플리케이션 파일 복사
 COPY . /var/www/html/
 
-# composer 라이브러리 설치 && Apache 서비스 시작
-CMD bash -c "composer update && composer install --no-interaction --prefer-dist && apache2-foreground"
+# composer 라이브러리 설치
+RUN composer install --no-interaction --prefer-dist --optimize-autoloader --no-dev
+
+# Apache 서비스 시작
+CMD ["apache2-foreground"]
