@@ -12,6 +12,7 @@ class Redis
             'scheme' => 'tcp',
             'host'   => getenv("REDIS_HOST"),
             'port'   => getenv("REDIS_PORT"),
+            'username' => getenv("REDIS_USERNAME"),
             'password' => getenv("REDIS_PASSWORD"),
         ]);
     }
