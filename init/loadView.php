@@ -1,7 +1,6 @@
 <?
-
 // path 체크
-$path = isset($_REQUEST['path']) ? $_REQUEST['path'] : 'main/index';
+$path = empty($_REQUEST['path']) ? 'main/index' : $_REQUEST['path'];
 
 // xss 방지
 $path = htmlspecialchars($path, ENT_QUOTES, 'UTF-8');
@@ -14,7 +13,6 @@ $fullPath = $_SERVER['VIEW_PATH'] . $path;
 if (is_dir($fullPath)) {
     $viewFile = rtrim($fullPath, '/') . '/index.php';
 }
-
 if (file_exists($viewFile)) {
     require $viewFile;
 } else {

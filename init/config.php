@@ -22,13 +22,13 @@ $_SERVER['VIEW_PATH'] = $_SERVER['DOCUMENT_ROOT'] . "/app/resources/views/";
 $_SERVER['LAYOUT_PATH'] = $_SERVER['DOCUMENT_ROOT'] . "/app/resources/layout/";
 
 // js 경로
-$_SERVER['JS_PATH'] = "/app/resources/assets/js/";
+$_SERVER['JS_PATH'] = "/public/resources/assets/js/";
 
 // css 경로
-$_SERVER['CSS_PATH'] = "/app/resources/assets/css/";
+$_SERVER['CSS_PATH'] = "/public/resources/assets/css/";
 
 // image 경로
-$_SERVER['IMAGE_PATH'] = "/app/resources/assets/image/";
+$_SERVER['IMAGE_PATH'] = "/public/resources/assets/image/";
 
 // 에러페이지 뷰 경로
 $_SERVER['ERROR_PATH'] = $_SERVER['VIEW_PATH'] . "error/";
