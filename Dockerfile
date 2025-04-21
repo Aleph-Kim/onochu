@@ -7,6 +7,9 @@ RUN docker-php-ext-install mysqli pdo pdo_mysql
 # mod_rewrite 모듈 활성화
 RUN a2enmod rewrite
 
+# mod_remoteip 모듈 활성화
+RUN a2enmod remoteip
+
 # 커스텀 Apache 설정 파일 복사
 COPY apache.conf /etc/apache2/conf-available/custom.conf
 
