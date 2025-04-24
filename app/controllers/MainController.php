@@ -45,6 +45,7 @@ class MainController extends Controller
     private function getNewAlbumsForUser($artists)
     {
         $new_albums = [];
+        $new_album_flo_ids = [];
         $new_album_data = $this->getNewAlbumData();
 
         // 사용자 관심 아티스트 id 추출
@@ -55,10 +56,14 @@ class MainController extends Controller
 
         // 교집합 아티스트 id를 키로 사용하여 새 앨범 정보를 추가
         foreach ($matching_artist_ids as $artist_id) {
-            $new_albums[] = $new_album_data['albums_info'][$new_album_data['artists_flo_id'][$artist_id]];
+            $new_album = $new_album_data['albums_info'][$new_album_data['artists_flo_id'][$artist_id]];
+            if (!in_array($new_album['flo_id'], $new_album_flo_ids)) {
+                $new_albums[] = $new_album;
+                $new_album_flo_ids[] = $new_album['flo_id'];
+            }
         }
 
-        return array_unique($new_albums);;
+        return $new_albums;
     }
 
     /**
