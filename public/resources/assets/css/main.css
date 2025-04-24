@@ -145,6 +145,7 @@ main {
 }
 
 .album-card {
+    width: 200px;
     flex: 0 0 12rem;
     border-radius: 0.5rem;
     box-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.1), 0 2px 4px -1px rgba(0, 0, 0, 0.06);
@@ -153,16 +154,24 @@ main {
 .album-card img {
     border-top-left-radius: 0.5rem;
     border-top-right-radius: 0.5rem;
-    width: 100%;
-    height: auto;
 }
 
 .album-card-content {
+    width: 200px;
     padding: 0.5rem;
 }
 
 .album-card-title {
     font-weight: 600;
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
+}
+
+.album-card-artist {
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
 }
 
 .artist-section {
