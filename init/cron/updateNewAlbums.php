@@ -22,10 +22,15 @@ class UpdateNewAlbums extends Cron
         $this->log("UpdateNewAlbums 크론 실행");
 
         // 모델 초기화
-        $this->recommends_model = $this->model('Recommends');
-        $this->new_albums_model = $this->model('NewAlbums');
-        $this->artists_model = $this->model('Artists');
-        $this->new_album_artists_model = $this->model('NewAlbumArtists');
+        try {
+            $this->recommends_model = $this->model('Recommends');
+            $this->new_albums_model = $this->model('NewAlbums');
+            $this->artists_model = $this->model('Artists');
+            $this->new_album_artists_model = $this->model('NewAlbumArtists');
+        } catch (Exception $e) {
+            $this->errorLog("모델 초기화 중 오류 발생", $e);
+            exit(1);
+        }
 
         $this->flo_api = new FloApiHelper();
     }
