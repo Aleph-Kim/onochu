@@ -39,11 +39,14 @@ COPY cronfile /etc/cron.d/cronfile
 # 크론 파일 설정
 RUN crontab /etc/cron.d/cronfile
 
-# 크론 서비스 시작
-RUN service cron start
-
 # composer 라이브러리 설치
 RUN composer install --no-interaction --prefer-dist --optimize-autoloader --no-dev
 
-# Apache 서비스 시작
-CMD ["apache2-foreground"]
+# entrypoint 스크립트 복사
+COPY entrypoint.sh /entrypoint.sh
+
+# entrypoint 스크립트 실행 권한 부여
+RUN chmod +x /entrypoint.sh
+
+# entrypoint 스크립트 실행
+ENTRYPOINT [ "/entrypoint.sh" ]
