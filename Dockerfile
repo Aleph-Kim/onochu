@@ -16,17 +16,27 @@ COPY apache.conf /etc/apache2/conf-available/custom.conf
 # 커스텀 Apache 설정 활성화
 RUN a2enconf custom
 
-# Composer 설치에 필요한 패키지 설치 (curl, unzip, git)
+# ubuntu 패키지 설치
 RUN apt-get update && apt-get install -y \
     curl \
     unzip \
-    git
+    git \
+    cron
 
 # Composer 설치
 RUN curl -sS https://getcomposer.org/installer | php -- --install-dir=/usr/local/bin --filename=composer
 
 # 애플리케이션 파일 복사
 COPY . /var/www/html/
+
+# 크론 파일 복사
+COPY cronfile /etc/cron.d/cronfile
+
+# 크론 파일 설정
+RUN crontab /etc/cron.d/cronfile
+
+# 크론 서비스 시작
+RUN service cron start
 
 # composer 라이브러리 설치
 RUN composer install --no-interaction --prefer-dist --optimize-autoloader --no-dev

@@ -61,4 +61,25 @@ class Artists extends Model
         $stmt->execute();
         return $stmt->fetchAll(PDO::FETCH_ASSOC);
     }
+
+    /**
+     * 추천을 받은 적이 있는 아티스트 조회
+     * 
+     * @return array 추천을 받은 적이 있는 아티스트 정보
+     */
+    public function getRecommendArtists()
+    {
+        $sql = "
+            SELECT a.flo_id, a.name, a.img_url, COUNT(*) as recommend_cnt
+            FROM recommends r
+            JOIN songs s ON r.song_id = s.id
+            JOIN song_artists sa ON s.id = sa.song_id
+            JOIN artists a ON sa.artist_id = a.id
+            GROUP BY a.flo_id, a.name, a.img_url
+            ORDER BY recommend_cnt DESC, max(r.created_at) DESC
+        ";
+        $stmt = $this->db->prepare($sql);
+        $stmt->execute();
+        return $stmt->fetchAll(PDO::FETCH_ASSOC);
+    }
 }

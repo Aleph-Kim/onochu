@@ -5,6 +5,8 @@ DROP TABLE IF EXISTS songs;
 DROP TABLE IF EXISTS albums;
 DROP TABLE IF EXISTS artists;
 DROP TABLE IF EXISTS users;
+DROP TABLE IF EXISTS new_albums;
+DROP TABLE IF EXISTS new_album_artists;
 -- 유저 정보를 저장하는 테이블
 CREATE TABLE `users` (
     id INT AUTO_INCREMENT PRIMARY KEY COMMENT '유저 고유 ID',
@@ -16,7 +18,7 @@ CREATE TABLE `users` (
 -- 아티스트 정보를 저장하는 테이블
 CREATE TABLE artists (
     id INT AUTO_INCREMENT PRIMARY KEY COMMENT '아티스트 고유 ID',
-    name VARCHAR(100) NOT NULL COMMENT '아티스트 이름',
+    name VARCHAR(255) NOT NULL COMMENT '아티스트 이름',
     genre VARCHAR(50) COMMENT '장르 정보',
     group_type VARCHAR(50) COMMENT '그룹 정보',
     img_url VARCHAR(255) COMMENT '아티스트 사진 URL',
@@ -27,7 +29,7 @@ CREATE TABLE artists (
 -- 앨범 정보를 저장하는 테이블
 CREATE TABLE albums (
     id INT AUTO_INCREMENT PRIMARY KEY COMMENT '앨범 고유 ID',
-    title VARCHAR(100) NOT NULL COMMENT '앨범 제목',
+    title VARCHAR(255) NOT NULL COMMENT '앨범 제목',
     release_date DATE COMMENT '발매일',
     genre VARCHAR(50) COMMENT '장르 정보',
     type VARCHAR(50) COMMENT '타입',
@@ -40,7 +42,7 @@ CREATE TABLE albums (
 CREATE TABLE songs (
     id INT AUTO_INCREMENT PRIMARY KEY COMMENT '노래 고유 ID',
     album_id INT NOT NULL COMMENT '연관 앨범 ID',
-    title VARCHAR(100) NOT NULL COMMENT '노래 제목',
+    title VARCHAR(255) NOT NULL COMMENT '노래 제목',
     genre VARCHAR(50) COMMENT '장르 정보',
     title_yn VARCHAR(50) COMMENT '타이틀 여부',
     play_time VARCHAR(50) COMMENT '재생 시간',
@@ -78,3 +80,21 @@ CREATE TABLE recommends (
     FOREIGN KEY (song_id) REFERENCES songs(id),
     FOREIGN KEY (user_id) REFERENCES users(id)
 ) COMMENT = '노래 추천 정보를 저장하는 테이블';
+-- 새 앨범을 저장하는 테이블
+CREATE TABLE new_albums (
+    id INT AUTO_INCREMENT PRIMARY KEY COMMENT '새 앨범 고유 ID',
+    album_title VARCHAR(255) NOT NULL COMMENT '앨범 제목',
+    album_img_url VARCHAR(255) COMMENT '앨범 커버 사진 URL',
+    flo_id INT NOT NULL COMMENT 'FLO music에서 사용하는 앨범 고유 ID',
+    created_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP COMMENT '생성 일시',
+    updated_at timestamp NULL DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP COMMENT '업데이트 일시'
+) COMMENT = '새 앨범을 저장하는 테이블';
+-- 새 앨범 아티스트를 저장하는 테이블
+CREATE TABLE new_album_artists (
+    id INT AUTO_INCREMENT PRIMARY KEY COMMENT '새 앨범 아티스트 고유 ID',
+    new_album_id INT NOT NULL COMMENT '새 앨범 ID',
+    artist_name VARCHAR(255) NOT NULL COMMENT '아티스트 이름',
+    flo_id INT NOT NULL COMMENT 'FLO music에서 사용하는 고유 ID',
+    created_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP COMMENT '생성 일시',
+    updated_at timestamp NULL DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP COMMENT '업데이트 일시'
+) COMMENT = '새 앨범 아티스트를 저장하는 테이블';

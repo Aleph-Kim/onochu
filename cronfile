@@ -1,0 +1,1 @@
+1 12,18 * * * /usr/local/bin/php /var/www/html/core/Cron.php updateNewAlbums
