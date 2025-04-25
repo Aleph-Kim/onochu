@@ -29,4 +29,30 @@ class NewAlbums extends Model
         $stmt->execute(['flo_id' => $floId]);
         return $stmt->fetch();
     }
+
+/**
+ * 최근 7일간 발매된 앨범과 그 앨범의 아티스트 목록 조회
+ *
+ * @return array 앨범 목록과 아티스트 flo_id 배열
+ */
+public function getRecentAlbumsAndArtists()
+{
+    // 앨범과 아티스트를 단일 쿼리로 조회
+    $sql = "
+        SELECT 
+            album.id, 
+            album.album_title, 
+            album.album_img_url, 
+            album.flo_id AS album_flo_id, 
+            artist.artist_name AS artist_name, 
+            artist.flo_id AS artist_flo_id
+        FROM new_albums album
+        LEFT JOIN new_album_artists artist ON artist.new_album_id = album.id
+        WHERE album.created_at >= DATE_SUB(CURDATE(), INTERVAL 7 DAY)
+        ORDER BY album.created_at DESC
+    ";
+    $stmt = $this->db->prepare($sql);
+    $stmt->execute();
+    return $stmt->fetchAll(PDO::FETCH_ASSOC);
+}
 }
