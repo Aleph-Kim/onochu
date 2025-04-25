@@ -1,6 +1,10 @@
 # PHP 7.4와 Apache 이미지 사용
 FROM php:7.4-apache
 
+# 한국 시간대 설정
+ENV TZ=Asia/Seoul
+RUN ln -snf /usr/share/zoneinfo/$TZ /etc/localtime && echo $TZ > /etc/timezone
+
 # 필요한 PHP 확장 모듈 설치
 RUN docker-php-ext-install mysqli pdo pdo_mysql
 
