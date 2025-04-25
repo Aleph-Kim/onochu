@@ -7,7 +7,6 @@
  */
 class UpdateNewAlbums extends Cron
 {
-    protected $recommends_model;
     protected $new_albums_model;
     protected $artists_model;
     protected $new_album_artists_model;
@@ -23,7 +22,6 @@ class UpdateNewAlbums extends Cron
 
         // 모델 초기화
         try {
-            $this->recommends_model = $this->model('Recommends');
             $this->new_albums_model = $this->model('NewAlbums');
             $this->artists_model = $this->model('Artists');
             $this->new_album_artists_model = $this->model('NewAlbumArtists');
