@@ -23,6 +23,7 @@ CREATE TABLE artists (
     group_type VARCHAR(50) COMMENT '그룹 정보',
     img_url VARCHAR(255) COMMENT '아티스트 사진 URL',
     flo_id int UNIQUE KEY COMMENT 'FLO music에서 사용하는 고유 ID',
+    flo_img_url VARCHAR(255) COMMENT 'FLO music에서 사용하는 아티스트 사진 URL',
     created_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP COMMENT '생성 일시',
     updated_at timestamp NULL DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP COMMENT '업데이트 일시'
 ) COMMENT = '아티스트 정보를 저장하는 테이블';

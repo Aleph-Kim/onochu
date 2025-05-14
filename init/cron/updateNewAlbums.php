@@ -11,6 +11,7 @@ class UpdateNewAlbums extends Cron
     protected $artists_model;
     protected $new_album_artists_model;
     protected $flo_api;
+    protected $image_helper;
 
     /**
      * 초기화 메서드
@@ -31,6 +32,7 @@ class UpdateNewAlbums extends Cron
         }
 
         $this->flo_api = new FloApiHelper();
+        $this->image_helper = new ImageHelper();
     }
 
     /**
@@ -125,7 +127,7 @@ class UpdateNewAlbums extends Cron
                 if ($this->new_albums_model->getByFloId($album['flo_id'])) {
                     continue;
                 }
-                
+
                 // new_albums 테이블에 저장
                 $albumData = [
                     'album_title' => $album['title'],
@@ -146,12 +148,38 @@ class UpdateNewAlbums extends Cron
                     ];
 
                     $this->new_album_artists_model->insert($artistData);
+
+                    // 아티스트 이미지 업데이트
+                    $this->updateArtistImgUrl($artist['flo_id']);
                 }
             }
             $this->log("저장된 새 앨범 수: " . $saved_count);
         } catch (Exception $e) {
             $this->errorLog("새 앨범 저장 중 오류 발생", $e);
             exit(1);
+        }
+    }
+
+    /**
+     * 아티스트 이미지 업데이트
+     * 
+     * @param int $flo_id 아티스트의 FLO ID
+     */
+    private function updateArtistImgUrl($flo_id)
+    {
+        // FLO 아티스트 정보 조회
+        $flo_artist = $this->flo_api->getArtistByFloId($flo_id);
+
+        // 데이터베이스에서 아티스트 정보 조회
+        $artist = $this->artists_model->getByFloId($flo_id);
+
+        // 이미지 업데이트 필요 여부 확인
+        if ($artist['flo_img_url'] != $flo_artist['img_url']) {
+            // 이미지 업데이트
+            $this->artists_model->updateByFloId($flo_id, [
+                'flo_img_url' => $flo_artist['img_url'],
+                'img_url' => $this->image_helper->uploadImage($flo_artist['img_url'], 'artist')
+            ]);
         }
     }
 }

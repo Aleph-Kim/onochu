@@ -4,14 +4,15 @@ class Artists extends Model
 {
     public function insert($artist)
     {
-        $sql = "INSERT INTO artists (name, genre, group_type, img_url, flo_id) VALUES (:name, :genre, :group_type, :img_url, :flo_id)";
+        $sql = "INSERT INTO artists (name, genre, group_type, img_url, flo_id, flo_img_url) VALUES (:name, :genre, :group_type, :img_url, :flo_id, :flo_img_url)";
         $stmt = $this->db->prepare($sql);
         $stmt->execute([
             ':name' => $artist['name'],
             ':genre' => $artist['genre'],
             ':group_type' => $artist['group_type'],
             ':img_url' => $artist['img_url'],
-            ':flo_id' => $artist['flo_id']
+            ':flo_id' => $artist['flo_id'],
+            ':flo_img_url' => $artist['flo_img_url']
         ]);
         return $this->db->lastInsertId();
     }
@@ -81,5 +82,21 @@ class Artists extends Model
         $stmt = $this->db->prepare($sql);
         $stmt->execute();
         return $stmt->fetchAll(PDO::FETCH_ASSOC);
+    }
+
+    public function updateByFloId($flo_id, $data)
+    {
+        $setSql = "";
+        foreach ($data as $key => $value) {
+            $setSql .= "{$key} = '{$value}', ";
+        }
+        $setSql = rtrim($setSql, ", ");
+
+        $sql = "UPDATE artists 
+            SET {$setSql}
+            WHERE flo_id = :flo_id
+        ";
+        $stmt = $this->db->prepare($sql);
+        $stmt->execute(['flo_id' => $flo_id]);
     }
 }

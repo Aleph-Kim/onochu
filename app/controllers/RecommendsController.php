@@ -60,6 +60,7 @@ class RecommendsController extends Controller
                 // 이미지 서버에 업로드
                 $upload_img_url = $artist['img_url'] . $_SERVER['FLO_IMG_RESIZE_PATH']($_SERVER['IMG_FULL_SIZE']);
                 $artist['img_url'] = ImageHelper::uploadImage($upload_img_url, 'artist');
+                $artist['flo_img_url'] = $artist_info['img_url'];
                 // 가수 저장
                 $artist['id'] = $this->artists_model->insert($artist);
             }
