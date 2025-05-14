@@ -55,5 +55,6 @@ jobs:
           docker run -d -p 8080:80 \
             --name ${{ secrets.PROJECT_NAME }} \
             -v ${{ secrets.ENV_PATH }}:/var/www/html/.env \
+            -v ${{ secrets.LOG_PATH }}:/var/log/apache2 \
             --network ${{ secrets.NETWORK_NAME }} \
             ${{ secrets.DOCKER_USERNAME }}/${{ secrets.PROJECT_NAME }}:latest
