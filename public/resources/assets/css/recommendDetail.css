@@ -81,6 +81,11 @@
     color: var(--genie-color);
 }
 
+.platform-spotify {
+    border: 1px solid var(--spotify-color);
+    color: var(--spotify-color);
+}
+
 .song-img {
     width: 100%;
     aspect-ratio: 1;

@@ -42,7 +42,8 @@ $song_info = $controller->detail();
     <div class="music-platforms">
         <a href="<?= $song_info['song']['url']['youtube'] ?>" target="_blank" class="platform-btn platform-youtube">YouTube Music</a>
         <a href="<?= $song_info['song']['url']['flo'] ?>" target="_blank" class="platform-btn platform-flo">FLO</a>
-        <a href="<?= $song_info['song']['url']['genie'] ?>" target="_blank" class="platform-btn platform-genie">Genie</a>
+        <a href="<?= $song_info['song']['url']['spotify'] ?>" target="_blank" class="platform-btn platform-spotify">Spotify</a>
+        <!-- <a href="<?= $song_info['song']['url']['genie'] ?>" target="_blank" class="platform-btn platform-genie">Genie</a> -->
     </div>
     <h3 class="section-title">곡 정보</h3>
     <div class="song-details">

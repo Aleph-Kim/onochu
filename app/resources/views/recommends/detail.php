@@ -19,7 +19,8 @@ $recommend_info = $controller->detail();
     <div class="music-platforms">
         <a href="<?= $recommend_info['url']['youtube'] ?>" target="_blank" class="platform-btn platform-youtube">YouTube Music</a>
         <a href="<?= $recommend_info['url']['flo'] ?>" target="_blank" class="platform-btn platform-flo">FLO</a>
-        <a href="<?= $recommend_info['url']['genie'] ?>" target="_blank" class="platform-btn platform-genie">Genie</a>
+        <a href="<?= $recommend_info['url']['spotify'] ?>" target="_blank" class="platform-btn platform-spotify">Spotify</a>
+        <!-- <a href="<?= $recommend_info['url']['genie'] ?>" target="_blank" class="platform-btn platform-genie">Genie</a> -->
     </div>
     <div class="song-img">
         <img src="<?= $recommend_info['album_img_url'] . $_SERVER['IMG_RESIZE_PATH']($_SERVER['IMG_BIG_SIZE']) ?>" onclick="window.location.href = '/song/detail?id=<?= $recommend_info['song_flo_id'] ?>'">

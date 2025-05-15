@@ -75,6 +75,12 @@ $_SERVER['GENIE_SEARCH_PATH'] = fn($q) => "https://www.genie.co.kr/search/search
 // 지니 앱 url 스키마
 $_SERVER['GENIE_APP_PATH'] = 'fb256937297704300://open';
 
+// 스포티파이 검색 경로
+$_SERVER['SPOTIFY_SEARCH_WEB_PATH'] = fn($q) => "https://open.spotify.com/search/$q/tracks";
+
+// 스포티파이 앱 url 스키마
+$_SERVER['SPOTIFY_SEARCH_APP_PATH'] = fn($q) => "spotify:search:$q";
+
 // 플로 상세페이지 경로
 $_SERVER['FLO_DETAIL_PATH'] = fn($id) => "https://www.music-flo.com/detail/track/$id/details";
 
