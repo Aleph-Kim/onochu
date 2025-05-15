@@ -36,6 +36,24 @@ class UserHelper
     }
 
     /**
+     * 로그인 페이지로 이동하는 함수
+     */
+    public static function sendLogin()
+    {
+        setcookie('last_url', $_SERVER['REQUEST_URI'], time() + 3600, '/');
+        ScriptHelper::msgGo("로그인 후 이용해주세요.", "/login");
+    }
+
+    /**
+     * 마지막 접속 페이지로 이동하는 함수
+     */
+    public static function sendLastUrl()
+    {
+        setcookie('last_url', null, -1, '/');
+        header('Location: ' . $_COOKIE['last_url']);
+    }
+
+    /**
      * https 요청 여부를 확인하는 함수
      * 
      * @return boolean - https 여부

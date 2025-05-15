@@ -72,8 +72,12 @@ class AuthController extends Controller
             'nickname' => $user['nickname'],
         ];
 
-        // 로그인 성공 후 메인 페이지로 리다이렉트
-        header('Location: /');
+        // 로그인 전 마지막 페이지로 리다이렉트
+        if (isset($_COOKIE['last_url'])) {
+            UserHelper::sendLastUrl();
+        } else {
+            header('Location: /');
+        }
         exit;
     }
 

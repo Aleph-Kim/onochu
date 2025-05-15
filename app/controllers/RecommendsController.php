@@ -27,7 +27,7 @@ class RecommendsController extends Controller
     public function index()
     {
         if (!UserHelper::checkLogin()) {
-            ScriptHelper::msgGo("로그인 후 이용해주세요.", "/login");
+            UserHelper::sendLogin();
         }
 
         // XSS 방지 처리
@@ -47,7 +47,7 @@ class RecommendsController extends Controller
     public function post()
     {
         if (!UserHelper::checkLogin()) {
-            ScriptHelper::msgGo("로그인 후 이용해주세요.", "/login");
+            UserHelper::sendLogin();
         }
 
         $song_info = $_SESSION['song_info'];
