@@ -111,7 +111,7 @@
                         <p class="song-artist">아이유</p>
                         <p class="recommend-date">2025.05.16</p>
                     </div>
-                    <div>
+                    <div class="song-card-btn">
                         <button class="btn btn-submit">
                             프로필 설정
                         </button>
