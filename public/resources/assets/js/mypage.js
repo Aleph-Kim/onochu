@@ -81,12 +81,10 @@ function initChart() {
             },
             label: {
                 show: true,
-                position: "outside",
+                position: "inside",
                 formatter: "{b}\n{d}%",
-                color: "#1f2937"
-            },
-            labelLine: {
-                show: true
+                color: "#1a1a1a",
+                fontSize: 10,
             },
             data: [{
                 value: 65,
