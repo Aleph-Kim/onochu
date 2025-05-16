@@ -32,9 +32,10 @@ class Recommends extends Model
                     a.img_url AS album_img_url,
                     SUBSTRING_INDEX(GROUP_CONCAT(art.id), ',', 1) AS artist_id,
                     GROUP_CONCAT(art.name SEPARATOR ' & ') AS artist_name,
-                    SUBSTRING_INDEX(GROUP_CONCAT(art.img_url), ',', 1) AS artist_img_url
+                    SUBSTRING_INDEX(GROUP_CONCAT(art.img_url), ',', 1) AS artist_img_url,
+                    r.created_at AS recommend_date
                 FROM (
-                    SELECT MAX(id) AS id, song_id
+                    SELECT MAX(id) AS id, song_id, MAX(created_at) as created_at
                     FROM recommends
                     GROUP BY song_id
                     ORDER BY MAX(created_at) DESC
@@ -44,7 +45,7 @@ class Recommends extends Model
                 JOIN song_artists sa ON s.id = sa.song_id
                 JOIN artists art ON sa.artist_id = art.id
                 JOIN albums a ON s.album_id = a.id
-                GROUP BY r.id, s.id, s.title, s.album_id, a.img_url
+                GROUP BY r.id, s.id, s.title, s.album_id, a.img_url, r.created_at
                 ORDER BY r.id DESC;
             ";
             $stmt = $this->db->prepare($sql);

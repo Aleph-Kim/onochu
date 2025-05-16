@@ -66,6 +66,7 @@
                 <!-- 유저 메뉴 -->
                 <div class="user-menu">
                     <? if (UserHelper::checkLogin()): ?>
+                        <a href="/mypage" type="button" class="btn">마이페이지</a>
                         <a href="/auth/logout" type="button" class="btn">로그아웃</a>
                     <? else: ?>
                         <a href="/login" type="button" class="btn">로그인</a>

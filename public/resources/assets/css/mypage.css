@@ -39,17 +39,18 @@
     padding-bottom: 2rem;
 }
 
+.profile-genre,
+.profile-stats {
+    color: #e6e6e6;
+    font-size: 1.125rem;
+    z-index: 1;
+}
+
 .profile-name {
     color: white;
     font-size: 3.75rem;
     font-weight: bold;
     margin-bottom: 4px;
-    z-index: 1;
-}
-
-.profile-stats {
-    color: white;
-    font-size: 1.125rem;
     z-index: 1;
 }
 

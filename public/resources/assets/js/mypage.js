@@ -2,6 +2,7 @@ let genreChart;
 let songs = [];
 let currentSort = 'latest';
 let searchQuery = '';
+let chartColors = ['#FF6347', '#FFD39B', '#FFEC8B', '#98FB98', '#87CEEB', '#DDA0DD', '#FFC0CB'];
 
 /**
  * HTML에서 앨범 데이터 파싱
@@ -61,6 +62,32 @@ function bindEvents() {
     });
 }
 
+function createChartData() {
+    const chartData = [];
+    const genreLength = Object.keys(genreList).length;
+    chartColors = chartColors.sort(() => Math.random() - 0.5);
+    for (let i = 0; i < Math.min(5, genreLength); i++) {
+        const genre = Object.keys(genreList)[i];
+        chartData.push({
+            name: genre,
+            value: genreList[genre],
+            itemStyle: {
+                color: chartColors[i]
+            }
+        });
+    }
+    if (genreLength > 5) {
+        chartData.push({
+            name: '기타',
+            value: genreList['기타'],
+            itemStyle: {
+                color: '#afafaf'
+            }
+        });
+    }
+    return chartData;
+}
+
 /**
  * 장르 차트 초기화
  */
@@ -86,35 +113,7 @@ function initChart() {
                 color: "#1a1a1a",
                 fontSize: 10,
             },
-            data: [{
-                value: 65,
-                name: "인디 록",
-                itemStyle: {
-                    color: "rgba(87, 181, 231, 1)"
-                }
-            },
-            {
-                value: 5,
-                name: "K-POP",
-                itemStyle: {
-                    color: "rgba(141, 211, 199, 1)"
-                }
-            },
-            {
-                value: 5,
-                name: "발라드",
-                itemStyle: {
-                    color: "rgba(251, 191, 114, 1)"
-                }
-            },
-            {
-                value: 15,
-                name: "어쿠스틱",
-                itemStyle: {
-                    color: "rgba(252, 141, 98, 1)"
-                }
-            }
-            ]
+            data: createChartData()
         }]
     };
     genreChart.setOption(option);

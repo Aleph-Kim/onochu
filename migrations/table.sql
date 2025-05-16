@@ -12,6 +12,7 @@ CREATE TABLE `users` (
     id INT AUTO_INCREMENT PRIMARY KEY COMMENT '유저 고유 ID',
     kakao_id varchar(50) NOT NULL COMMENT '카카오 고유 ID',
     nickname varchar(50) NOT NULL COMMENT '유저 닉네임',
+    profile_album_id INT COMMENT '유저 프로필 앨범',
     created_at timestamp NULL DEFAULT CURRENT_TIMESTAMP COMMENT '생성 일시',
     updated_at timestamp NULL DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP COMMENT '업데이트 일시'
 ) COMMENT = '유저 정보를 저장하는 테이블';
