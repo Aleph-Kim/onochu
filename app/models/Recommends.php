@@ -79,10 +79,13 @@ class Recommends extends Model
                     albums.release_date as release_date,
                     albums.flo_id as album_flo_id,
                     songs.genre as genre,
-                    songs.play_time as play_time
+                    songs.play_time as play_time,
+                    users.id as user_id,
+                    users.nickname as user_name
                 FROM recommends 
                 JOIN songs ON recommends.song_id = songs.id
                 JOIN albums ON songs.album_id = albums.id
+                JOIN users ON recommends.user_id = users.id
                 WHERE recommends.id = :id
             ";
             $stmt = $this->db->prepare($recommend_sql);

@@ -62,6 +62,9 @@ $recommend_info = $controller->detail();
             <label for="star1">★</label>
         </div>
         <textarea name="comment" class="recommends-comment" placeholder="작성된 코멘트가 없습니다." disabled><?= $recommend_info['comment'] ?></textarea>
+        <div class="recommends-user">추천인: 
+            <a href="/mypage?id=<?= $recommend_info['user_id'] ?>"><?= $recommend_info['user_name'] ?></a>
+        </div>
         <div class="recommend-date">추천일: <?= date('Y년 m월 d일', strtotime($recommend_info['recommend_date'])) ?></div>
     </div>
 </div>
