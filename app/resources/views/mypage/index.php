@@ -33,7 +33,7 @@ $controller = new MypageController();
                         <h2 class="section-title">좋아하는 아티스트</h2>
                         <div class="artist-list">
                             <? foreach ($artist_list as $artist) { ?>
-                                <a class="artist-card" href="/artist/detail?id=<?= $artist['id'] ?>">
+                                <a class="artist-card" href="/artist/detail?id=<?= $artist['flo_id'] ?>">
                                     <img src="<?= $artist['img_url'] . $_SERVER['FLO_IMG_RESIZE_PATH']($_SERVER['IMG_SMALL_SIZE']) ?>" alt="아티스트" class="artist-image">
                                     <div class="artist-info">
                                         <h3 class="artist-name"><?= $artist['name'] ?></h3>

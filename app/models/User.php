@@ -55,7 +55,7 @@ class User extends Model
     public function getUserLikeArtist($userId)
     {
         $sql = "
-            SELECT a.id, a.name, a.img_url, COUNT(a.id) as count
+            SELECT a.id, a.flo_id, a.name, a.img_url, COUNT(a.id) as count
             FROM users u
             JOIN recommends r ON u.id = r.user_id
             JOIN songs s ON r.song_id = s.id
