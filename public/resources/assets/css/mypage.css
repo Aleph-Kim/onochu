@@ -297,7 +297,7 @@ input:checked+.slider:before {
     flex: none;
 }
 
-.btn {
+.song-card-btn .btn {
     padding: 8px 16px;
     border-radius: 4px;
     font-size: 14px;

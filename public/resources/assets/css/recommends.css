@@ -124,7 +124,7 @@
     gap: 8px;
 }
 
-.btn {
+.buttons .btn {
     padding: 8px 16px;
     border-radius: 4px;
     font-size: 14px;
@@ -134,24 +134,24 @@
     transition: 0.2s;
 }
 
-.btn-cancel {
+.buttons .btn-cancel {
     background-color: #e9ecef;
     color: #495057;
 }
 
-.btn-submit {
+.buttons .btn-submit {
     background-color: var(--main-color);
     color: white;
 }
 
-.btn-cancel:active,
-.btn-cancel:hover {
+.buttons .btn-cancel:active,
+.buttons .btn-cancel:hover {
     background-color: #c8c8c8;
     ;
 }
 
-.btn-submit:active,
-.btn-submit:hover {
+.buttons .btn-submit:active,
+.buttons .btn-submit:hover {
     background-color: var(--term-color);
     ;
 }
