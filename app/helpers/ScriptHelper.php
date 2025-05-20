@@ -21,6 +21,9 @@ class ScriptHelper
         echo $code;
     }
 
+    /**
+     * 페이지 이동
+     */
     public static function go($url)
     {
         header("Location: {$url}");

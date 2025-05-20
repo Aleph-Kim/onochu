@@ -27,8 +27,7 @@ class AuthController extends Controller
     {
         // 로그인 상태 확인
         if (UserHelper::checkLogin()) {
-            header('Location: /');
-            exit;
+            ScriptHelper::go("/");
         }
 
         $params = [
@@ -39,8 +38,7 @@ class AuthController extends Controller
         ];
 
         $authUrl = $this->kakaoApiUrl . '/oauth/authorize?' . http_build_query($params);
-        header('Location: ' . $authUrl);
-        exit;
+        ScriptHelper::go($authUrl);
     }
 
     /**
@@ -76,9 +74,8 @@ class AuthController extends Controller
         if (isset($_COOKIE['last_url'])) {
             UserHelper::sendLastUrl();
         } else {
-            header('Location: /');
+            ScriptHelper::go("/");
         }
-        exit;
     }
 
     /**
@@ -144,7 +141,7 @@ class AuthController extends Controller
         if (UserHelper::checkLogin()) {
             unset($_SESSION['user']);
         }
-        header('Location: /');
-        exit;
+
+        ScriptHelper::go("/");
     }
 }

@@ -50,7 +50,7 @@ class UserHelper
     public static function sendLastUrl()
     {
         setcookie('last_url', null, -1, '/');
-        header('Location: ' . $_COOKIE['last_url']);
+        ScriptHelper::go($_COOKIE['last_url']);
     }
 
     /**
