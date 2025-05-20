@@ -5,7 +5,7 @@ $controller = new MypageController();
     'artist_list' => $artist_list,
     'genre_list' => $genre_list,
     'song_list' => $song_list
-] = $controller->index();
+] = $controller->user();
 ?>
 
 <? include $_SERVER['LAYOUT_PATH'] . "header.php"; ?>
@@ -74,11 +74,6 @@ $controller = new MypageController();
                                 <p class="song-artist"><?= $song['artist_name'] ?></p>
                                 <p class="recommend-date"><?= date('Y.m.d', strtotime($song['recommend_date'])) ?></p>
                             </div>
-                            <div class="song-card-btn" onclick="setProfileAlbum('<?= $song['id'] ?>')">
-                                <button class="btn btn-submit">
-                                    프로필 설정
-                                </button>
-                            </div>
                         </div>
                     <? } ?>
                 </div>
@@ -107,7 +102,7 @@ $controller = new MypageController();
                 </div>
             </div>
             <div class="skeleton-no-results">
-                <p>추천한 노래가 없습니다.</p>
+                <p>활동이 없는 사용자입니다.</p>
             </div>
         </div>
     <? } ?>

@@ -12,17 +12,27 @@ class MypageController extends Controller
 
     public function index()
     {
-        $user_info = $this->getUserInfo();
-        $artist_list = $this->user_model->getUserLikeArtist($user_info['id']);
-        $genre_list = $this->user_model->getUserLikeGenre($user_info['id']);
-        $song_list = $this->recommends_model->getRecentRecommends(1000);
+        if (!UserHelper::checkLogin()) {
+            UserHelper::sendLogin();
+        }
+        $user_id = $_SESSION['user']['id'];
 
-        return [
-            'user_info' => $user_info,
-            'artist_list' => $artist_list,
-            'genre_list' => $genre_list,
-            'song_list' => $song_list
-        ];
+        return $this->getMypageInfo($user_id);
+    }
+
+    public function user()
+    {
+        $user_id = $_GET['id'];
+
+        if (!$user_id) {
+            ScriptHelper::msgGo("잘못된 요청입니다.");
+        }
+
+        if ($user_id == $_SESSION['user']['id']) {
+            ScriptHelper::go("/mypage");
+        }
+
+        return $this->getMypageInfo($user_id);
     }
 
     public function setProfileAlbum()
@@ -54,17 +64,22 @@ class MypageController extends Controller
         ];
     }
 
-    private function getUserInfo()
-    {
-        if (isset($_GET['id'])) {
-            $user_id = (int)$_GET['id'];
-        } else {
-            if (!UserHelper::checkLogin()) {
-                UserHelper::sendLogin();
-            }
-            $user_id = $_SESSION['user']['id'];
-        }
+    private function getMypageInfo($user_id){
+        $user_info = $this->getUserInfo($user_id);
+        $artist_list = $this->user_model->getUserLikeArtist($user_info['id']);
+        $genre_list = $this->user_model->getUserLikeGenre($user_info['id']);
+        $song_list = $this->recommends_model->getRecentRecommends(1000, $user_id);
 
+        return [
+            'user_info' => $user_info,
+            'artist_list' => $artist_list,
+            'genre_list' => $genre_list,
+            'song_list' => $song_list
+        ];
+    }
+
+    private function getUserInfo($user_id)
+    {
         $user_info = $this->user_model->getUserInfoById($user_id);
 
         if (!$user_info) {

@@ -20,4 +20,10 @@ class ScriptHelper
 
         echo $code;
     }
+
+    public static function go($url)
+    {
+        header("Location: {$url}");
+        exit;
+    }
 }
