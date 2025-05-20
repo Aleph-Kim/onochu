@@ -4,6 +4,29 @@ let currentSort = 'latest';
 let searchQuery = '';
 let chartColors = ['#FF6347', '#FFD39B', '#FFEC8B', '#98FB98', '#87CEEB', '#DDA0DD', '#FFC0CB'];
 
+function setProfileAlbum(recommendId) {
+    fetch(`/mypage/setProfileAlbum`, {
+        method: 'POST',
+        headers: {
+            'Content-Type': 'application/json'
+        },
+        body: JSON.stringify({
+            recommend_id: recommendId
+        })
+    })
+    .then(response => response.json())
+    .then(data => {
+        editProfile(data.album_flo_id, data.album_img_url);
+    })
+}
+
+function editProfile(albumFloId, albumImgUrl) {
+    const profileHeader = document.querySelector('.profile-header');
+    const profileBackground = document.querySelector('.profile-background');
+    profileHeader.href = `/album/detail?id=${albumFloId}`;
+    profileBackground.style.backgroundImage = `url(${albumImgUrl})`;
+}
+
 /**
  * HTML에서 앨범 데이터 파싱
  */

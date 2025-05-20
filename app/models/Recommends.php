@@ -117,4 +117,23 @@ class Recommends extends Model
             ErrorHandler::showErrorPage(400);
         }
     }
+
+    public function getByMyRecommend($recommend_id)
+    {
+        $sql = "
+            SELECT 
+                recommends.id,
+                songs.album_id,
+                albums.img_url,
+                albums.flo_id
+            FROM recommends 
+            JOIN songs ON recommends.song_id = songs.id
+            JOIN albums ON songs.album_id = albums.id
+            WHERE user_id = :user_id
+                AND recommends.id = :recommend_id
+        ";
+        $stmt = $this->db->prepare($sql);
+        $stmt->execute([':user_id' => $_SESSION['user']['id'], ':recommend_id' => $recommend_id]);
+        return $stmt->fetch(PDO::FETCH_ASSOC);
+    }
 }

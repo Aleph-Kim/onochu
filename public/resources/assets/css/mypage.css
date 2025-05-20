@@ -261,6 +261,7 @@ input:checked+.slider:before {
     border: 1px solid #e5e7eb;
     transition: box-shadow 0.3s ease;
     background-color: white;
+    cursor: pointer;
 }
 
 .song-card:hover {

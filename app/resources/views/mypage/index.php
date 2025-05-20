@@ -6,7 +6,6 @@ $controller = new MypageController();
     'genre_list' => $genre_list,
     'song_list' => $song_list
 ] = $controller->index();
-
 ?>
 
 <? include $_SERVER['LAYOUT_PATH'] . "header.php"; ?>
@@ -68,19 +67,19 @@ $controller = new MypageController();
                 </div>
                 <div class="songs-grid">
                     <? foreach ($song_list as $song) { ?>
-                        <a class="song-card" href="/recommends/detail?id=<?= $song['recommend_id'] ?>">
-                            <img src="<?= $song['album_img_url'] . $_SERVER['FLO_IMG_RESIZE_PATH']($_SERVER['IMG_SMALL_SIZE']) ?>" alt="앨범커버" class="album-cover" loading="lazy">
-                            <div class="song-info">
+                        <div class="song-card">
+                            <img src="<?= $song['album_img_url'] . $_SERVER['FLO_IMG_RESIZE_PATH']($_SERVER['IMG_SMALL_SIZE']) ?>" alt="앨범커버" class="album-cover" loading="lazy" onclick="window.location.href='/recommends/detail?id=<?= $song['id'] ?>'">
+                            <div class="song-info" onclick="window.location.href='/recommends/detail?id=<?= $song['id'] ?>'">
                                 <h3 class="song-title"><?= $song['song_title'] ?></h3>
                                 <p class="song-artist"><?= $song['artist_name'] ?></p>
                                 <p class="recommend-date"><?= date('Y.m.d', strtotime($song['recommend_date'])) ?></p>
                             </div>
-                            <!-- <div class="song-card-btn">
+                            <div class="song-card-btn" onclick="setProfileAlbum('<?= $song['id'] ?>')">
                                 <button class="btn btn-submit">
                                     프로필 설정
                                 </button>
-                            </div> -->
-                        </a>
+                            </div>
+                        </div>
                     <? } ?>
                 </div>
             </div>

@@ -106,4 +106,15 @@ class User extends Model
 
         return $result;
     }
+
+    public function setProfileAlbum($album_id)
+    {
+        $sql = "
+            UPDATE users 
+            SET profile_album_id = :album_id 
+            WHERE id = :user_id
+        ";
+        $stmt = $this->db->prepare($sql);
+        $stmt->execute(['album_id' => $album_id, 'user_id' => $_SESSION['user']['id']]);
+    }
 }

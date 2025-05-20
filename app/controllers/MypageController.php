@@ -25,6 +25,35 @@ class MypageController extends Controller
         ];
     }
 
+    public function setProfileAlbum()
+    {
+        if (!UserHelper::checkLogin()) {
+            return [
+                'code' => 401,
+                'message' => '로그인이 필요합니다.'
+            ];
+        }
+
+        $recommend_id = $_POST['recommend_id'];
+
+        $recommend_info = $this->recommends_model->getByMyRecommend($recommend_id);
+
+        if (!$recommend_info) {
+            return [
+                'code' => 400,
+                'message' => '잘못된 요청입니다.'
+            ];
+        }
+
+        $this->user_model->setProfileAlbum($recommend_info['album_id']);
+
+        return [
+            'message' => '앨범 설정 완료',
+            'album_img_url' => $recommend_info['img_url'] . $_SERVER['IMG_RESIZE_PATH']($_SERVER['IMG_FULL_SIZE']),
+            'album_flo_id' => $recommend_info['flo_id'],
+        ];
+    }
+
     private function getUserInfo()
     {
         if (isset($_GET['id'])) {
