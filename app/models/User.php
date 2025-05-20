@@ -8,51 +8,51 @@ class User extends Model
         return $stmt->fetchAll(PDO::FETCH_ASSOC);
     }
 
-    public function getUserByKakaoId($kakaoId)
+    public function getUserByKakaoId($kakao_id)
     {
         $sql = "
             SELECT * 
             FROM users 
-            WHERE kakao_id = :kakaoId
+            WHERE kakao_id = :kakao_id
         ";
 
         $stmt = $this->db->prepare($sql);
-        $stmt->execute(['kakaoId' => $kakaoId]);
+        $stmt->execute(['kakao_id' => $kakao_id]);
         return $stmt->fetch(PDO::FETCH_ASSOC);
     }
 
-    public function createUser($userInfo)
+    public function createUser($user_info)
     {
         $sql = "
             INSERT INTO users (kakao_id, nickname) 
-            VALUES (:kakaoId, :nickname)
+            VALUES (:kakao_id, :nickname)
         ";
 
         $stmt = $this->db->prepare($sql);
-        $stmt->execute(['kakaoId' => $userInfo['id'], 'nickname' => $userInfo['properties']['nickname']]);
+        $stmt->execute(['kakao_id' => $user_info['id'], 'nickname' => $user_info['properties']['nickname']]);
 
         return [
             'id' => $this->db->lastInsertId(),
-            'nickname' => $userInfo['properties']['nickname']
+            'nickname' => $user_info['properties']['nickname']
         ];
     }
 
-    public function getUserInfoById($userId)
+    public function getUserInfoById($user_id)
     {
         $sql = "
             SELECT u.id, u.nickname, COUNT(r.id) as recommend_count, a.flo_id as profile_album_flo_id, a.img_url as profile_img_url
             FROM users u
             LEFT JOIN recommends r ON u.id = r.user_id
             LEFT JOIN albums a ON u.profile_album_id = a.id
-            WHERE u.id = :userId
+            WHERE u.id = :user_id
         ";
 
         $stmt = $this->db->prepare($sql);
-        $stmt->execute(['userId' => $userId]);
+        $stmt->execute(['user_id' => $user_id]);
         return $stmt->fetch(PDO::FETCH_ASSOC);
     }
 
-    public function getUserLikeArtist($userId)
+    public function getUserLikeArtist($user_id)
     {
         $sql = "
             SELECT a.id, a.flo_id, a.name, a.img_url, COUNT(a.id) as count
@@ -61,18 +61,18 @@ class User extends Model
             JOIN songs s ON r.song_id = s.id
             JOIN song_artists sa ON s.id = sa.song_id
             JOIN artists a ON sa.artist_id = a.id
-            WHERE u.id = :userId
+            WHERE u.id = :user_id
             GROUP BY a.id
             ORDER BY count DESC
             LIMIT 5
         ";
 
         $stmt = $this->db->prepare($sql);
-        $stmt->execute(['userId' => $userId]);
+        $stmt->execute(['user_id' => $user_id]);
         return $stmt->fetchAll(PDO::FETCH_ASSOC);
     }
 
-    public function getUserLikeGenre($userId)
+    public function getUserLikeGenre($user_id)
     {
         $sql = "
             SELECT genre_list.genre, COUNT(genre_list.genre) as count
@@ -86,13 +86,13 @@ class User extends Model
                     '$[*]' columns (genre varchar(50) path '$')
                 ) temp_table
             ) genre_list ON r.song_id = genre_list.id
-            WHERE u.id = :userId
+            WHERE u.id = :user_id
             GROUP BY genre_list.genre
             ORDER BY count DESC
         ";
 
         $stmt = $this->db->prepare($sql);
-        $stmt->execute(['userId' => $userId]);
+        $stmt->execute(['user_id' => $user_id]);
         $genre_list = $stmt->fetchAll(PDO::FETCH_ASSOC);
 
         $result = [];

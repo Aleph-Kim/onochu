@@ -104,15 +104,15 @@ class FloApiHelper
      * API에서 데이터를 가져오고 추출하는 메서드
      * @param string $path API 엔드포인트 경로
      * @param array|null $params 요청 파라미터
-     * @param string $getMethod 데이터를 가져오는 메서드 이름
+     * @param string $get_method 데이터를 가져오는 메서드 이름
      * @param string|null $other_params 추가 파라미터
      * @return array 추출한 데이터
      */
-    protected function fetchAndExtract($path, $params = null, $getMethod, $other_params = null)
+    protected function fetchAndExtract($path, $params = null, $get_method, $other_params = null)
     {
         $full_path = $path . ($params ? '?' . http_build_query($params) : "");
         $data = $this->fetchData($full_path);
-        return $this->$getMethod($data, $other_params);
+        return $this->$get_method($data, $other_params);
     }
 
     /**
@@ -362,18 +362,18 @@ class FloApiHelper
 
     /**
      * 데이터에서 아티스트 정보를 추출하는 메서드
-     * @param array $artistList 아티스트 리스트
+     * @param array $artist_list 아티스트 리스트
      * @return array 추출한 아티스트 정보 배열
      */
-    protected function extractArtists($artistList)
+    protected function extractArtists($artist_list)
     {
         $artists = [];
 
-        if (!isset($artistList) || !is_array($artistList)) {
+        if (!isset($artist_list) || !is_array($artist_list)) {
             return $artists;
         }
 
-        foreach ($artistList as $artist) {
+        foreach ($artist_list as $artist) {
             $artists[] = $this->extractArtist($artist);
         }
 

@@ -2,20 +2,20 @@
 
 class AuthController extends Controller
 {
-    private $clientId;
-    private $clientSecret;
-    private $redirectUri;
-    private $kakaoApiUrl = 'https://kauth.kakao.com';
-    private $kakaoApiUrlV2 = 'https://kapi.kakao.com';
+    private $client_id;
+    private $client_secret;
+    private $redirect_uri;
+    private $kakao_api_url = 'https://kauth.kakao.com';
+    private $kakao_api_url_v2 = 'https://kapi.kakao.com';
 
     private $user_model;
 
     public function __construct()
     {
-        $this->clientId = getenv('KAKAO_CLIENT_ID');
-        $this->clientSecret = getenv('KAKAO_CLIENT_SECRET');
+        $this->client_id = getenv('KAKAO_CLIENT_ID');
+        $this->client_secret = getenv('KAKAO_CLIENT_SECRET');
         // 현재 페이지의 프로토콜과 호스트를 사용하여 리다이렉트 URI 생성
-        $this->redirectUri = (UserHelper::isHttps() ? 'https' : 'http') . '://' . $_SERVER['HTTP_HOST'] . getenv('KAKAO_REDIRECT_URI');
+        $this->redirect_uri = (UserHelper::isHttps() ? 'https' : 'http') . '://' . $_SERVER['HTTP_HOST'] . getenv('KAKAO_REDIRECT_URI');
 
         $this->user_model = $this->model('User');
     }
@@ -31,14 +31,14 @@ class AuthController extends Controller
         }
 
         $params = [
-            'client_id' => $this->clientId,
-            'redirect_uri' => $this->redirectUri,
+            'client_id' => $this->client_id,
+            'redirect_uri' => $this->redirect_uri,
             'response_type' => 'code',
             'scope' => 'profile_nickname'
         ];
 
-        $authUrl = $this->kakaoApiUrl . '/oauth/authorize?' . http_build_query($params);
-        ScriptHelper::go($authUrl);
+        $auth_url = $this->kakao_api_url . '/oauth/authorize?' . http_build_query($params);
+        ScriptHelper::go($auth_url);
     }
 
     /**
@@ -54,14 +54,14 @@ class AuthController extends Controller
         $token = $this->getAccessToken($_GET['code']);
 
         // 사용자 정보 받기
-        $userInfo = $this->getUserInfo($token);
+        $user_info = $this->getUserInfo($token);
 
         // 사용자 정보 조회
-        $user = $this->user_model->getUserByKakaoId($userInfo['id']);
+        $user = $this->user_model->getUserByKakaoId($user_info['id']);
 
         // 사용자 정보가 없으면 생성
         if (!$user) {
-            $user = $this->user_model->createUser($userInfo);
+            $user = $this->user_model->createUser($user_info);
         }
 
         // 사용자 정보를 세션에 저장
@@ -85,23 +85,23 @@ class AuthController extends Controller
     {
         $params = [
             'grant_type' => 'authorization_code',
-            'client_id' => $this->clientId,
-            'client_secret' => $this->clientSecret,
-            'redirect_uri' => $this->redirectUri,
+            'client_id' => $this->client_id,
+            'client_secret' => $this->client_secret,
+            'redirect_uri' => $this->redirect_uri,
             'code' => $code
         ];
 
         $ch = curl_init();
-        curl_setopt($ch, CURLOPT_URL, $this->kakaoApiUrl . '/oauth/token');
+        curl_setopt($ch, CURLOPT_URL, $this->kakao_api_url . '/oauth/token');
         curl_setopt($ch, CURLOPT_POST, true);
         curl_setopt($ch, CURLOPT_POSTFIELDS, http_build_query($params));
         curl_setopt($ch, CURLOPT_RETURNTRANSFER, true);
 
         $response = curl_exec($ch);
-        $httpCode = curl_getinfo($ch, CURLINFO_HTTP_CODE);
+        $http_code = curl_getinfo($ch, CURLINFO_HTTP_CODE);
         curl_close($ch);
 
-        if ($httpCode !== 200) {
+        if ($http_code !== 200) {
             throw new Exception('액세스 토큰 발급 실패');
         }
 
@@ -115,7 +115,7 @@ class AuthController extends Controller
     private function getUserInfo($accessToken)
     {
         $ch = curl_init();
-        curl_setopt($ch, CURLOPT_URL, $this->kakaoApiUrlV2 . '/v2/user/me');
+        curl_setopt($ch, CURLOPT_URL, $this->kakao_api_url_v2 . '/v2/user/me');
         curl_setopt($ch, CURLOPT_RETURNTRANSFER, true);
         curl_setopt($ch, CURLOPT_HTTPHEADER, [
             'Authorization: Bearer ' . $accessToken,
@@ -123,10 +123,10 @@ class AuthController extends Controller
         ]);
 
         $response = curl_exec($ch);
-        $httpCode = curl_getinfo($ch, CURLINFO_HTTP_CODE);
+        $http_code = curl_getinfo($ch, CURLINFO_HTTP_CODE);
         curl_close($ch);
 
-        if ($httpCode !== 200) {
+        if ($http_code !== 200) {
             throw new Exception('사용자 정보 조회 실패');
         }
 
