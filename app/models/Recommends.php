@@ -20,9 +20,11 @@ class Recommends extends Model
         }
     }
 
-    public function getRecentRecommends($limit = 10)
+    public function getRecentRecommends($limit = 10, $user_id = null)
     {
         try {
+            $where = $user_id ? "WHERE user_id = :user_id" : "";
+
             $sql = "
                 SELECT 
                     r.id,
@@ -37,6 +39,7 @@ class Recommends extends Model
                 FROM (
                     SELECT MAX(id) AS id, song_id, MAX(created_at) as created_at
                     FROM recommends
+                    {$where}
                     GROUP BY song_id
                     ORDER BY MAX(created_at) DESC
                     LIMIT :limit
@@ -50,6 +53,9 @@ class Recommends extends Model
             ";
             $stmt = $this->db->prepare($sql);
             $stmt->bindParam(':limit', $limit, PDO::PARAM_INT);
+            if ($user_id) {
+                $stmt->bindParam(':user_id', $user_id, PDO::PARAM_INT);
+            }
             $stmt->execute();
             return $stmt->fetchAll(PDO::FETCH_ASSOC);
         } catch (PDOException $e) {
