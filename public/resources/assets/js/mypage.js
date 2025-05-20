@@ -17,6 +17,7 @@ function setProfileAlbum(recommendId) {
     .then(response => response.json())
     .then(data => {
         editProfile(data.album_flo_id, data.album_img_url);
+        alert("프로필 앨범이 변경되었습니다.");
     })
 }
 
